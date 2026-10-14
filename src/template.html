@@ -1,0 +1,1327 @@
+<title>Invigorate Behavioral Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&display=swap">
+<style>
+/* ===== Tokens ============================================================ */
+:root{
+  color-scheme: light;
+  --ink:#0f2429;
+  --teal:#0d5c63;
+  --teal-deep:#06373d;
+  --teal-soft:#e3efec;
+  --leaf:#8ac302;
+  --leaf-ink:#5c8506;
+  --paper:#fbfcfb;
+  --mist:#eaf0ee;
+  --muted:#5d7077;
+  --line:#dbe5e2;
+  --shadow:0 30px 64px -34px rgba(6,55,61,.45);
+  --r:16px;
+  --display:"Newsreader","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --sans:"Manrope","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+}
+
+/* ===== Base ============================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--leaf);outline-offset:3px;border-radius:5px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+h1,h2,h3,h4{font-family:var(--display);font-weight:300;line-height:1.09;letter-spacing:-.012em;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.45rem,5.2vw,4.1rem)}
+h2{font-size:clamp(1.95rem,3.8vw,3rem)}
+h3{font-size:1.28rem;font-weight:400}
+p{margin:0}
+em{font-style:italic;font-weight:400}
+.lede{font-size:clamp(1.05rem,1.4vw,1.2rem);color:var(--muted);line-height:1.7;max-width:66ch}
+.sec--dark .lede{color:rgba(255,255,255,.76)}
+.eyebrow{display:flex;align-items:center;gap:11px;font:600 .73rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--teal)}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--leaf);flex:none}
+.sec--dark .eyebrow{color:rgba(255,255,255,.82)}
+
+.wrap{width:min(1140px,calc(100% - 44px));margin-inline:auto}
+.narrow{width:min(760px,100%);margin-inline:auto}
+.sec{padding:clamp(74px,8.2vw,114px) 0;position:relative}
+.sec--mist{background:var(--mist)}
+.sec--dark{background:var(--teal-deep);color:#fff}
+.sec--tight{padding:clamp(46px,4.6vw,64px) 0}
+.stack{display:flex;flex-direction:column}
+.g8{gap:8px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}.g28{gap:28px}.g36{gap:36px}.g48{gap:48px}
+.center{text-align:center;align-items:center}
+.center .lede{margin-inline:auto}
+.center .eyebrow{justify-content:center}
+
+/* ===== Buttons =========================================================== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:700 .95rem/1 var(--sans);padding:16px 27px;border-radius:999px;border:1px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:transform .22s cubic-bezier(.3,.8,.3,1),background-color .22s,box-shadow .22s,color .22s,border-color .22s}
+.btn:hover{transform:translateY(-2px)}
+.btn--primary{background:var(--teal);color:#fff;box-shadow:0 14px 28px -16px rgba(13,92,99,.85)}
+.btn--primary:hover{background:#0a4a50}
+.btn--light{background:#fff;color:var(--teal-deep);box-shadow:0 14px 30px -18px rgba(0,0,0,.5)}
+.btn--light:hover{background:#eef5f3}
+.btn--ghost{border-color:rgba(255,255,255,.4);color:#fff}
+.btn--ghost:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.7)}
+.btn--outline{border-color:var(--line);background:#fff;color:var(--teal-deep)}
+.btn--outline:hover{border-color:var(--teal);color:var(--teal)}
+.btn--lg{padding:19px 34px;font-size:1.02rem}
+.btn--sm{padding:12px 20px;font-size:.86rem}
+.btn--block{width:100%}
+.cta-row{display:flex;flex-wrap:wrap;gap:13px}
+.fine{font-size:.85rem;color:var(--muted);letter-spacing:.01em}
+.sec--dark .fine,.hero .fine{color:rgba(255,255,255,.66)}
+
+/* ===== Care-path spine =================================================== */
+.spine{position:fixed;left:28px;top:50%;transform:translateY(-50%);z-index:50;display:none;flex-direction:column;align-items:center;gap:21px}
+@media(min-width:1300px){.spine{display:flex}}
+.spine::before{content:"";position:absolute;top:-6px;bottom:-6px;width:1px;background:var(--line);transition:background .35s}
+.spine.is-dark::before{background:rgba(255,255,255,.2)}
+.spine__dot{position:relative;width:9px;height:9px;border-radius:50%;background:var(--paper);border:1px solid #b6c9c4;
+  transition:background .3s,border-color .3s,transform .3s}
+.spine.is-dark .spine__dot{background:var(--teal-deep);border-color:rgba(255,255,255,.34)}
+.spine__dot.is-past{background:#b6c9c4;border-color:#b6c9c4}
+.spine.is-dark .spine__dot.is-past{background:rgba(255,255,255,.34)}
+.spine__dot.is-active{background:var(--leaf);border-color:var(--leaf);transform:scale(1.4)}
+.spine__dot::after{content:attr(data-label);position:absolute;left:19px;top:50%;translate:0 -50%;
+  font:700 .64rem/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+  white-space:nowrap;opacity:0;transition:opacity .25s;pointer-events:none}
+.spine.is-dark .spine__dot::after{color:rgba(255,255,255,.72)}
+.spine__dot:hover::after,.spine__dot:focus-visible::after,.spine__dot.is-active::after{opacity:1}
+
+/* ===== Header ============================================================ */
+.hdr{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+.hdr.is-stuck{border-color:var(--line);box-shadow:0 8px 26px -22px rgba(6,55,61,.7)}
+.hdr__in{display:flex;align-items:center;justify-content:space-between;gap:18px;height:74px}
+.hdr__logo{display:block}
+.hdr__logo img{height:40px;width:auto}
+.hdr__right{display:flex;align-items:center;gap:20px}
+.hdr__note{font-size:.79rem;color:var(--muted);letter-spacing:.03em}
+@media(max-width:700px){.hdr__note{display:none}.hdr__logo img{height:33px}.hdr__in{height:64px}}
+
+/* ===== Hero ============================================================== */
+.hero{position:relative;background:var(--teal-deep);color:#fff;isolation:isolate;overflow:hidden}
+.hero__bg{position:absolute;inset:0;z-index:-2;background-image:url("__IMG_hero__");background-size:cover;background-position:64% 46%}
+.hero__scrim{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(97deg,rgba(4,42,47,.96) 0%,rgba(5,49,54,.92) 34%,rgba(6,55,61,.66) 62%,rgba(6,55,61,.26) 100%)}
+.hero__in{padding:clamp(58px,7vw,100px) 0 clamp(56px,6vw,84px);max-width:700px;display:flex;flex-direction:column;gap:26px}
+.hero h1{color:#fff}
+.hero__lede{font-family:var(--display);font-size:clamp(1.14rem,1.7vw,1.4rem);font-weight:300;font-style:italic;color:rgba(255,255,255,.88);max-width:44ch}
+.pill{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:8px 16px 8px 13px;border-radius:999px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);font:700 .71rem/1 var(--sans);letter-spacing:.15em;text-transform:uppercase}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--leaf);animation:pulse 2.8s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(138,195,2,.6)}70%{box-shadow:0 0 0 9px rgba(138,195,2,0)}100%{box-shadow:0 0 0 0 rgba(138,195,2,0)}}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.17);font-size:.855rem;font-weight:500}
+.chip svg{flex:none;color:var(--leaf)}
+@media(max-width:760px){
+  .hero__bg{background-image:url("__IMG_heroM__");background-position:50% 24%}
+  .hero__scrim{background:linear-gradient(180deg,rgba(4,42,47,.72) 0%,rgba(5,49,54,.9) 44%,rgba(4,42,47,.97) 100%)}
+  .hero__in{padding-top:140px}
+}
+.fade-up{animation:fadeUp .62s cubic-bezier(.25,.8,.3,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.d1{animation-delay:.06s}.d2{animation-delay:.14s}.d3{animation-delay:.22s}.d4{animation-delay:.3s}.d5{animation-delay:.38s}
+
+/* ===== Empathy =========================================================== */
+.pullquote{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(1.4rem,2.5vw,1.95rem);
+  line-height:1.34;color:var(--teal-deep);max-width:26ch;margin-inline:auto;padding-top:26px;position:relative}
+.pullquote::before{content:"";position:absolute;top:0;left:50%;translate:-50% 0;width:38px;height:2px;background:var(--leaf)}
+
+/* ===== Continuum of care ================================================= */
+.care{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.care__rail{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:center;position:relative;height:12px;margin-bottom:6px}
+.care__rail::before{content:"";position:absolute;left:16.66%;right:16.66%;top:50%;height:1px;background:#c6d6d1}
+.care__rail i{justify-self:center;width:11px;height:11px;border-radius:50%;background:var(--mist);border:1.5px solid var(--teal);position:relative;z-index:1}
+.stage{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  transition:transform .3s cubic-bezier(.25,.8,.3,1),box-shadow .3s,border-color .3s}
+.stage:hover{transform:translateY(-5px);border-color:#c3d6d1;box-shadow:0 24px 46px -32px rgba(6,55,61,.55)}
+.stage__img{aspect-ratio:16/9;overflow:hidden;background:var(--mist)}
+.stage__img img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.8,.3,1)}
+.stage:hover .stage__img img{transform:scale(1.05)}
+.stage__body{padding:24px 25px 28px;display:flex;flex-direction:column;gap:11px;flex:1}
+.stage__num{font:800 .7rem/1 var(--sans);letter-spacing:.2em;color:var(--leaf-ink);font-variant-numeric:tabular-nums}
+.stage h3{font-size:1.32rem}
+.stage p{font-size:.94rem;color:var(--muted);line-height:1.58;flex:1}
+.stage__dur{align-self:flex-start;font:700 .71rem/1 var(--sans);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--teal);background:var(--teal-soft);padding:8px 13px;border-radius:999px;font-variant-numeric:tabular-nums}
+@media(max-width:820px){
+  .care{grid-template-columns:1fr;gap:18px}
+  .care__rail{display:none}
+}
+
+/* ===== Approach ========================================================== */
+.split{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(28px,5vw,72px);align-items:start}
+@media(max-width:860px){.split{grid-template-columns:1fr;gap:26px}}
+.feats{display:grid;grid-template-columns:1fr 1fr;column-gap:52px}
+@media(max-width:820px){.feats{grid-template-columns:1fr;column-gap:0}}
+.feat{display:flex;gap:16px;padding:21px 2px;border-top:1px solid var(--line)}
+.feat__ic{flex:none;width:40px;height:40px;border-radius:12px;background:var(--teal-soft);color:var(--teal);display:grid;place-items:center}
+.feat__tx{display:flex;flex-direction:column;gap:3px}
+.feat b{font-size:.98rem;font-weight:700;letter-spacing:-.005em}
+.feat p{font-size:.92rem;color:var(--muted);line-height:1.55}
+
+/* ===== Reviews =========================================================== */
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.stars{display:block;flex:none}
+
+/* Google rating badge */
+.grate{display:inline-flex;align-self:flex-start;align-items:center;gap:15px;padding:13px 20px;border-radius:14px;
+  background:#fff;box-shadow:0 16px 36px -26px rgba(0,0,0,.6)}
+.grate__body{display:flex;flex-direction:column;gap:5px}
+.grate__row{display:flex;align-items:center;gap:9px}
+.grate__n{font:800 1.3rem/1 var(--sans);color:#202124;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.grate__sub{display:flex;align-items:center;gap:6px;font:600 .76rem/1 var(--sans);color:#5f6368;letter-spacing:.01em}
+.grate__sub b{font-weight:700;color:#202124}
+.vchk{display:inline-flex;color:#1a73e8}
+.vchk svg{display:block}
+
+/* AI summary */
+#stories .split{align-items:center}
+.aisum{display:flex;flex-direction:column;gap:16px;padding:22px 24px;border-radius:16px;
+  background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.13)}
+.aisum__hd{display:flex;align-items:center;gap:10px}
+.aisum__ic{display:grid;place-items:center;width:27px;height:27px;border-radius:8px;
+  background:linear-gradient(135deg,#8ac302,#0d5c63);color:#fff;flex:none}
+.aisum__t{font:800 .72rem/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.92)}
+.aisum .lede{font-size:1rem}
+
+/* Review rail — one row, auto-scrolling, and scrollable by hand */
+.revs{position:relative;margin:14px 0 40px}
+.revs::before,.revs::after{content:"";position:absolute;top:0;bottom:0;width:56px;z-index:2;pointer-events:none}
+.revs::before{left:0;background:linear-gradient(90deg,var(--teal-deep),rgba(6,55,61,0))}
+.revs::after{right:0;background:linear-gradient(270deg,var(--teal-deep),rgba(6,55,61,0))}
+.revs__rail{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;
+  cursor:grab;-webkit-overflow-scrolling:touch}
+.revs__rail::-webkit-scrollbar{display:none}
+.revs__rail.is-drag{cursor:grabbing;scroll-behavior:auto}
+.revs__rail:focus-visible{outline:2px solid var(--leaf);outline-offset:-2px;border-radius:12px}
+.revs__track{display:flex;align-items:stretch;gap:16px;width:max-content;padding:4px 64px}
+.revs__pass{display:flex;align-items:stretch;gap:16px}
+.rev{flex:0 0 330px;display:flex;flex-direction:column;gap:12px;background:#fff;border-radius:14px;
+  padding:19px 20px 21px;box-shadow:0 14px 30px -24px rgba(0,0,0,.6)}
+.rev__hd{display:flex;align-items:center;gap:11px}
+.rev__av{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
+  color:#fff;font:700 1rem/1 var(--sans)}
+.rev__who{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.rev__who b{font:700 .92rem/1.2 var(--sans);color:#202124}
+.rev__meta{font:500 .74rem/1 var(--sans);color:#5f6368}
+.rev__g{flex:none;opacity:.9}
+.rev__body{font-size:.88rem;line-height:1.62;color:#3c4043;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:9;overflow:hidden}
+.rev.is-open .rev__body{display:block;-webkit-line-clamp:unset;overflow-y:auto;max-height:320px;
+  scrollbar-width:thin;padding-right:4px}
+.rev__more{align-self:flex-start;margin-top:-4px;background:none;border:0;padding:2px 0;cursor:pointer;
+  font:700 .8rem/1 var(--sans);color:#1a73e8;letter-spacing:.01em}
+.rev__more:hover{text-decoration:underline}
+.rev__more:focus-visible{outline:2px solid #1a73e8;outline-offset:2px;border-radius:3px}
+@media(max-width:560px){
+  .rev{flex-basis:270px}
+  .revs::before,.revs::after{width:26px}
+  .revs__track{padding-inline:30px}
+}
+
+/* ===== Trust strip ======================================================= */
+.trust{display:grid;grid-template-columns:repeat(3,1fr)}
+.trust__i{display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;padding:4px 26px;border-left:1px solid var(--line)}
+.trust__i:first-child{border-left:0}
+.trust__n{font-family:var(--display);font-weight:300;font-size:clamp(2rem,3.4vw,2.7rem);line-height:1;font-variant-numeric:tabular-nums;color:var(--teal-deep)}
+.trust__l{font:700 .71rem/1.4 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.trust img{height:44px;width:auto}
+.trust__glogo{display:block}
+@media(max-width:760px){
+  .trust{grid-template-columns:1fr;gap:30px}
+  .trust__i{border-left:0;padding:0}
+  .trust__i+.trust__i{border-top:1px solid var(--line);padding-top:30px}
+}
+
+/* ===== Admissions form =================================================== */
+.admit{display:grid;grid-template-columns:1fr 1.04fr;gap:clamp(32px,5vw,66px);align-items:start}
+@media(max-width:900px){.admit{grid-template-columns:1fr}}
+.assure{display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
+.assure li{display:flex;gap:11px;align-items:flex-start;font-size:.96rem;color:var(--muted)}
+.assure svg{flex:none;color:var(--leaf-ink);margin-top:3px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(24px,3vw,36px);box-shadow:var(--shadow)}
+.form{display:flex;flex-direction:column;gap:17px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:480px){.row2{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font:700 .7rem/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.field label .rq{color:var(--leaf-ink)}
+.field input{width:100%;font:400 1rem/1.2 var(--sans);color:var(--ink);background:var(--paper);
+  padding:14px 15px;border:1px solid var(--line);border-radius:11px;transition:border-color .2s,box-shadow .2s,background-color .2s}
+.field input::placeholder{color:#9dafb2}
+.field input:focus{outline:none;background:#fff;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,92,99,.13)}
+.field input:user-invalid{border-color:#b8562c}
+.hint{font-size:.78rem;color:var(--muted);letter-spacing:.01em}
+.form__err{font-size:.9rem;line-height:1.5;color:#8d3d18;background:#fdf1ea;border:1px solid #f0cdb8;
+  border-radius:11px;padding:13px 15px}
+.form__preview{font-size:.74rem;text-align:center;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;
+  border-top:1px dashed var(--line);padding-top:13px}
+.btn:disabled{opacity:.62;cursor:progress;transform:none}
+.form__done{display:none;flex-direction:column;gap:14px;align-items:center;text-align:center;padding:22px 4px}
+.form__done .tick{width:52px;height:52px;border-radius:50%;background:var(--teal-soft);color:var(--teal);display:grid;place-items:center}
+.card.is-done .form{display:none}
+.card.is-done .form__done{display:flex}
+
+/* ===== Insurance band ==================================================== */
+.ins{position:relative;background:var(--teal);color:#fff;isolation:isolate;overflow:hidden}
+.ins__bg{position:absolute;inset:0;z-index:-1;background:url("__IMG_facility__") center/cover;opacity:.14}
+.ins__h{color:#fff;font-size:clamp(1.6rem,2.8vw,2.3rem)}
+/* Carrier row: a white plate so full-colour carrier logos read correctly
+   against the teal band. Cells are a fixed box with the logo contained,
+   so wordmarks and square marks sit at the same optical weight. */
+/* Carrier row: a white plate so full-colour carrier logos read correctly
+   against the teal band. Each logo carries its own --h from the build, set to
+   hold constant optical area, so the stacked marks and the wide wordmarks
+   land at matching visual weight. */
+.carriers{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 8px;
+  background:#fff;border-radius:16px;padding:16px 20px;width:min(1090px,100%);margin-inline:auto;
+  box-shadow:0 18px 40px -30px rgba(0,0,0,.55);--logo-scale:1}
+/* Fixed flex-basis puts exactly 5 per row, so nine logos settle as a balanced
+   5 + 4 with the short row centred, instead of wrapping 7 + 2. */
+.carrier{flex:0 0 19%;display:grid;place-items:center;height:56px;padding:0 8px}
+.carrier img{height:calc(var(--h,30px) * var(--logo-scale));width:auto;max-width:100%;object-fit:contain}
+.carrier--text{font:700 .84rem/1 var(--sans);letter-spacing:.03em;color:var(--teal-deep);white-space:nowrap}
+@media(max-width:860px){.carriers{--logo-scale:.84}.carrier{flex-basis:31%;height:48px;padding:0 6px}}
+@media(max-width:560px){.carriers{--logo-scale:.66;padding:12px 8px;gap:2px}.carrier{flex-basis:31%;height:38px;padding:0 4px}}
+
+/* ===== FAQ =============================================================== */
+.faq{width:min(860px,100%);margin-inline:auto}
+.q{border-top:1px solid var(--line)}
+.q:last-child{border-bottom:1px solid var(--line)}
+.q__btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:24px 2px;
+  background:none;border:0;text-align:left;cursor:pointer;color:var(--ink);
+  font-family:var(--display);font-size:clamp(1.06rem,1.5vw,1.2rem);font-weight:400;line-height:1.36;transition:color .2s}
+.q__btn:hover{color:var(--teal)}
+.q__ic{flex:none;position:relative;width:27px;height:27px;border-radius:50%;border:1px solid var(--line);transition:background-color .28s,border-color .28s}
+.q__ic::before,.q__ic::after{content:"";position:absolute;top:50%;left:50%;background:var(--teal);transition:transform .28s,background-color .28s}
+.q__ic::before{width:11px;height:1.5px;transform:translate(-50%,-50%)}
+.q__ic::after{width:1.5px;height:11px;transform:translate(-50%,-50%)}
+.q.is-open .q__ic{background:var(--teal);border-color:var(--teal)}
+.q.is-open .q__ic::before,.q.is-open .q__ic::after{background:#fff}
+.q.is-open .q__ic::after{transform:translate(-50%,-50%) scaleY(0)}
+.q__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .36s cubic-bezier(.3,.85,.3,1)}
+.q.is-open .q__panel{grid-template-rows:1fr}
+.q__panel>div{overflow:hidden}
+.q__panel p{padding:0 44px 26px 0;color:var(--muted);font-size:1rem;line-height:1.68;max-width:72ch}
+.q__panel dl{margin:0 0 26px;padding:0;display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-size:.95rem;max-width:60ch}
+.q__panel dt{font-weight:700;color:var(--ink)}
+.q__panel dd{margin:0;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ===== Facility bento ==================================================== */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:196px;gap:14px}
+.tile{position:relative;overflow:hidden;border-radius:15px;margin:0;background:var(--teal-deep)}
+.tile--lg{grid-column:span 2;grid-row:span 2}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.25,.8,.3,1)}
+.tile:hover img{transform:scale(1.055)}
+.tile figcaption{position:absolute;inset:auto 0 0 0;padding:46px 18px 16px;color:#fff;
+  background:linear-gradient(to top,rgba(5,36,40,.9) 0%,rgba(5,36,40,.45) 52%,rgba(5,36,40,0) 100%)}
+.tile b{display:block;font:700 .92rem/1.3 var(--sans)}
+.tile span{font-size:.79rem;color:rgba(255,255,255,.76);line-height:1.4}
+@media(max-width:820px){.bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}}
+
+/* ===== Closing =========================================================== */
+.close{position:relative;isolation:isolate;overflow:hidden;text-align:center}
+.close__bg{position:absolute;inset:0;z-index:-1;background:url("__IMG_hands__") center 42%/cover;opacity:.13}
+.close__scrim{position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(ellipse 70% 62% at 50% 52%,rgba(6,55,61,.86) 0%,rgba(6,55,61,.45) 62%,rgba(6,55,61,.1) 100%)}
+
+/* ===== Footer ============================================================ */
+.ftr{background:#081f23;color:rgba(255,255,255,.6);padding:52px 0 44px;font-size:.86rem}
+.ftr__in{display:flex;flex-wrap:wrap;gap:26px 40px;align-items:center;justify-content:space-between}
+.ftr img{height:38px;width:auto}
+.ftr a{color:rgba(255,255,255,.85);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.28);padding-bottom:1px}
+.ftr a:hover{color:#fff;border-color:var(--leaf)}
+.ftr__links{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center}
+.ftr__bottom{display:flex;gap:30px 44px;align-items:flex-start;margin-top:30px;padding-top:26px;border-top:1px solid rgba(255,255,255,.12)}
+.ftr__seals{flex:none;display:flex;align-items:center;gap:18px}
+.ftr__seals img{height:58px;width:auto}
+.ftr__seals a{border:0;padding:0;display:block;border-radius:6px;transition:opacity .2s}
+.ftr__seals a:hover{opacity:.82}
+.ftr__legal{font-size:.78rem;line-height:1.65;color:rgba(255,255,255,.45);max-width:72ch}
+@media(max-width:700px){.ftr__bottom{flex-direction:column;gap:22px}}
+
+/* ===== Sticky mobile call bar ============================================ */
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:11px 14px calc(11px + env(safe-area-inset-bottom,0px));
+  background:rgba(255,255,255,.97);border-top:1px solid var(--line);
+  box-shadow:0 -8px 24px -18px rgba(6,55,61,.8);
+  transform:translateY(115%);transition:transform .34s cubic-bezier(.3,.85,.3,1)}
+.callbar.is-on{transform:none}
+.callbar .btn{flex:1}
+@media(max-width:860px){.callbar{display:flex}.ftr{padding-bottom:104px}}
+
+/* ===== Variant switcher (preview builds only; hidden on the live domain) == */
+.vswitch{position:fixed;top:84px;right:16px;z-index:80;display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  background:rgba(8,31,35,.93);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:7px 9px;
+  max-width:min(340px,calc(100vw - 32px));box-shadow:0 14px 34px -20px rgba(0,0,0,.8)}
+.vswitch__l{font:800 .6rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);padding:0 5px}
+.vswitch a{font:700 .7rem/1 var(--sans);letter-spacing:.02em;color:rgba(255,255,255,.82);text-decoration:none;
+  padding:7px 10px;border-radius:7px;background:rgba(255,255,255,.08);transition:background-color .2s,color .2s}
+.vswitch a:hover{background:rgba(255,255,255,.18);color:#fff}
+.vswitch a[aria-current="page"]{background:var(--leaf);color:#13260a}
+@media(max-width:860px){.vswitch{top:auto;bottom:74px;right:10px;left:10px;max-width:none;justify-content:center}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+</style>
+
+<!-- ===================== GOOGLE TAG MANAGER =====================
+     Carries GA4, Google Ads and Microsoft Clarity. The build places this
+     block inside <head> for the standalone files in dist/.
+     The noscript iframe stays in the body, immediately after <body>. -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PHZHNGJ6');
+</script>
+<!--/HEAD-->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PHZHNGJ6"
+  height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="g-logo" viewBox="0 0 48 48">
+    <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
+    <path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
+    <path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>
+    <path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
+  </symbol>
+  <symbol id="stars5" viewBox="0 0 116 20"><path transform="translate(0,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(24,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(48,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(72,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(96,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/></symbol>
+  <symbol id="verified" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 1l2.39 2.09 3.16-.4 1.1 2.98 2.94 1.4-1.01 3.06 1.01 3.06-2.94 1.4-1.1 2.98-3.16-.4L12 23l-2.39-2.09-3.16.4-1.1-2.98-2.94-1.4 1.01-3.06L2.41 7.07l2.94-1.4 1.1-2.98 3.16.4z"/>
+    <path fill="#fff" d="M10.65 15.64l-3.01-3.01 1.32-1.32 1.69 1.69 4.24-4.24 1.32 1.33z"/>
+  </symbol>
+</defs></svg>
+
+<!-- ===================== SPINE ===================== -->
+<nav class="spine" aria-label="Sections of this page">
+  <a class="spine__dot" href="#hero"      data-label="Start"><span class="sr-only">Start</span></a>
+  <a class="spine__dot" href="#why"       data-label="You"><span class="sr-only">You</span></a>
+  <a class="spine__dot" href="#care"      data-label="Care"><span class="sr-only">Levels of care</span></a>
+  <a class="spine__dot" href="#approach"  data-label="Approach"><span class="sr-only">Our approach</span></a>
+  <a class="spine__dot" href="#stories"   data-label="Stories"><span class="sr-only">Stories</span></a>
+  <a class="spine__dot" href="#admissions" data-label="Talk"><span class="sr-only">Talk to someone</span></a>
+  <a class="spine__dot" href="#faq"       data-label="Answers"><span class="sr-only">Answers</span></a>
+  <a class="spine__dot" href="#call"      data-label="Call"><span class="sr-only">Call</span></a>
+</nav>
+
+<!-- ===================== HEADER ===================== -->
+<header class="hdr" id="top">
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="#top" aria-label="Invigorate Behavioral Health, home">
+      <img src="__IMG_logo__" alt="Invigorate Behavioral Health" width="411" height="161">
+    </a>
+    <div class="hdr__right">
+      <span class="hdr__note">Confidential &middot; Answered 24/7</span>
+      <a class="btn btn--primary btn--sm" href="tel:+1__PHONE_RAW__">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        __PHONE_DISPLAY__
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero" data-dark="1">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__in">
+      <span class="pill fade-up d1"><span class="pdot" aria-hidden="true"></span><span data-dyn>Admissions Available Today</span></span>
+      <h1 class="fade-up d2">Treatment That<br><em>Meets You Where You Are</em></h1>
+      <p class="hero__lede fade-up d3"><span data-dyn-pre></span>Real recovery starts with one call.<span data-dyn-post></span></p>
+      <div class="chips fade-up d4">
+        <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5z"/><path d="M3 12.5 12 17l9-4.5"/><path d="M3 17.5 12 22l9-4.5"/></svg>All Levels of Care</span>
+        <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>Dual-Diagnosis Treatment</span>
+        <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>Same-Day Admissions</span>
+        <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18h18"/><path d="M7 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/><path d="M12 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/></svg>Luxury Accommodations</span>
+        <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 19h20"/><path d="M2.5 16.5 8 8l3.5 5.2L14 9.5l6 7"/><path d="M17 6.5c0 1.4-1.1 2.5-2.5 2.5"/></svg>Adventure &amp; Holistic Therapies</span>
+      </div>
+      <div class="cta-row fade-up d5">
+        <a class="btn btn--light btn--lg" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
+        <a class="btn btn--ghost btn--lg" href="#admissions">Verify Insurance</a>
+      </div>
+      <p class="fine fade-up d5">Confidential &middot; No commitment required</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EMPATHY ===================== -->
+<section class="sec" id="why">
+  <div class="wrap narrow stack g28 center">
+    <span class="eyebrow">You are not the first</span>
+    <h2>We Know How Hard<br>You&rsquo;ve Been Trying.</h2>
+    <div class="stack g16">
+      <p class="lede">You&rsquo;ve probably been carrying this for a while. Maybe it&rsquo;s your own struggle. Maybe it&rsquo;s someone you love. Either way, you&rsquo;re here &mdash; and taking that first step matters more than you may know right now.</p>
+      <p class="lede">At Invigorate Behavioral Health, we don&rsquo;t see a diagnosis. We see a person with a story &mdash; someone worthy of real support, real care, and a real chance at a life they love.</p>
+    </div>
+    <p class="pullquote">Recovery isn&rsquo;t just possible. It happens here, every day.</p>
+    <a class="btn btn--primary btn--lg" href="#admissions">Talk to Someone Today</a>
+  </div>
+</section>
+
+<!-- ===================== CONTINUUM OF CARE ===================== -->
+<section class="sec sec--mist" id="care">
+  <div class="wrap stack g48">
+    <div class="split">
+      <div class="stack g16">
+        <span class="eyebrow">The continuum</span>
+        <h2>A Complete Path<br>to Recovery</h2>
+      </div>
+      <div class="stack g16">
+        <p class="lede">Every journey is different. That&rsquo;s why we offer a full continuum of care, built around you &mdash; not a one-size-fits-all program.</p>
+        <p class="lede">Your team here will work with you to find the level of care that fits your situation. Programs are individualized &mdash; <em>your plan, your path.</em></p>
+      </div>
+    </div>
+
+    <div class="stack g20">
+      <span class="eyebrow">Find the right level of care</span>
+      <div class="care">
+        <div class="care__rail" aria-hidden="true"><i></i><i></i><i></i></div>
+
+        <article class="stage">
+          <div class="stage__img"><img src="__IMG_care1__" alt="Two people walking outdoors on a wooded trail" loading="lazy" width="490" height="282"></div>
+          <div class="stage__body">
+            <span class="stage__num">STAGE 01</span>
+            <h3>Detox</h3>
+            <p>Safe, supervised withdrawal management with 24/7 medical support.</p>
+            <span class="stage__dur">7&ndash;10 days</span>
+          </div>
+        </article>
+
+        <article class="stage">
+          <div class="stage__img"><img src="__IMG_care2__" alt="Friends embracing outdoors at sunset" loading="lazy" width="490" height="282"></div>
+          <div class="stage__body">
+            <span class="stage__num">STAGE 02</span>
+            <h3>Residential Treatment</h3>
+            <p>Immersive, full-time healing in a structured therapeutic environment.</p>
+            <span class="stage__dur">28+ days</span>
+          </div>
+        </article>
+
+        <article class="stage">
+          <div class="stage__img"><img src="__IMG_care3__" alt="A client and therapist talking in a bright counseling room" loading="lazy" width="490" height="282"></div>
+          <div class="stage__body">
+            <span class="stage__num">STAGE 03</span>
+            <h3>Outpatient &mdash; PHP, IOP &amp; OP</h3>
+            <p>Flexible daily programming and continued support as life resumes.</p>
+            <span class="stage__dur">30&ndash;90 days</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== APPROACH ===================== -->
+<section class="sec" id="approach">
+  <div class="wrap stack g48">
+    <div class="split">
+      <div class="stack g16">
+        <span class="eyebrow">Our approach</span>
+        <h2>Healing the Whole Person.<br><em>Not Just the Addiction.</em></h2>
+      </div>
+      <div class="stack g16">
+        <p class="lede">Most treatment programs treat the surface. We go deeper. At Invigorate, we understand that addiction and mental health challenges don&rsquo;t exist in a vacuum.</p>
+        <p class="lede">That&rsquo;s why our programs go far beyond detox and group therapy. We combine clinical excellence with holistic care, so you leave not just sober &mdash; but genuinely well.</p>
+      </div>
+    </div>
+
+    <div class="feats">
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg></span>
+        <span class="feat__tx"><b>Dual-Diagnosis Treatment</b><p>Address addiction and mental health simultaneously.</p></span>
+      </div>
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-6 7-9 7-9s7 3 7 9a7 7 0 0 1-7 7z"/><path d="M11 20V9"/></svg></span>
+        <span class="feat__tx"><b>Holistic Mind-Body Care</b><p>Yoga, mindfulness, nutrition, and wellness practices.</p></span>
+      </div>
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 19l6.5-11L13 15l2.5-4L22 19z"/></svg></span>
+        <span class="feat__tx"><b>Adventure &amp; Experiential Therapy</b><p>Experiences that build confidence, trust, and resilience.</p></span>
+      </div>
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.5"/><path d="M2.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15 19a4 4 0 0 1 6.5-3.1"/></svg></span>
+        <span class="feat__tx"><b>Family Therapy &amp; Support</b><p>Healing doesn&rsquo;t stop with the individual.</p></span>
+      </div>
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18a9 9 0 0 1-18 0z"/><path d="M2 20h20"/><path d="M12 9V5"/><path d="M12 5c2 0 3-1.2 3-3"/></svg></span>
+        <span class="feat__tx"><b>Nutrition &amp; Wellness</b><p>Restore physical health alongside mental health.</p></span>
+      </div>
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 10.5 10.5 8.5 15.5 13.5 13.5"/></svg></span>
+        <span class="feat__tx"><b>Life Skills Training</b><p>Build the practical tools needed to sustain recovery.</p></span>
+      </div>
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg></span>
+        <span class="feat__tx"><b>FMLA &amp; Medical Leave Guidance</b><p>Navigate work and leave documentation stress-free.</p></span>
+      </div>
+      <div class="feat">
+        <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18h18"/><path d="M7 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/><path d="M12 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/></svg></span>
+        <span class="feat__tx"><b>Luxury Accommodations</b><p>Private rooms, designed for focus and comfort.</p></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STORIES ===================== -->
+<section class="sec sec--dark" id="stories" data-dark="1">
+  <div class="wrap stack g48">
+    <div class="split">
+      <div class="stack g20">
+        <span class="eyebrow">In their words</span>
+        <h2>Lives Changed.<br><em>Every Day.</em></h2>
+        __RATING_BADGE_DARK__
+      </div>
+
+      <div class="aisum">
+        <div class="aisum__hd">
+          <span class="aisum__ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+              <path d="M12 2l1.6 4.8L18.4 8.4l-4.8 1.6L12 14.8l-1.6-4.8L5.6 8.4l4.8-1.6z"/>
+              <path d="M18.5 14l.85 2.55L21.9 17.4l-2.55.85L18.5 20.8l-.85-2.55L15.1 17.4l2.55-.85z"/>
+            </svg>
+          </span>
+          <span class="aisum__t">AI summary of Google reviews</span>
+        </div>
+        <div class="stack g16">
+          <p class="lede">Those who have gone through Invigorate&rsquo;s programs consistently describe a turning point &mdash; a place where they finally felt seen, safe, and supported enough to do the real work of recovery. Clients speak of staff who showed up for them as individuals, not just patients: case managers who advocated fiercely on their behalf, technicians who felt like family, and therapists who helped them unpack trauma with compassion and skill.</p>
+          <p class="lede">Many note that they arrived broken and afraid &mdash; and left with a sense of community, purpose, and a foundation they describe as life-saving. From those in the depths of active addiction to those battling mental health challenges alongside substance use, the recurring theme is the same: <em>Invigorate didn&rsquo;t just help them get sober &mdash; it helped them want to live again.</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="revs">
+    <div class="revs__rail" id="revRail" tabindex="0" role="region"
+         aria-label="Google reviews, scroll for more">
+      <div class="revs__track">
+      __REVIEW_CARDS__
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap stack center">
+    <a class="btn btn--light btn--lg" href="#admissions">Talk to Someone Today</a>
+  </div>
+</section>
+
+<!-- ===================== TRUST ===================== -->
+<section class="sec sec--tight" id="trust">
+  <div class="wrap stack g36 center">
+    <span class="eyebrow">Accredited. Trusted. Proven.</span>
+    <div class="trust">
+      <div class="trust__i">
+        <svg class="trust__glogo" viewBox="0 0 48 48" width="30" height="30" aria-hidden="true"><use href="#g-logo"/></svg>
+        <span class="trust__n">4.8 / 5</span>
+        __STARS_LIGHT__
+        <span class="trust__l">Google Reviews</span>
+      </div>
+      <div class="trust__i">
+        <img src="__IMG_jcaho__" alt="The Joint Commission National Quality Approval seal" width="150" height="150">
+        <span class="trust__l">JCAHO Gold Seal<br>&plus; DHCS Licensed</span>
+      </div>
+      <div class="trust__i">
+        <span class="trust__n">Detox &rarr; OP</span>
+        <span class="trust__l">All levels of care,<br>beginning to end</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ADMISSIONS ===================== -->
+<section class="sec sec--mist" id="admissions">
+  <div class="wrap admit">
+    <div class="stack g28">
+      <div class="stack g16">
+        <span class="eyebrow">Admissions</span>
+        <h2>Ready to Take<br>the First Step?</h2>
+        <p class="lede">No commitment. No pressure. Just answers and support. Tell us a little about your situation and an admissions counselor will call you back.</p>
+      </div>
+      <ul class="assure">
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Free, fast, and confidential insurance verification</li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Protected under federal HIPAA law &mdash; we never contact employers</li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Same-day admissions available for those ready to start now</li>
+      </ul>
+      <div class="stack g12">
+        <p class="fine">Prefer to talk right now?</p>
+        <a class="btn btn--outline" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__ &mdash; answered 24/7</a>
+      </div>
+    </div>
+
+    <div class="card" id="formCard">
+      <form class="form" id="admitForm" novalidate>
+        <div class="row2">
+          <div class="field">
+            <label for="fn">First name <span class="rq" aria-hidden="true">*</span></label>
+            <input id="fn" name="first" type="text" autocomplete="given-name" required>
+          </div>
+          <div class="field">
+            <label for="ln">Last name <span class="rq" aria-hidden="true">*</span></label>
+            <input id="ln" name="last" type="text" autocomplete="family-name" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="ph">Your phone <span class="rq" aria-hidden="true">*</span></label>
+          <input id="ph" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" required>
+        </div>
+        <div class="field">
+          <label for="dob">Date of birth <span class="rq" aria-hidden="true">*</span></label>
+          <input id="dob" name="dob" type="text" inputmode="numeric" autocomplete="bday"
+                 placeholder="MM / DD / YYYY" maxlength="14" aria-describedby="dobHint" required>
+          <span class="hint" id="dobHint">Month, day, and year &mdash; for example 04 / 17 / 1990</span>
+        </div>
+        <div class="field">
+          <label for="ins">Insurance provider <span class="rq" aria-hidden="true">*</span></label>
+          <input id="ins" name="insurance" type="text" list="carrierList" placeholder="Anthem, Aetna, Cigna&hellip;" required>
+          <datalist id="carrierList">
+            <option value="Anthem"></option><option value="Aetna"></option><option value="BCBS"></option>
+            <option value="Carelon"></option><option value="Cigna"></option><option value="Magellan"></option>
+            <option value="Surest"></option><option value="UHC"></option><option value="UMR"></option>
+          </datalist>
+        </div>
+        <div class="field">
+          <label for="mid">Member ID / policy number <span class="rq" aria-hidden="true">*</span></label>
+          <input id="mid" name="memberId" type="text" required>
+        </div>
+        <p class="form__err" id="admitError" role="alert" hidden></p>
+        <button class="btn btn--primary btn--block btn--lg" type="submit" id="admitSubmit">Send My Confidential Request</button>
+        <p class="fine" style="text-align:center">Free, fast, and confidential. We never share your information.</p>
+        <p class="form__preview" id="previewNote" hidden>Preview mode &mdash; nothing is sent</p>
+      </form>
+
+      <div class="form__done" role="status">
+        <span class="tick" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <h3>Your request is in.</h3>
+        <p class="fine">An admissions counselor will call you back shortly &mdash; usually within the hour. If you&rsquo;d rather not wait, call us any time.</p>
+        <a class="btn btn--primary" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INSURANCE ===================== -->
+<section class="sec sec--tight sec--dark ins" id="insurance" data-dark="1">
+  <div class="ins__bg" aria-hidden="true"></div>
+  <div class="wrap stack g28 center">
+    <div class="narrow stack g16 center">
+      <h2 class="ins__h">We Work Hard to Make Treatment Accessible.</h2>
+      <p class="lede">Working directly with insurance to maximize benefits and minimize out-of-pocket costs.</p>
+    </div>
+    <div class="carriers">
+      __CARRIER_STRIP__
+    </div>
+    <p class="fine">We work with many more plans than those shown. Out-of-network provider; Medicaid and Medi-Cal are not accepted at this time.</p>
+    <a class="btn btn--light" href="#admissions">Verify My Coverage &mdash; Free</a>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="sec" id="faq">
+  <div class="wrap stack g48">
+    <div class="stack g16 center">
+      <span class="eyebrow">Straight answers</span>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq" id="faqList">
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a1">Can I talk to someone before making a decision?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a1"><div><p>Absolutely. You&rsquo;re not committing to anything by calling. Our admissions team is here to listen, answer your questions, and help you understand your options &mdash; no pressure, no judgment. Think of it as a conversation, not an intake.</p></div></div>
+      </div>
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a2">How quickly can I get help? Do you offer same-day admissions?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a2"><div><p>Yes. Same-day admissions are available. If you or a loved one is in crisis or ready to start now, call us immediately and we&rsquo;ll work to get you in as quickly as possible. Don&rsquo;t wait for the &ldquo;right moment&rdquo; &mdash; now is the right moment.</p></div></div>
+      </div>
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a3">Will my employer find out? Is my information confidential?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a3"><div><p>Treatment is completely confidential under federal HIPAA laws. We do not contact employers, and nothing related to treatment appears on employment records. You control all communication about your care. If you need documentation for medical leave, we can provide general paperwork &mdash; without disclosing any specifics about your treatment.</p></div></div>
+      </div>
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a4">Do you treat dual-diagnosis / co-occurring conditions?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a4"><div><p>Yes &mdash; this is one of our core specializations. Many people struggling with addiction also live with depression, anxiety, PTSD, trauma, or other mental health conditions. We treat both simultaneously, because addressing only one rarely leads to lasting recovery.</p></div></div>
+      </div>
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a5">What insurance do you accept? What does treatment cost?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a5"><div><p>We are an out-of-network provider and work with most major commercial insurance plans, including Anthem, Aetna, BCBS, Carelon, Cigna, Magellan, Surest, UHC, UMR, and more. At this time, we do not accept Medicaid or Medi-Cal. Insurance verification is free and confidential &mdash; contact us and we&rsquo;ll walk you through your benefits before you make any decisions.</p></div></div>
+      </div>
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a6">How long is treatment? Can I customize my stay?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a6"><div>
+          <p>Program length varies by level of care and individual need. As a general guide:</p>
+          <dl>
+            <dt>Medical Detox</dt><dd>7&ndash;10 days</dd>
+            <dt>Residential Treatment</dt><dd>28+ days</dd>
+            <dt>Partial Hospitalization (PHP)</dt><dd>20+ hours/week, flexible duration</dd>
+            <dt>Intensive Outpatient (IOP)</dt><dd>9&ndash;12 hours/week, typically 30&ndash;90 days</dd>
+            <dt>Outpatient (OP)</dt><dd>Flexible schedule</dd>
+          </dl>
+          <p>Your doctor will recommend the level of care that fits your situation. Outpatient programs are designed to flex around your life &mdash; work, family, and obligations included.</p>
+        </div></div>
+      </div>
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a7">What amenities are available?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a7"><div><p>Our residential programs feature private rooms with private bathrooms, chef-prepared meals, and access to grocery essentials. We offer recreational outings, wellness activities, and holistic therapies as part of the program. Our environment is designed to feel like a place you want to heal &mdash; not a clinical facility you want to escape.</p></div></div>
+      </div>
+      <div class="q">
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a8">Can family visit during treatment?<span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a8"><div><p>Yes. Family involvement is an important part of the healing process. We offer structured family therapy sessions and support your loved ones throughout your treatment. Our team will walk you through visitation guidelines and family program details during the admissions process.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FACILITY ===================== -->
+<section class="sec sec--mist" id="facility">
+  <div class="wrap stack g36">
+    <div class="stack g16">
+      <span class="eyebrow">The environment</span>
+      <h2>Designed to Feel Like a Place<br><em>You Want to Heal.</em></h2>
+    </div>
+    <div class="bento">
+      <figure class="tile tile--lg">
+        <img src="__IMG_g1__" alt="A bright open living room with light oak furniture and mustard armchairs" loading="lazy" width="642" height="596">
+        <figcaption><b>Luxurious Accommodations</b><span>Private and semi-private rooms</span></figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="__IMG_g2__" alt="A lounge seating area beside floor-to-ceiling windows" loading="lazy" width="642" height="596">
+        <figcaption><b>Therapeutic Spaces</b><span>Group therapy and counseling areas</span></figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="__IMG_g3__" alt="A light-filled common room with lounge seating and large windows" loading="lazy" width="642" height="596">
+        <figcaption><b>Wellness Amenities</b><span>Fitness facilities and outdoor spaces</span></figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="__IMG_g4__" alt="An open living and dining space with a stairway and natural light" loading="lazy" width="642" height="596">
+        <figcaption><b>Dining Areas</b><span>Nutritious meals in comfortable settings</span></figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="__IMG_g5__" alt="A shared sitting room with a woven pendant light and framed art" loading="lazy" width="642" height="596">
+        <figcaption><b>Common Areas</b><span>Spaces for connection and reflection</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSE ===================== -->
+<section class="sec sec--dark close" id="call" data-dark="1">
+  <div class="close__bg" aria-hidden="true"></div>
+  <div class="close__scrim" aria-hidden="true"></div>
+  <div class="wrap narrow stack g28 center">
+    <span class="eyebrow">One call</span>
+    <h2>We Know How Hard You&rsquo;ve Been Trying.<br><em>We&rsquo;ll Take It From There.</em></h2>
+    <p class="lede">Thousands of people have sat exactly where you are right now &mdash; overwhelmed, uncertain, afraid. Every single one of them is glad they made the call.</p>
+    <a class="btn btn--light btn--lg" href="tel:+1__PHONE_RAW__">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call Now __PHONE_DISPLAY__
+    </a>
+    <p class="fine">24 hours a day, 7 days a week</p>
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="ftr" data-dark="1">
+  <div class="wrap">
+    <div class="ftr__in">
+      <img src="__IMG_logoW__" alt="Invigorate Behavioral Health" width="257" height="106">
+      <div class="ftr__links">
+        <a href="#admissions">Verify Insurance Coverage</a>
+        <a href="tel:+1__PHONE_RAW__">__PHONE_DISPLAY__</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </div>
+    <div class="ftr__bottom">
+      <div class="ftr__seals">
+        <img src="__IMG_jcaho__" alt="Accredited by The Joint Commission &mdash; National Quality Approval" width="150" height="150">
+        <!-- LegitScript: in production, swap src back to https://static.legitscript.com/seals/25550278.png -->
+        <a href="https://www.legitscript.com/websites/?checker_keywords=invigoratebh.com" target="_blank" rel="noopener" title="Verify LegitScript Approval for invigoratebh.com">
+          <img src="__IMG_legitscript__" alt="Verify Approval for invigoratebh.com" width="73" height="79">
+        </a>
+      </div>
+      <p class="ftr__legal">&copy; 2025 Invigorate Behavioral Health. All Rights Reserved. Accredited by The Joint Commission, LegitScript certified, and licensed by the Department of Health Care Services.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== VARIANT SWITCHER (preview only) ===================== -->
+<nav class="vswitch" id="vswitch" hidden aria-label="Landing page variants">
+  <span class="vswitch__l">Preview</span>
+  __VARIANT_LINKS__
+</nav>
+
+<!-- ===================== STICKY CALL BAR ===================== -->
+<div class="callbar" id="callbar">
+  <a class="btn btn--outline btn--sm" href="#admissions">Insurance</a>
+  <a class="btn btn--primary btn--sm" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* --- header shadow on scroll --- */
+  var hdr = document.querySelector('.hdr');
+  var onScroll = function () { hdr.classList.toggle('is-stuck', window.scrollY > 8); };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* --- care-path spine: active dot + dark-ground detection --- */
+  var spine = document.querySelector('.spine');
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.spine__dot'));
+  var dotFor = {};
+  dots.forEach(function (d, i) { dotFor[d.getAttribute('href').slice(1)] = i; });
+
+  var tracked = Array.prototype.slice.call(
+    document.querySelectorAll('main > section, footer')
+  );
+
+  function setActive(i) {
+    dots.forEach(function (d, n) {
+      d.classList.toggle('is-active', n === i);
+      d.classList.toggle('is-past', n < i);
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var mid = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        spine.classList.toggle('is-dark', e.target.hasAttribute('data-dark'));
+        var i = dotFor[e.target.id];
+        if (i !== undefined) setActive(i);
+      });
+    }, { rootMargin: '-48% 0px -48% 0px' });
+    tracked.forEach(function (s) { mid.observe(s); });
+
+    /* --- sticky call bar appears once the hero is behind you --- */
+    var bar = document.getElementById('callbar');
+    var heroWatch = new IntersectionObserver(function (entries) {
+      bar.classList.toggle('is-on', !entries[0].isIntersecting);
+    }, { threshold: 0 });
+    heroWatch.observe(document.getElementById('hero'));
+  } else {
+    setActive(0);
+  }
+
+  /* ------------------------------------------------------------------
+     Review rail: drifts on its own, but it is a real scroll container —
+     wheel, drag, touch and keyboard all work. Auto-scroll yields the
+     moment someone touches it and picks back up once they stop. The cards
+     are rendered twice, so wrapping at the halfway mark is seamless.
+     ------------------------------------------------------------------ */
+  (function () {
+    var rail = document.getElementById('revRail');
+    if (!rail) return;
+    var reduce = window.matchMedia &&
+                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var SPEED = 0.33;          /* px per frame, ~20px/s at 60fps */
+    var RESUME_AFTER = 2200;   /* ms of stillness before drifting again */
+    var pos = 0, paused = false, idleTimer = null, dragging = false, dragX = 0, dragFrom = 0;
+    var openCount = 0;         /* a review being read holds the rail still */
+
+    var passEl = rail.querySelector('.revs__pass');
+    function half() {
+      return passEl ? passEl.offsetWidth + 16 : rail.scrollWidth / 2;
+    }
+
+    function hold() {
+      paused = true;
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(function () { paused = false; }, RESUME_AFTER);
+    }
+
+    function wrap() {
+      var h = half();
+      if (!h) return;
+      if (rail.scrollLeft >= h) { rail.scrollLeft -= h; }
+      else if (rail.scrollLeft <= 0) { rail.scrollLeft += h; }
+      pos = rail.scrollLeft;
+    }
+
+    function tick() {
+      if (!paused && !dragging && !openCount) {
+        pos += SPEED;
+        if (pos >= half()) pos -= half();
+        rail.scrollLeft = pos;
+      }
+      window.requestAnimationFrame(tick);
+    }
+
+    rail.addEventListener('pointerenter', function () { paused = true; });
+    rail.addEventListener('pointerleave', function () { if (!dragging) paused = false; });
+    rail.addEventListener('focusin', function () { paused = true; });
+    rail.addEventListener('focusout', function () { paused = false; });
+    rail.addEventListener('wheel', hold, { passive: true });
+    rail.addEventListener('touchstart', function () { paused = true; }, { passive: true });
+    rail.addEventListener('touchend', hold, { passive: true });
+    rail.addEventListener('scroll', function () {
+      if (paused || dragging) { wrap(); }
+    }, { passive: true });
+
+    rail.addEventListener('pointerdown', function (ev) {
+      if (ev.pointerType === 'mouse' && ev.button !== 0) return;
+      dragging = true; paused = true;
+      dragX = ev.clientX; dragFrom = rail.scrollLeft;
+      rail.classList.add('is-drag');
+      rail.setPointerCapture && rail.setPointerCapture(ev.pointerId);
+    });
+    rail.addEventListener('pointermove', function (ev) {
+      if (!dragging) return;
+      rail.scrollLeft = dragFrom - (ev.clientX - dragX);
+      wrap();
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      rail.classList.remove('is-drag');
+      pos = rail.scrollLeft;
+      hold();
+    }
+    rail.addEventListener('pointerup', endDrag);
+    rail.addEventListener('pointercancel', endDrag);
+
+    /* Reviews run from a couple of lines to a couple of paragraphs. Cards clamp
+       to 9 lines so the row keeps one height; anything actually cut off gets a
+       Read more, so no review is permanently hidden. */
+    Array.prototype.forEach.call(rail.querySelectorAll('.rev'), function (card) {
+      var body = card.querySelector('.rev__body');
+      if (!body || body.scrollHeight <= body.clientHeight + 4) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rev__more';
+      btn.textContent = 'Read full review';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.addEventListener('click', function () {
+        var open = card.classList.toggle('is-open');
+        openCount += open ? 1 : -1;
+        btn.textContent = open ? 'Show less' : 'Read full review';
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (!open) body.scrollTop = 0;
+        pos = rail.scrollLeft;
+        hold();
+      });
+      card.appendChild(btn);
+    });
+
+    window.requestAnimationFrame(function () {
+      pos = rail.scrollLeft = 0;
+      if (!reduce) window.requestAnimationFrame(tick);
+    });
+  })();
+
+  /* --- FAQ accordion --- */
+  document.getElementById('faqList').addEventListener('click', function (ev) {
+    var btn = ev.target.closest('.q__btn');
+    if (!btn) return;
+    var q = btn.parentElement;
+    var open = q.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  /* ------------------------------------------------------------------
+     Variant config — written by src/build.py, one value per landing page.
+     ------------------------------------------------------------------ */
+  var VARIANT   = '__VARIANT_ID__';
+  var DYN_MODE  = '__DYN_MODE__';           /* 'none' | 'dli' | 'dki' */
+  var PHONE_CTM = '__PHONE_RAW__';          /* the tracking number for this LP */
+  var CTM_HOST  = 'app.calltrackingmetrics.com';
+  var CTM_FRT   = '__CTM_FRT__';
+  var CTM_REST  = 'https://api.calltrackingmetrics.com/api/v1/formreactor/' +
+                  CTM_FRT + '?key=__CTM_KEY__';
+  var IS_LIVE   = /(^|\.)invigoratebh\.com$/i.test(location.hostname);
+
+  /* ------------------------------------------------------------------
+     Dynamic headline insertion (DKI / DLI)
+     The fallback copy is already in the HTML, so the page is complete
+     before any of this runs and stays complete if it fails.
+     Values are written with textContent and sanitised to letters, spaces,
+     hyphens and apostrophes — a query parameter renders on the page, so
+     it is never trusted and never concatenated into markup.
+     ------------------------------------------------------------------ */
+  /* IPinfo, same endpoint and token as the current /lpc-dli/ page. */
+  var GEO_ENDPOINT = 'https://ipinfo.io?token=511d4854a95242';
+  var GEO_CACHE = 'inv_geo';
+  var DYN_FALLBACK = 'Admissions Available Today';
+
+  /* Areas this page will render. ?area= is attacker-controllable — anyone can
+     send traffic to ?area=<anything> — so sanitising alone is not enough:
+     list the areas your ads actually use and everything else falls back to the
+     default copy. Leave empty to accept any sanitised value. */
+  var DKI_ALLOW = [];
+
+  function titleCase(s) {
+    return s.replace(/(^|[\s\-])([a-z])/g, function (_, lead, ch) {
+      return lead + ch.toUpperCase();
+    });
+  }
+
+  function cleanPhrase(raw) {
+    if (!raw) return '';
+    var s = String(raw).replace(/[+_]+/g, ' ')
+                       .replace(/[^A-Za-z \-']/g, '')
+                       .replace(/\s+/g, ' ')
+                       .trim();
+    if (s.length < 2 || s.length > 38) return '';
+    if (s.split(' ').length > 5) return '';
+    return titleCase(s);
+  }
+
+  function allowedArea(s) {
+    if (!s) return '';
+    if (!DKI_ALLOW.length) return s;
+    var hit = DKI_ALLOW.filter(function (a) {
+      return a.toLowerCase() === s.toLowerCase();
+    })[0];
+    return hit || '';
+  }
+
+  /* "{Place} Admissions Available Today", or the plain line if nothing
+     resolves. Written with textContent, never markup. */
+  function paintDynamic(place) {
+    var el = document.querySelector('[data-dyn]');
+    if (!el) return;
+    el.textContent = place ? place + ' ' + DYN_FALLBACK : DYN_FALLBACK;
+    document.documentElement.setAttribute('data-dyn-state', place ? 'resolved' : 'fallback');
+  }
+
+  function applyLocation(state) {
+    if (state) paintDynamic(state);
+  }
+
+  if (DYN_MODE === 'dki') {
+    var area = allowedArea(cleanPhrase(new URLSearchParams(location.search).get('area')));
+    if (area) paintDynamic(area);
+  } else if (DYN_MODE === 'dli' && GEO_ENDPOINT) {
+    var cachedState = null;
+    try { cachedState = sessionStorage.getItem(GEO_CACHE); } catch (e) {}
+    if (cachedState) {
+      applyLocation(cachedState);
+    } else {
+      var ctrl = window.AbortController ? new AbortController() : null;
+      if (ctrl) window.setTimeout(function () { ctrl.abort(); }, 2500);
+      fetch(GEO_ENDPOINT, ctrl ? { signal: ctrl.signal } : undefined)
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var st = cleanPhrase(d.region || d.region_name || '');
+          if (!st) return;
+          try { sessionStorage.setItem(GEO_CACHE, st); } catch (e) {}
+          applyLocation(st);
+        })
+        .catch(function () { /* fallback copy stands */ });
+    }
+  }
+
+  /* Attribution is captured on the first pageview and kept for the session,
+     so a visitor who scrolls, opens the FAQ and comes back still posts the
+     click IDs they arrived with. */
+  var ATTR_KEY = 'inv_attr';
+  var attribution = (function () {
+    var stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem(ATTR_KEY) || '{}'); } catch (e) {}
+    var q = new URLSearchParams(location.search);
+    var pick = function (keys) {
+      for (var i = 0; i < keys.length; i++) {
+        var v = q.get(keys[i]);
+        if (v) return v;
+      }
+      return '';
+    };
+    var fresh = {
+      gclid:       pick(['gclid', 'wbraid', 'gbraid']),
+      campaign_id: pick(['campaignid', 'utm_campaign']),
+      adgroup_id:  pick(['adgroupid', 'utm_adgroup']),
+      creative_id: pick(['creative', 'creativeid', 'utm_content']),
+      utm_source:  pick(['utm_source']),
+      landing_page: stored.landing_page || location.href
+    };
+    Object.keys(fresh).forEach(function (k) {
+      if (fresh[k]) stored[k] = fresh[k];
+    });
+    if (!stored.landing_page) stored.landing_page = location.href;
+    try { sessionStorage.setItem(ATTR_KEY, JSON.stringify(stored)); } catch (e) {}
+    return stored;
+  })();
+
+  var form = document.getElementById('admitForm');
+  var card = document.getElementById('formCard');
+  var submitBtn = document.getElementById('admitSubmit');
+  var errBox = document.getElementById('admitError');
+  if (!IS_LIVE) {
+    document.getElementById('previewNote').hidden = false;
+    document.getElementById('vswitch').hidden = false;
+  }
+
+  function leadFields() {
+    return {
+      name: (document.getElementById('fn').value.trim() + ' ' +
+             document.getElementById('ln').value.trim()).trim(),
+      phone: ph.value.replace(/\D/g, '').slice(-10),
+      custom: {
+        patient_name:  (document.getElementById('fn').value.trim() + ' ' +
+                        document.getElementById('ln').value.trim()).trim(),
+        date_of_birth: dob.value.replace(/\s/g, ''),
+        insurance:     document.getElementById('ins').value.trim(),
+        policy_id:     document.getElementById('mid').value.trim(),
+        landing_page:  attribution.landing_page || location.href,
+        utm_source:    attribution.utm_source || ''
+      }
+    };
+  }
+
+  /* CTM's own embed API is preferred: it ties the lead to the visitor's
+     CTM session, so the tracking number, referrer and keyword data stitch
+     together on their side. It needs the standard CTM embed script on the
+     page. Without it we fall back to a direct REST post, which records the
+     lead but carries only the attribution we pass explicitly. */
+  function hasCtmEmbed() {
+    return !!(window.__ctm && window.__ctm.form &&
+              typeof window.__ctm.form.track === 'function');
+  }
+
+  function sendLead() {
+    var f = leadFields();
+
+    if (hasCtmEmbed()) {
+      window.__ctm.form.track(CTM_HOST, CTM_FRT, PHONE_CTM, {
+        country_code: '1',
+        name: f.name,
+        phone: f.phone,
+        custom: f.custom
+      });
+      return Promise.resolve('embed');   /* the embed API is fire-and-forget */
+    }
+
+    var body = new URLSearchParams();
+    body.set('phone_number', '+1' + f.phone);
+    Object.keys(f.custom).forEach(function (k) {
+      if (f.custom[k]) body.set('custom_fields[' + k + ']', f.custom[k]);
+    });
+    ['gclid', 'campaign_id', 'adgroup_id', 'creative_id'].forEach(function (k) {
+      if (attribution[k]) body.set('paid_attribution[' + k + ']', attribution[k]);
+    });
+
+    return fetch(CTM_REST, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: body.toString()
+    }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return 'rest';
+    });
+  }
+
+  function showError(msg) {
+    errBox.textContent = msg;
+    errBox.hidden = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send My Confidential Request';
+  }
+
+  function showDone() {
+    card.classList.add('is-done');
+    card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'generate_lead',
+      form_name: 'admissions_' + VARIANT,
+      variant: VARIANT
+    });
+  }
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    errBox.hidden = true;
+
+    var bad = null;
+    Array.prototype.forEach.call(form.querySelectorAll('input[required]'), function (inp) {
+      if (!inp.value.trim() && !bad) bad = inp;
+    });
+    if (bad) { bad.focus(); bad.reportValidity && bad.reportValidity(); return; }
+
+    if (ph.value.replace(/\D/g, '').length < 10) {
+      ph.setCustomValidity('Enter a 10-digit phone number so we can call you back.');
+      ph.focus(); ph.reportValidity && ph.reportValidity();
+      return;
+    }
+    ph.setCustomValidity('');
+
+    var dobMsg = dobError(dob.value);
+    if (dobMsg) {
+      dob.setCustomValidity(dobMsg);
+      dob.focus(); dob.reportValidity && dob.reportValidity();
+      return;
+    }
+    dob.setCustomValidity('');
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    if (!IS_LIVE) {                      // preview: never touch the network
+      window.setTimeout(showDone, 450);
+      return;
+    }
+
+    sendLead().then(showDone).catch(function () {
+      showError('We could not send that just now. Please call __PHONE_DISPLAY__ ' +
+                '— we answer 24/7 — or try again in a moment.');
+    });
+  });
+
+  /* Call clicks are the other conversion on this page, so GTM sees them too. */
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest('a[href^="tel:"]');
+    if (!a) return;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'call_click', link_location: a.closest('.hdr') ? 'header'
+      : a.closest('.callbar') ? 'sticky_bar' : a.closest('.close') ? 'closing_cta' : 'body' });
+  });
+
+  /* --- phone input: light US formatting as you type --- */
+  var ph = document.getElementById('ph');
+  ph.addEventListener('input', function () {
+    var d = ph.value.replace(/\D/g, '').slice(0, 10);
+    ph.value = d.length > 6 ? '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6)
+             : d.length > 3 ? '(' + d.slice(0, 3) + ') ' + d.slice(3)
+             : d.length     ? '(' + d
+             : '';
+  });
+
+  /* --- date of birth: MM / DD / YYYY mask, typed not picked --- */
+  var dob = document.getElementById('dob');
+  dob.addEventListener('input', function () {
+    var caretAtEnd = dob.selectionStart === dob.value.length;
+    var d = dob.value.replace(/\D/g, '').slice(0, 8);
+    var out = d.slice(0, 2);
+    if (d.length > 2) out += ' / ' + d.slice(2, 4);
+    if (d.length > 4) out += ' / ' + d.slice(4, 8);
+    dob.value = out;
+    if (caretAtEnd) dob.setSelectionRange(out.length, out.length);
+  });
+
+  function dobError(value) {
+    var d = value.replace(/\D/g, '');
+    if (d.length !== 8) return 'Enter your date of birth as MM / DD / YYYY.';
+    var mm = +d.slice(0, 2), dd = +d.slice(2, 4), yyyy = +d.slice(4, 8);
+    var dt = new Date(yyyy, mm - 1, dd);
+    if (dt.getFullYear() !== yyyy || dt.getMonth() !== mm - 1 || dt.getDate() !== dd) {
+      return 'That date does not exist. Please check the month and day.';
+    }
+    if (dt > new Date()) return 'Date of birth cannot be in the future.';
+    if (yyyy < 1900) return 'Please enter a four-digit year.';
+    return '';
+  }
+  dob.addEventListener('blur', function () {
+    dob.setCustomValidity(dob.value ? dobError(dob.value) : '');
+  });
+})();
+</script>
