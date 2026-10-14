@@ -240,12 +240,8 @@ em{font-style:italic;font-weight:400}
 }
 
 /* ===== Admissions form =================================================== */
-.admit{display:grid;grid-template-columns:1fr 1.04fr;gap:clamp(32px,5vw,66px);align-items:start}
-@media(max-width:900px){.admit{grid-template-columns:1fr}}
-.assure{display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
-.assure li{display:flex;gap:11px;align-items:flex-start;font-size:.96rem;color:var(--muted)}
-.assure svg{flex:none;color:var(--leaf-ink);margin-top:3px}
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(24px,3vw,36px);box-shadow:var(--shadow)}
+.card{width:100%;background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:clamp(24px,3vw,36px);box-shadow:var(--shadow)}
 .form{display:flex;flex-direction:column;gap:17px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:480px){.row2{grid-template-columns:1fr}}
@@ -260,35 +256,54 @@ em{font-style:italic;font-weight:400}
 .hint{font-size:.78rem;color:var(--muted);letter-spacing:.01em}
 .form__err{font-size:.9rem;line-height:1.5;color:#8d3d18;background:#fdf1ea;border:1px solid #f0cdb8;
   border-radius:11px;padding:13px 15px}
-.form__preview{font-size:.74rem;text-align:center;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;
-  border-top:1px dashed var(--line);padding-top:13px}
 .btn:disabled{opacity:.62;cursor:progress;transform:none}
 .form__done{display:none;flex-direction:column;gap:14px;align-items:center;text-align:center;padding:22px 4px}
 .form__done .tick{width:52px;height:52px;border-radius:50%;background:var(--teal-soft);color:var(--teal);display:grid;place-items:center}
 .card.is-done .form{display:none}
 .card.is-done .form__done{display:flex}
 
-/* ===== Insurance band ==================================================== */
-.ins{position:relative;background:var(--teal);color:#fff;isolation:isolate;overflow:hidden}
-.ins__bg{position:absolute;inset:0;z-index:-1;background:url("__IMG_facility__") center/cover;opacity:.14}
-.ins__h{color:#fff;font-size:clamp(1.6rem,2.8vw,2.3rem)}
-/* Carrier row: a white plate so full-colour carrier logos read correctly
-   against the teal band. Cells are a fixed box with the logo contained,
-   so wordmarks and square marks sit at the same optical weight. */
-/* Carrier row: a white plate so full-colour carrier logos read correctly
-   against the teal band. Each logo carries its own --h from the build, set to
-   hold constant optical area, so the stacked marks and the wide wordmarks
-   land at matching visual weight. */
-.carriers{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 8px;
-  background:#fff;border-radius:16px;padding:16px 20px;width:min(1090px,100%);margin-inline:auto;
-  box-shadow:0 18px 40px -30px rgba(0,0,0,.55);--logo-scale:1}
-/* Fixed flex-basis puts exactly 5 per row, so nine logos settle as a balanced
-   5 + 4 with the short row centred, instead of wrapping 7 + 2. */
-.carrier{flex:0 0 19%;display:grid;place-items:center;height:56px;padding:0 8px}
+/* Carrier grid: logos sit directly on the section, no plate. Each logo
+   carries its own --h from the build so the stacked marks and the wide
+   wordmarks land at matching optical weight. */
+.carriers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center;
+  width:100%;--logo-scale:1}
+.carrier{display:grid;place-items:center;height:62px;padding:0 10px}
 .carrier img{height:calc(var(--h,30px) * var(--logo-scale));width:auto;max-width:100%;object-fit:contain}
-.carrier--text{font:700 .84rem/1 var(--sans);letter-spacing:.03em;color:var(--teal-deep);white-space:nowrap}
-@media(max-width:860px){.carriers{--logo-scale:.84}.carrier{flex-basis:31%;height:48px;padding:0 6px}}
-@media(max-width:560px){.carriers{--logo-scale:.66;padding:12px 8px;gap:2px}.carrier{flex-basis:31%;height:38px;padding:0 4px}}
+.carrier--text{font:700 .84rem/1 var(--sans);letter-spacing:.03em;color:var(--teal-deep)}
+.carrier--more{border:1px dashed #b4c6c1;background:none;border-radius:999px;cursor:pointer;
+  font:700 .84rem/1 var(--sans);color:var(--teal);letter-spacing:.02em;height:40px;padding:0 20px;
+  width:max-content;justify-self:center;align-self:center;
+  transition:border-color .2s,color .2s,background-color .2s}
+.carrier--more:hover{border-color:var(--teal);background:rgba(13,92,99,.06)}
+@media(max-width:900px){.carriers{grid-template-columns:repeat(3,1fr);--logo-scale:.9}.carrier{height:54px}}
+@media(max-width:520px){.carriers{grid-template-columns:repeat(2,1fr);--logo-scale:.78}.carrier{height:48px}}
+
+/* Admissions form, centred under the carrier grid */
+.admit{display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(30px,4.5vw,60px);align-items:center}
+.admit__plans{display:flex;flex-direction:column;gap:18px}
+.admit__form{display:flex;flex-direction:column;gap:16px}
+.admit__alt{text-align:center}
+@media(max-width:900px){.admit{grid-template-columns:1fr;gap:32px;align-items:stretch}}
+.admit__alt a{font-weight:700;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(13,92,99,.35)}
+.admit__alt a:hover{border-color:var(--teal)}
+
+/* "Don't see your plan?" dialog */
+.pmodal{position:fixed;inset:0;margin:auto;width:min(520px,calc(100vw - 32px));height:max-content;
+  max-height:calc(100dvh - 32px);overflow:auto;border:0;border-radius:18px;padding:30px 30px 26px;
+  background:#fff;color:var(--ink);box-shadow:0 40px 90px -40px rgba(6,40,44,.7)}
+.pmodal::backdrop{background:rgba(6,40,44,.62)}
+.pmodal[open]{display:flex;flex-direction:column;gap:18px}
+.pmodal__x{position:absolute;top:14px;right:14px;width:32px;height:32px;display:grid;place-items:center;
+  background:none;border:0;border-radius:50%;cursor:pointer;color:var(--muted);transition:background-color .2s,color .2s}
+.pmodal__x:hover{background:var(--mist);color:var(--ink)}
+.pmodal__hd{display:flex;align-items:center;gap:13px;padding-right:34px}
+.pmodal__ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:13px;
+  background:var(--teal-soft);color:var(--teal)}
+.pmodal__hd h3{font-size:1.38rem}
+.pmodal__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:13px}
+.pmodal__list li{position:relative;padding-left:20px;font-size:.93rem;line-height:1.58;color:var(--muted)}
+.pmodal__list li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--leaf)}
+.pmodal .fine a{font-weight:700;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(13,92,99,.35)}
 
 /* ===== FAQ =============================================================== */
 .faq{width:min(860px,100%);margin-inline:auto}
@@ -355,6 +370,68 @@ em{font-style:italic;font-weight:400}
 .callbar.is-on{transform:none}
 .callbar .btn{flex:1}
 @media(max-width:860px){.callbar{display:flex}.ftr{padding-bottom:104px}}
+
+/* ===== Design D ========================================================== */
+/* Hero rating: the Google badge replaces the plain reassurance line */
+.herorate{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.herorate .grate{padding:10px 16px;gap:12px}
+.herorate .grate__n{font-size:1.15rem}
+.herorate__t{font-size:.85rem;color:rgba(255,255,255,.66)}
+
+/* "You are not the first": photograph carrying a pulled review line */
+.whysplit{display:grid;grid-template-columns:.86fr 1.14fr;gap:clamp(30px,5vw,68px);align-items:center}
+.whyfig{position:relative;margin:0;border-radius:20px;overflow:hidden;isolation:isolate;
+  box-shadow:0 34px 70px -40px rgba(6,40,44,.6)}
+.whyfig img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5}
+.whyquote{position:absolute;inset:auto 0 0 0;padding:64px 24px 22px;color:#fff;
+  background:linear-gradient(to top,rgba(5,36,40,.93) 12%,rgba(5,36,40,.55) 56%,rgba(5,36,40,0) 100%)}
+.whyquote p{font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:clamp(1.08rem,1.5vw,1.3rem);line-height:1.42}
+.whyquote cite{display:block;margin-top:11px;font:800 .66rem/1 var(--sans);letter-spacing:.17em;
+  text-transform:uppercase;font-style:normal;color:var(--leaf)}
+@media(max-width:860px){.whysplit{grid-template-columns:1fr;gap:28px}.whyfig img{aspect-ratio:16/11}}
+
+/* Levels of care: duration and the "what to expect" opener share a footer row */
+.stage__foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stage__more{display:inline-flex;align-items:center;gap:6px;background:none;border:0;cursor:pointer;
+  padding:4px 0;font:700 .8rem/1 var(--sans);color:var(--teal);letter-spacing:.01em}
+.stage__more svg{transition:transform .2s}
+.stage__more:hover svg{transform:translateX(3px)}
+.pmodal__kicker{font:800 .67rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--leaf-ink)}
+.pmodal__hd .stage__dur{margin-top:2px}
+
+/* Reviews header: one compact row instead of a tall two-column block */
+.revhd{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+.revfoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:22px}
+.revs--static{margin-bottom:0}
+.revs--static .revs__rail{cursor:grab}
+
+/* The AI summary sits in the rail as a card, on brand colour so it never
+   reads as somebody's testimonial */
+.rev--ai{background:linear-gradient(158deg,#0d5c63 0%,#09474d 62%,#073c41 100%);
+  border:1px solid rgba(138,195,2,.4)}
+.rev--ai .rev__who b{color:#fff}
+.rev--ai .rev__meta{color:rgba(255,255,255,.62)}
+.rev--ai .rev__body{color:rgba(255,255,255,.88)}
+.rev--ai .rev__more{color:var(--leaf)}
+.rev--ai__av{background:rgba(138,195,2,.18);color:var(--leaf)}
+/* The summary card is wider and never clamped — it reads in full at rest.
+   Below the two-column breakpoint it scrolls inside itself rather than
+   stretching every other card in the row. */
+.rev--ai{flex:0 0 520px}
+.rev--ai .rev__body{display:block;-webkit-line-clamp:unset;overflow:visible}
+@media(max-width:860px){
+  .rev--ai{flex-basis:330px}
+  .rev--ai .rev__body{max-height:300px;overflow-y:auto;scrollbar-width:thin;padding-right:4px}
+}
+@media(max-width:560px){.rev--ai{flex-basis:270px}}
+
+/* FAQ: prompt column left, answers right */
+.faqsplit{display:grid;grid-template-columns:35fr 65fr;gap:clamp(28px,4.5vw,62px);align-items:start}
+.faqsplit__hd{position:sticky;top:104px}
+.faqsplit .faq{width:100%;margin:0}
+.faqsplit__tel{font-weight:700;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(13,92,99,.35)}
+@media(max-width:860px){.faqsplit{grid-template-columns:1fr;gap:26px}.faqsplit__hd{position:static}}
 
 /* ===== Variant switcher (preview builds only; hidden on the live domain) == */
 .vswitch{position:fixed;top:84px;right:16px;z-index:80;display:flex;flex-wrap:wrap;align-items:center;gap:5px;
@@ -450,11 +527,18 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
         <a class="btn btn--light btn--lg" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
         <a class="btn btn--ghost btn--lg" href="#admissions">Verify Insurance</a>
       </div>
+<!--C:start-->
       <p class="fine fade-up d5">Confidential &middot; No commitment required</p>
+<!--C:end--><!--D:start-->
+      <div class="fade-up d5 herorate">__RATING_BADGE_HERO__
+        <span class="herorate__t">Confidential &middot; No commitment required</span>
+      </div>
+<!--D:end-->
     </div>
   </div>
 </section>
 
+<!--C:start-->
 <!-- ===================== EMPATHY ===================== -->
 <section class="sec" id="why">
   <div class="wrap narrow stack g28 center">
@@ -468,6 +552,30 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     <a class="btn btn--primary btn--lg" href="#admissions">Talk to Someone Today</a>
   </div>
 </section>
+<!--C:end-->
+
+<!--D:start-->
+<section class="sec" id="why">
+  <div class="wrap whysplit">
+    <figure class="whyfig">
+      <img src="__IMG_g1__" alt="A bright open living room with light oak furniture and mustard armchairs" loading="lazy" width="642" height="596">
+      <figcaption class="whyquote">
+        <p>&hellip;didn&rsquo;t just SAVE my life, they helped me to build a life worth living!</p>
+        <cite>Donna &middot; Google review</cite>
+      </figcaption>
+    </figure>
+    <div class="stack g28">
+      <span class="eyebrow">You are not the first</span>
+      <h2>Recovery isn&rsquo;t just possible.<br><em>It happens here, every day.</em></h2>
+      <div class="stack g16">
+        <p class="lede">You&rsquo;ve probably been carrying this for a while. Maybe it&rsquo;s your own struggle. Maybe it&rsquo;s someone you love. Either way, you&rsquo;re here &mdash; and taking that first step matters more than you may know right now.</p>
+        <p class="lede">At Invigorate Behavioral Health, we don&rsquo;t see a diagnosis. We see a person with a story &mdash; someone worthy of real support, real care, and a real chance at a life they love.</p>
+      </div>
+      <a class="btn btn--primary btn--lg" href="#admissions" style="align-self:flex-start">Talk to Someone Today</a>
+    </div>
+  </div>
+</section>
+<!--D:end-->
 
 <!-- ===================== CONTINUUM OF CARE ===================== -->
 <section class="sec sec--mist" id="care">
@@ -494,7 +602,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
             <span class="stage__num">STAGE 01</span>
             <h3>Detox</h3>
             <p>Safe, supervised withdrawal management with 24/7 medical support.</p>
-            <span class="stage__dur">7&ndash;10 days</span>
+            <div class="stage__foot"><span class="stage__dur">7&ndash;10 days</span><!--D:start--><button type="button" class="stage__more" data-modal="care-detox" aria-haspopup="dialog">What to expect<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><!--D:end--></div>
           </div>
         </article>
 
@@ -504,7 +612,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
             <span class="stage__num">STAGE 02</span>
             <h3>Residential Treatment</h3>
             <p>Immersive, full-time healing in a structured therapeutic environment.</p>
-            <span class="stage__dur">28+ days</span>
+            <div class="stage__foot"><span class="stage__dur">28+ days</span><!--D:start--><button type="button" class="stage__more" data-modal="care-residential" aria-haspopup="dialog">What to expect<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><!--D:end--></div>
           </div>
         </article>
 
@@ -514,7 +622,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
             <span class="stage__num">STAGE 03</span>
             <h3>Outpatient &mdash; PHP, IOP &amp; OP</h3>
             <p>Flexible daily programming and continued support as life resumes.</p>
-            <span class="stage__dur">30&ndash;90 days</span>
+            <div class="stage__foot"><span class="stage__dur">30&ndash;90 days</span><!--D:start--><button type="button" class="stage__more" data-modal="care-outpatient" aria-haspopup="dialog">What to expect<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><!--D:end--></div>
           </div>
         </article>
       </div>
@@ -573,6 +681,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
   </div>
 </section>
 
+<!--C:start-->
 <!-- ===================== STORIES ===================== -->
 <section class="sec sec--dark" id="stories" data-dark="1">
   <div class="wrap stack g48">
@@ -614,6 +723,33 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     <a class="btn btn--light btn--lg" href="#admissions">Talk to Someone Today</a>
   </div>
 </section>
+<!--C:end-->
+
+<!--D:start-->
+<section class="sec sec--dark sec--tight" id="stories" data-dark="1">
+  <div class="wrap revhd">
+    <div class="stack g12">
+      <span class="eyebrow">In their words</span>
+      <h2>Lives Changed. <em>Every Day.</em></h2>
+    </div>
+    __RATING_BADGE_DARK__
+  </div>
+
+  <div class="revs revs--static">
+    <div class="revs__rail" id="revRail" tabindex="0" role="region"
+         aria-label="Google reviews, scroll for more">
+      <div class="revs__track">
+      __REVIEW_CARDS_ONE__
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap revfoot">
+    <p class="fine">Drag or scroll to read more &mdash; 26 reviews, 4.8 average.</p>
+    <a class="btn btn--light" href="#admissions">Talk to Someone Today</a>
+  </div>
+</section>
+<!--D:end-->
 
 <!-- ===================== TRUST ===================== -->
 <section class="sec sec--tight" id="trust">
@@ -640,98 +776,114 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
 
 <!-- ===================== ADMISSIONS ===================== -->
 <section class="sec sec--mist" id="admissions">
-  <div class="wrap admit">
-    <div class="stack g28">
-      <div class="stack g16">
-        <span class="eyebrow">Admissions</span>
-        <h2>Ready to Take<br>the First Step?</h2>
-        <p class="lede">No commitment. No pressure. Just answers and support. Tell us a little about your situation and an admissions counselor will call you back.</p>
-      </div>
-      <ul class="assure">
-        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Free, fast, and confidential insurance verification</li>
-        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Protected under federal HIPAA law &mdash; we never contact employers</li>
-        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Same-day admissions available for those ready to start now</li>
-      </ul>
-      <div class="stack g12">
-        <p class="fine">Prefer to talk right now?</p>
-        <a class="btn btn--outline" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__ &mdash; answered 24/7</a>
-      </div>
-    </div>
-
-    <div class="card" id="formCard">
-      <form class="form" id="admitForm" novalidate>
-        <div class="row2">
-          <div class="field">
-            <label for="fn">First name <span class="rq" aria-hidden="true">*</span></label>
-            <input id="fn" name="first" type="text" autocomplete="given-name" required>
-          </div>
-          <div class="field">
-            <label for="ln">Last name <span class="rq" aria-hidden="true">*</span></label>
-            <input id="ln" name="last" type="text" autocomplete="family-name" required>
-          </div>
-        </div>
-        <div class="field">
-          <label for="ph">Your phone <span class="rq" aria-hidden="true">*</span></label>
-          <input id="ph" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" required>
-        </div>
-        <div class="field">
-          <label for="dob">Date of birth <span class="rq" aria-hidden="true">*</span></label>
-          <input id="dob" name="dob" type="text" inputmode="numeric" autocomplete="bday"
-                 placeholder="MM / DD / YYYY" maxlength="14" aria-describedby="dobHint" required>
-          <span class="hint" id="dobHint">Month, day, and year &mdash; for example 04 / 17 / 1990</span>
-        </div>
-        <div class="field">
-          <label for="ins">Insurance provider <span class="rq" aria-hidden="true">*</span></label>
-          <input id="ins" name="insurance" type="text" list="carrierList" placeholder="Anthem, Aetna, Cigna&hellip;" required>
-          <datalist id="carrierList">
-            <option value="Anthem"></option><option value="Aetna"></option><option value="BCBS"></option>
-            <option value="Carelon"></option><option value="Cigna"></option><option value="Magellan"></option>
-            <option value="Surest"></option><option value="UHC"></option><option value="UMR"></option>
-          </datalist>
-        </div>
-        <div class="field">
-          <label for="mid">Member ID / policy number <span class="rq" aria-hidden="true">*</span></label>
-          <input id="mid" name="memberId" type="text" required>
-        </div>
-        <p class="form__err" id="admitError" role="alert" hidden></p>
-        <button class="btn btn--primary btn--block btn--lg" type="submit" id="admitSubmit">Send My Confidential Request</button>
-        <p class="fine" style="text-align:center">Free, fast, and confidential. We never share your information.</p>
-        <p class="form__preview" id="previewNote" hidden>Preview mode &mdash; nothing is sent</p>
-      </form>
-
-      <div class="form__done" role="status">
-        <span class="tick" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-        <h3>Your request is in.</h3>
-        <p class="fine">An admissions counselor will call you back shortly &mdash; usually within the hour. If you&rsquo;d rather not wait, call us any time.</p>
-        <a class="btn btn--primary" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== INSURANCE ===================== -->
-<section class="sec sec--tight sec--dark ins" id="insurance" data-dark="1">
-  <div class="ins__bg" aria-hidden="true"></div>
-  <div class="wrap stack g28 center">
+  <div class="wrap stack g36">
     <div class="narrow stack g16 center">
-      <h2 class="ins__h">We Work Hard to Make Treatment Accessible.</h2>
+      <span class="eyebrow">Admissions</span>
+      <h2>We Make Treatment Accessible.</h2>
       <p class="lede">Working directly with insurance to maximize benefits and minimize out-of-pocket costs.</p>
     </div>
-    <div class="carriers">
-      __CARRIER_STRIP__
+
+    <div class="admit">
+      <div class="admit__plans">
+        <div class="carriers">
+        __CARRIER_STRIP__
+        </div>
+        <p class="fine">We work with many more plans than those shown. Medicaid and Medi-Cal are not accepted at this time.</p>
+      </div>
+
+      <div class="admit__form">
+      <div class="card" id="formCard">
+        <form class="form" id="admitForm" novalidate>
+          <div class="row2">
+            <div class="field">
+              <label for="fn">First name <span class="rq" aria-hidden="true">*</span></label>
+              <input id="fn" name="first" type="text" autocomplete="given-name" required>
+            </div>
+            <div class="field">
+              <label for="ln">Last name <span class="rq" aria-hidden="true">*</span></label>
+              <input id="ln" name="last" type="text" autocomplete="family-name" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="ph">Your phone <span class="rq" aria-hidden="true">*</span></label>
+            <input id="ph" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" required>
+          </div>
+          <div class="field">
+            <label for="dob">Date of birth <span class="rq" aria-hidden="true">*</span></label>
+            <input id="dob" name="dob" type="text" inputmode="numeric" autocomplete="bday"
+                   placeholder="MM / DD / YYYY" maxlength="14" aria-describedby="dobHint" required>
+            <span class="hint" id="dobHint">Month, day, and year &mdash; for example 04 / 17 / 1990</span>
+          </div>
+          <div class="field">
+            <label for="ins">Insurance provider <span class="rq" aria-hidden="true">*</span></label>
+            <input id="ins" name="insurance" type="text" list="carrierList" placeholder="Anthem, Aetna, Cigna&hellip;" required>
+            <datalist id="carrierList">
+              <option value="Anthem"></option><option value="Aetna"></option><option value="BCBS"></option>
+              <option value="Carelon"></option><option value="Cigna"></option><option value="Magellan"></option>
+              <option value="Surest"></option><option value="UHC"></option><option value="UMR"></option>
+            </datalist>
+          </div>
+          <div class="field">
+            <label for="mid">Member ID / policy number <span class="rq" aria-hidden="true">*</span></label>
+            <input id="mid" name="memberId" type="text" required>
+          </div>
+          <p class="form__err" id="admitError" role="alert" hidden></p>
+          <button class="btn btn--primary btn--block btn--lg" type="submit" id="admitSubmit">Send My Confidential Request</button>
+          <p class="fine" style="text-align:center">Free, fast, and confidential. We never share your information.</p>
+        </form>
+
+        <div class="form__done" role="status">
+          <span class="tick" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <h3>Your request is in.</h3>
+          <p class="fine">An admissions counselor will call you back shortly &mdash; usually within the hour. If you&rsquo;d rather not wait, call us any time.</p>
+          <a class="btn btn--primary" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
+        </div>
+      </div>
+
+      <p class="fine admit__alt">Prefer to talk right now?
+        <a href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a> &mdash; answered 24/7.</p>
+      </div>
     </div>
-    <p class="fine">We work with many more plans than those shown. Out-of-network provider; Medicaid and Medi-Cal are not accepted at this time.</p>
-    <a class="btn btn--light" href="#admissions">Verify My Coverage &mdash; Free</a>
   </div>
 </section>
+
+<!-- ===================== PLANS DIALOG ===================== -->
+<dialog class="pmodal" id="planModal" aria-labelledby="planModalTitle">
+  <button type="button" class="pmodal__x" data-close aria-label="Close">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <div class="pmodal__hd">
+    <span class="pmodal__ic" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19"/><path d="M6 14.5h4"/></svg>
+    </span>
+    <h3 id="planModalTitle">Don&rsquo;t see your plan?</h3>
+  </div>
+  <ul class="pmodal__list">
+    <li>We work with most major commercial insurance carriers. The ones shown are simply the plans our admissions team sees most often &mdash; they are not the full list.</li>
+    <li>Coverage varies widely even within a single carrier, so a plan that is not pictured is very often still one we can work with.</li>
+    <li>A counselor checks your benefits directly with your insurer and tells you what your policy actually covers.</li>
+    <li>Free, confidential, and it commits you to nothing.</li>
+  </ul>
+  <button type="button" class="btn btn--primary btn--block" id="planModalGo" data-goform>Check my benefits &rarr;</button>
+  <p class="fine" style="text-align:center">Or call <a href="tel:+1__PHONE_RAW__">__PHONE_DISPLAY__</a> &mdash; admissions is open 24/7.</p>
+</dialog>
 
 <!-- ===================== FAQ ===================== -->
 <section class="sec" id="faq">
+<!--C:start-->
   <div class="wrap stack g48">
     <div class="stack g16 center">
       <span class="eyebrow">Straight answers</span>
       <h2>Frequently Asked Questions</h2>
     </div>
+<!--C:end--><!--D:start-->
+  <div class="wrap faqsplit">
+    <div class="faqsplit__hd stack g16">
+      <span class="eyebrow">Straight answers</span>
+      <h2>Frequently Asked Questions</h2>
+      <p class="lede">Can&rsquo;t find it here? Call <a class="faqsplit__tel" href="tel:+1__PHONE_RAW__">__PHONE_DISPLAY__</a> &mdash; someone picks up, any hour.</p>
+    </div>
+<!--D:end-->
     <div class="faq" id="faqList">
       <div class="q">
         <button class="q__btn" type="button" aria-expanded="false" aria-controls="a1">Can I talk to someone before making a decision?<span class="q__ic" aria-hidden="true"></span></button>
@@ -858,6 +1010,10 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
   __VARIANT_LINKS__
 </nav>
 
+<!--D:start-->
+__CARE_MODALS__
+<!--D:end-->
+
 <!-- ===================== STICKY CALL BAR ===================== -->
 <div class="callbar" id="callbar">
   <a class="btn btn--outline btn--sm" href="#admissions">Insurance</a>
@@ -928,6 +1084,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     var RESUME_AFTER = 2200;   /* ms of stillness before drifting again */
     var pos = 0, paused = false, idleTimer = null, dragging = false, dragX = 0, dragFrom = 0;
     var openCount = 0;         /* a review being read holds the rail still */
+    var captured = false;      /* pointer taken only once a drag is real */
 
     var passEl = rail.querySelector('.revs__pass');
     function half() {
@@ -970,14 +1127,23 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
 
     rail.addEventListener('pointerdown', function (ev) {
       if (ev.pointerType === 'mouse' && ev.button !== 0) return;
-      dragging = true; paused = true;
+      /* Capturing the pointer here would swallow the click on buttons and
+         links inside the cards, so controls never start a drag. */
+      if (ev.target.closest('button, a, input, select, textarea, [role="button"]')) return;
+      dragging = true; paused = true; captured = false;
       dragX = ev.clientX; dragFrom = rail.scrollLeft;
-      rail.classList.add('is-drag');
-      rail.setPointerCapture && rail.setPointerCapture(ev.pointerId);
     });
     rail.addEventListener('pointermove', function (ev) {
       if (!dragging) return;
-      rail.scrollLeft = dragFrom - (ev.clientX - dragX);
+      var dx = ev.clientX - dragX;
+      /* Only take the pointer once this is clearly a drag, not a click. */
+      if (!captured) {
+        if (Math.abs(dx) < 4) return;
+        captured = true;
+        rail.classList.add('is-drag');
+        rail.setPointerCapture && rail.setPointerCapture(ev.pointerId);
+      }
+      rail.scrollLeft = dragFrom - dx;
       wrap();
     });
     function endDrag() {
@@ -995,7 +1161,8 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
        Read more, so no review is permanently hidden. */
     Array.prototype.forEach.call(rail.querySelectorAll('.rev'), function (card) {
       var body = card.querySelector('.rev__body');
-      if (!body || body.scrollHeight <= body.clientHeight + 4) return;
+      if (!body || card.classList.contains('rev--ai')) return;
+      if (body.scrollHeight <= body.clientHeight + 4) return;
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'rev__more';
@@ -1013,10 +1180,54 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
       card.appendChild(btn);
     });
 
+    /* Design D leaves the rail still until the visitor interacts with it;
+       design C drifts on its own. Both stay fully scrollable either way. */
+    var autoScroll = !rail.closest('.revs--static');
     window.requestAnimationFrame(function () {
       pos = rail.scrollLeft = 0;
-      if (!reduce) window.requestAnimationFrame(tick);
+      if (autoScroll && !reduce) window.requestAnimationFrame(tick);
     });
+  })();
+
+  /* --- dialogs: plan list and the levels-of-care detail ---
+     <dialog> gives us the focus trap, Escape and backdrop for free. Any
+     element with data-modal="<id>" opens the matching dialog. */
+  (function () {
+    var lastOpener = null;
+
+    function openModal(el, opener) {
+      if (!el) return;
+      lastOpener = opener || null;
+      if (el.showModal) { el.showModal(); } else { el.setAttribute('open', ''); }
+    }
+    function closeModal(el) {
+      if (el.close) { el.close(); } else { el.removeAttribute('open'); }
+      if (lastOpener) { lastOpener.focus(); lastOpener = null; }
+    }
+
+    document.addEventListener('click', function (ev) {
+      var trigger = ev.target.closest('[data-modal]');
+      if (trigger) {
+        openModal(document.getElementById(trigger.getAttribute('data-modal')), trigger);
+        return;
+      }
+      var dlg = ev.target.closest('dialog');
+      if (!dlg) return;
+      if (ev.target.closest('[data-close]') || ev.target === dlg) { closeModal(dlg); return; }
+      if (ev.target.closest('[data-goform]')) {
+        closeModal(dlg);
+        var first = document.getElementById('fn');
+        first.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        window.setTimeout(function () { first.focus(); }, 320);
+      }
+    });
+
+    var plans = document.getElementById('morePlans');
+    if (plans) {
+      plans.addEventListener('click', function () {
+        openModal(document.getElementById('planModal'), plans);
+      });
+    }
   })();
 
   /* --- FAQ accordion --- */
@@ -1157,7 +1368,6 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
   var submitBtn = document.getElementById('admitSubmit');
   var errBox = document.getElementById('admitError');
   if (!IS_LIVE) {
-    document.getElementById('previewNote').hidden = false;
     document.getElementById('vswitch').hidden = false;
   }
 

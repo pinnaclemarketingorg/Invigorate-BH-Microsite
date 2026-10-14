@@ -5,6 +5,7 @@ original `/lpc/`; new visual execution, markup and tracking.
 
 | Variant | Replaces | Tracking number | Dynamic insertion |
 | --- | --- | --- | --- |
+| `home` | homepage (indexable) | (888) 891-2240 | — |
 | `lpc` | `/lpc/` | (888) 891-2240 | — |
 | `lpc-dli` | `/lpc-dli/` | (888) 891-2240 | state, from IP |
 | `lpc-dki` | `/lpc-dki/` | (888) 891-2240 | `?area=` parameter |
@@ -31,6 +32,28 @@ immediately after `<body>`, LegitScript served from LegitScript's own domain,
 canonical and description per variant, `noindex` while they are staging. Every
 image is an inlined WebP data URI, so each page is one ~630 KB file with no
 external requests except Google Fonts, GTM and the LegitScript seal.
+
+## Two designs
+
+`design` on each variant picks the layout. One template serves both: blocks are
+fenced with `<!--C:start--> … <!--C:end-->` and `<!--D:start--> … <!--D:end-->`,
+and `strip_designs()` unwraps the matching fences and deletes the rest, so
+neither design ships the other's markup.
+
+**C** — `home`, `lpc`, `lpc-dli`, `lpc-dki`, `bing-lpc`.
+
+**D** — `lpd`, `lpd-dli`, `lpd-dki`, `bing-lpd`. Same content, reworked:
+
+- Hero closes on the Google rating badge rather than a plain reassurance line.
+- "You are not the first" is a photograph carrying a pulled review line, headed
+  *Recovery isn't just possible. It happens here, every day.* (the pull-quote
+  that repeated this further down is gone).
+- Levels of care each open a **What to expect** dialog — four specifics and a
+  benefits check. Still three cards.
+- Reviews are static until touched, in a much shorter section: one header row,
+  and the AI summary sits **in** the rail as a card on brand colour so it reads
+  as a summary rather than somebody's testimonial. Single pass, 26 cards.
+- FAQ is 35/65, prompts left (sticky) and answers right.
 
 ## Variants
 
@@ -79,6 +102,11 @@ failure falls back silently:
 a curated selection from a profile averaging 4.8. The build renders the list
 twice into a single horizontal rail so it can wrap seamlessly mid-scroll, which
 is why the page contains twice as many cards as reviews.
+
+Running order is set by `REVIEW_ORDER`, strongest first — ranked on concrete
+specifics, a clear before/after, and unusual detail, with generic superlatives
+at the back. A review not named in that list keeps its place at the end and the
+build says so.
 
 Reviews run from two lines to several paragraphs, so cards clamp to 9 lines to
 hold one row height. Anything actually cut off gets a **Read more** that expands
@@ -154,9 +182,9 @@ creative read Google's ValueTrack names first and fall back to `utm_*`.
 ### Live vs preview
 
 The form only posts from `invigoratebh.com`. Anywhere else it validates, shows
-the success state and sends nothing, with a "Preview mode" note under the button
-and a variant switcher top-right. This keeps design review from firing real
-leads into CTM. `site/` builds have the switcher stripped entirely.
+the success state and sends nothing. The visible "Preview mode" note has been
+removed, so this is now silent — the gate itself remains, and is what stops a
+design review from firing real leads into CTM. `site/` builds have the switcher stripped entirely.
 
 ## Before going live
 
@@ -167,8 +195,6 @@ leads into CTM. `site/` builds have the switcher stripped entirely.
       the form shows an error pointing at the phone number — it never reports a
       false success.
 - [ ] **Fill `DKI_ALLOW`** before sending traffic to `lpc-dki`.
-- [ ] **Remove `<meta name="robots" content="noindex, nofollow">`** from
-      `standalone()` in `src/build.py` when these go live for real.
 - [ ] Swap the facility photography. Two gallery images are the same file, and
       the "Wellness Amenities" and "Dining Areas" captions sit over what are
       clearly living-room shots.

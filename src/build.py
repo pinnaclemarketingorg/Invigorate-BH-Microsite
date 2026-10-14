@@ -25,7 +25,6 @@ SPEC = {
     "care2":    ("inv_img3.jpg",             640, 80),
     "care3":    ("inv_img4.jpg",             640, 80),
     "hands":    ("inv_img8.jpg",             900, 76),
-    "facility": ("inv_img9.jpg",            1500, 70),
     "g1":       ("img6_gallery1_pmax2.jpg",  780, 78),
     "g2":       ("img7_gallery2_pmax2.jpg",  780, 78),
     "g3":       ("img8_gallery32_pmax2.jpg", 780, 78),
@@ -100,6 +99,9 @@ def carrier_strip():
             '<span class="carrier"><img src="%s" alt="%s" style="--h:%dpx" loading="lazy"></span>'
             % (uri, name, h)
         )
+    cells.append(
+        '<button type="button" class="carrier carrier--more" id="morePlans" '
+        'aria-haspopup="dialog">+ More</button>')
     print("carriers %d of %d logos, %.1f KB raw" % (found, len(CARRIERS), total / 1024))
     missing = [f for _, f in CARRIERS if not os.path.exists(os.path.join(CARRIER_DIR, f))]
     if missing:
@@ -132,29 +134,67 @@ SITE_HOST = "help.invigoratebh.com"
 
 VARIANTS = [
     {
+        # Homepage: same page as /lpc/, but indexable and canonical to the root.
+        "id": "home", "slug": "home", "label": "home",
+        "phone": "8888912240", "dyn": "none", "noindex": False, "design": "c",
+        "canonical": "https://%s/" % SITE_HOST,
+        "title": "Invigorate Behavioral Health",
+        "desc": "Dual-diagnosis addiction treatment with same-day admissions. "
+                "Detox, residential and outpatient care. Call (888) 891-2240.",
+    },
+    {
         "id": "lpc", "slug": "lpc", "label": "lpc",
-        "phone": "8888912240", "dyn": "none",
+        "phone": "8888912240", "dyn": "none", "design": "c",
         "title": "Invigorate Behavioral Health",
         "desc": "Dual-diagnosis addiction treatment with same-day admissions. "
                 "Detox, residential and outpatient care. Call (888) 891-2240.",
     },
     {
         "id": "lpc-dli", "slug": "lpc-dli", "label": "lpc-dli",
-        "phone": "8888912240", "dyn": "dli",
+        "phone": "8888912240", "dyn": "dli", "design": "c",
         "title": "Invigorate Behavioral Health",
         "desc": "Dual-diagnosis addiction treatment with same-day admissions, "
                 "wherever you are. Call (888) 891-2240.",
     },
     {
         "id": "lpc-dki", "slug": "lpc-dki", "label": "lpc-dki",
-        "phone": "8888912240", "dyn": "dki",
+        "phone": "8888912240", "dyn": "dki", "design": "c",
         "title": "Invigorate Behavioral Health",
         "desc": "Dual-diagnosis addiction treatment with same-day admissions. "
                 "Detox, residential and outpatient care. Call (888) 891-2240.",
     },
     {
         "id": "bing-lpc", "slug": "bing-lpc", "label": "bing-lpc",
-        "phone": "8882776026", "dyn": "none",
+        "phone": "8882776026", "dyn": "none", "design": "c",
+        "title": "Invigorate Behavioral Health",
+        "desc": "Dual-diagnosis addiction treatment with same-day admissions. "
+                "Detox, residential and outpatient care. Call (888) 277-6026.",
+    },
+    # --- design D: same content, reworked hero, why, reviews, care and FAQ ---
+    {
+        "id": "lpd", "slug": "lpd", "label": "lpd",
+        "phone": "8888912240", "dyn": "none", "design": "d",
+        "title": "Invigorate Behavioral Health",
+        "desc": "Dual-diagnosis addiction treatment with same-day admissions. "
+                "Detox, residential and outpatient care. Call (888) 891-2240.",
+    },
+    {
+        "id": "lpd-dli", "slug": "lpd-dli", "label": "lpd-dli",
+        "phone": "8888912240", "dyn": "dli", "design": "d",
+        "title": "Invigorate Behavioral Health",
+        "desc": "Dual-diagnosis addiction treatment with same-day admissions, "
+                "wherever you are. Call (888) 891-2240.",
+    },
+    {
+        "id": "lpd-dki", "slug": "lpd-dki", "label": "lpd-dki",
+        "phone": "8888912240", "dyn": "dki", "design": "d",
+        "title": "Invigorate Behavioral Health",
+        "desc": "Dual-diagnosis addiction treatment with same-day admissions. "
+                "Detox, residential and outpatient care. Call (888) 891-2240.",
+    },
+    {
+        "id": "bing-lpd", "slug": "bing-lpd", "label": "bing-lpd",
+        "phone": "8882776026", "dyn": "none", "design": "d",
         "title": "Invigorate Behavioral Health",
         "desc": "Dual-diagnosis addiction treatment with same-day admissions. "
                 "Detox, residential and outpatient care. Call (888) 277-6026.",
@@ -360,21 +400,57 @@ REVIEWS = [
 ]
 
 
-def _interleave(reviews, long_at=320):
-    """Alternate long and short entries so the rail never shows a run of one
-    length. Keeps working as reviews are added, unlike a hand-written order."""
-    short = [r for r in reviews if len(r[2]) < long_at]
-    tall = [r for r in reviews if len(r[2]) >= long_at]
+# Running order, strongest first. Ranked on the things that make a review read
+# as real rather than solicited: concrete specifics (names, durations, what
+# actually happened), a clear before/after, an unusual detail no template would
+# produce, and -- in Marilyn's case -- a mild criticism, which reads as more
+# credible than unbroken praise. Generic superlatives sort to the back.
+REVIEW_ORDER = [
+    "Marilyn",      # staff in recovery, nicotine policy, outings; "most of them anyway"
+    "Bryan",        # two months, still sober today, refers people
+    "Chuck",        # names twelve staff; specific and emotional
+    "Patrick",      # flew in two hours after calling; field trips; 30 days
+    "Donna",        # five months; "sounding like a dang paid advertisement"
+    "Jimmy Mack",   # grief work, classes, friendships that outlasted treatment
+    "amirreza",     # one week, medication taper, reporting back a year later
+    "Kailey",       # names Shane; "saving my life"
+    "Anthony Ball", # names Gabe and Teresa
+    "Erika",        # Rosie the housekeeper, Geronimo the chef
+    "Jacob",        # speaks directly to the reader's fear of going
+    "Carl",         # concrete stakes: child and work
+    "robin",        # explains the behavioural work in her own voice
+    "Dylon",        # "down to literally nothing"; seen by a doctor immediately
+    "Lisa",         # "not one moment that I felt like I didn't matter"
+    "Jeff",         # booked 30 days, stayed 35
+    "Taylor",       # concrete amenities
+    "Dan",          # first Dan entry
+    "Danielle",
+    "Dan",          # second Dan entry
+    "Koltun",
+    "Katie",
+    "Chris",
+    "Rich",
+    "Joey",
+    "Antonio",
+]
+
+
+def _rank(reviews):
+    pool = list(reviews)
     out = []
-    while short or tall:
-        if tall:
-            out.append(tall.pop(0))
-        if short:
-            out.append(short.pop(0))
+    for name in REVIEW_ORDER:
+        for i, r in enumerate(pool):
+            if r[0] == name:
+                out.append(pool.pop(i))
+                break
+    if pool:   # anything new that is not in REVIEW_ORDER keeps its place at the end
+        print("  note: %d review(s) not in REVIEW_ORDER, appended: %s"
+              % (len(pool), ", ".join(r[0] for r in pool)))
+        out.extend(pool)
     return out
 
 
-REVIEWS = _interleave(REVIEWS)
+REVIEWS = _rank(REVIEWS)
 
 AVATARS = ["#1a73e8", "#188038", "#c5221f", "#e37400", "#7b1fa2",
            "#00796b", "#ad1457", "#0b8043", "#4285f4"]
@@ -410,6 +486,89 @@ def stars_svg(rating, empty, uid=None, height=16):
     return "".join(out)
 
 
+# --------------------------------------------------------------------------
+# "What to expect" dialogs on the levels-of-care cards (design D)
+# --------------------------------------------------------------------------
+CARE_MODALS = [
+    ("detox", "Detox", "7–10 days", [
+        "A medical assessment on arrival, and a withdrawal plan built around your "
+        "history rather than a template.",
+        "Round-the-clock nursing supervision, with comfort medication as needed.",
+        "A private room to rest in. No group obligations until you are stable.",
+        "A direct step into residential care when detox is done — not a second "
+        "admission somewhere else.",
+    ]),
+    ("residential", "Residential Treatment", "28+ days", [
+        "Individual therapy, group work and dual-diagnosis care on a daily schedule.",
+        "A private room with a private bathroom, chef-prepared meals and grocery "
+        "essentials.",
+        "Family therapy sessions, with your team walking your family through "
+        "visitation.",
+        "Weekly outings, adventure and holistic programming alongside the clinical "
+        "work.",
+    ]),
+    ("outpatient", "Outpatient — PHP, IOP &amp; OP", "30–90 days", [
+        "PHP runs 20+ hours a week, IOP 9–12, stepping down as you stabilise.",
+        "Scheduling is built around work, family and school rather than against them.",
+        "Continued psychiatry and medication management throughout.",
+        "Relapse-prevention planning and alumni support once you finish.",
+    ]),
+]
+
+
+def care_modals():
+    out = []
+    for key, title, dur, bullets in CARE_MODALS:
+        out.append(
+            '<dialog class="pmodal" id="care-%s" aria-labelledby="care-%s-t">'
+            '<button type="button" class="pmodal__x" data-close aria-label="Close">'
+            '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+            'stroke-width="2.2" stroke-linecap="round" aria-hidden="true">'
+            '<path d="M5 5l14 14M19 5L5 19"/></svg></button>'
+            '<div class="pmodal__hd"><div class="stack g8">'
+            '<span class="pmodal__kicker">What to expect</span>'
+            '<h3 id="care-%s-t">%s</h3>'
+            '<span class="stage__dur">%s</span></div></div>'
+            '<ul class="pmodal__list">%s</ul>'
+            '<button type="button" class="btn btn--primary btn--block" data-goform>'
+            'Check my benefits &rarr;</button>'
+            '<p class="fine" style="text-align:center">Questions this does not answer? '
+            '<a href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a> &mdash; 24/7.</p>'
+            "</dialog>"
+            % (key, key, key, title, dur, "".join("<li>%s</li>" % b for b in bullets))
+        )
+    return "\n".join(out)
+
+
+def ai_summary_card():
+    """The AI summary, sized and shaped like a review card so it sits in the
+    rail, but on brand colour so it never reads as somebody's testimonial."""
+    body = (
+        "Those who have gone through Invigorate’s programs consistently describe a "
+        "turning point — a place where they finally felt seen, safe, and supported "
+        "enough to do the real work of recovery. Clients speak of staff who showed up "
+        "for them as individuals, not just patients: case managers who advocated "
+        "fiercely on their behalf, technicians who felt like family, and therapists "
+        "who helped them unpack trauma with compassion and skill. Many note that they "
+        "arrived broken and afraid — and left with a sense of community, purpose, and "
+        "a foundation they describe as life-saving. The recurring theme is the same: "
+        "Invigorate didn’t just help them get sober — it helped them want to live again."
+    )
+    return (
+        '<article class="rev rev--ai">'
+        '<header class="rev__hd">'
+        '<span class="rev__av rev--ai__av" aria-hidden="true">'
+        '<svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">'
+        '<path d="M12 2l1.6 4.8L18.4 8.4l-4.8 1.6L12 14.8l-1.6-4.8L5.6 8.4l4.8-1.6z"/>'
+        '<path d="M18.5 14l.85 2.55L21.9 17.4l-2.55.85L18.5 20.8l-.85-2.55L15.1 17.4l2.55-.85z"/>'
+        "</svg></span>"
+        '<span class="rev__who"><b>AI summary</b>'
+        '<span class="rev__meta">From 26 Google reviews</span></span>'
+        "</header>"
+        '<p class="rev__body">%s</p></article>' % body
+    )
+
+
 def rating_badge(uid, rating=4.8):
     return (
         '<div class="grate">'
@@ -424,7 +583,7 @@ def rating_badge(uid, rating=4.8):
     )
 
 
-def review_cards():
+def review_cards(single=False):
     """Two identical passes so the rail can wrap seamlessly mid-scroll."""
     def card(i, name, rating, text, clone):
         return (
@@ -439,6 +598,9 @@ def review_cards():
                AVATARS[i % len(AVATARS)], name[0].upper(), name,
                stars_svg(rating, "#dadce0"), text)
         )
+
+    if single:
+        return "".join(card(i, n, r, t, False) for i, (n, r, t) in enumerate(REVIEWS))
 
     passes = []
     for clone in (False, True):
@@ -468,16 +630,37 @@ def standalone(fragment, v):
         '<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
         '<meta name="description" content="%s">\n'
-        '<meta name="robots" content="noindex, nofollow">\n'
-        '<link rel="canonical" href="https://%s/%s/">\n'
+        "%s"
+        '<link rel="canonical" href="%s">\n'
         "%s\n</head>\n"
         '<body style="margin:0;background:#fbfcfb;color:#0f2429;font:400 14px/1.65 system-ui,sans-serif">\n'
-        "%s\n</body>\n</html>\n" % (v["desc"], SITE_HOST, v["slug"], head.strip(), body.strip())
+        "%s\n</body>\n</html>\n"
+        % (v["desc"],
+           # Paid landing pages stay out of the index so they do not compete
+           # with the homepage on near-identical copy. "follow" so link equity
+           # still flows. The homepage sets noindex False.
+           '<meta name="robots" content="noindex, follow">\n' if v.get("noindex", True) else "",
+           v.get("canonical", "https://%s/%s/" % (SITE_HOST, v["slug"])),
+           head.strip(), body.strip())
     )
 
 
+def strip_designs(html, design):
+    """One template serves both designs. Blocks are fenced with
+    <!--C:start--> / <!--C:end--> and <!--D:start--> / <!--D:end-->;
+    the matching fences are unwrapped and the others deleted outright."""
+    for tag in ("C", "D"):
+        if tag == design.upper():
+            html = html.replace("<!--%s:start-->" % tag, "").replace("<!--%s:end-->" % tag, "")
+        else:
+            html = re.sub(r"<!--%s:start-->.*?<!--%s:end-->" % (tag, tag), "",
+                          html, flags=re.S)
+    return html
+
+
 def render(base, v, preview):
-    html = base
+    html = strip_designs(base, v.get("design", "c"))
+    html = html.replace("__CARE_MODALS__", care_modals())
     html = html.replace("__VARIANT_ID__", v["id"])
     html = html.replace("__DYN_MODE__", v["dyn"])
     html = html.replace("__PHONE_RAW__", v["phone"])
@@ -507,6 +690,8 @@ def main():
     base = base.replace("__RATING_BADGE_DARK__", rating_badge("st-hero"))
     base = base.replace("__STARS_LIGHT__", stars_svg(4.8, "#bdc1c6", "st-trust", 20))
     base = base.replace("__REVIEW_CARDS__", review_cards())
+    base = base.replace("__REVIEW_CARDS_ONE__", ai_summary_card() + review_cards(single=True))
+    base = base.replace("__RATING_BADGE_HERO__", rating_badge("st-hero2"))
     print("reviews  %d cards x2 passes" % len(REVIEWS))
 
     total = 0
