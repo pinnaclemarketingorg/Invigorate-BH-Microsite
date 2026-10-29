@@ -1,0 +1,57 @@
+# Deploys this repo to the Cloudways app (help.invigoratebh.com) on every push.
+# Add this file in GitHub at: .github/workflows/deploy.yml
+#
+# Needs 3 repository secrets (Settings > Secrets and variables > Actions):
+#   CLOUDWAYS_HOST      - server Public IP
+#   CLOUDWAYS_USER      - application username (Access Details > Application Credentials)
+#   CLOUDWAYS_PASSWORD  - application password  (same place)
+
+name: Deploy to Cloudways
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch: # adds a "Run workflow" button in the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      # Only runs if the repo has a package.json with a "build" script
+      # (React, Vite, etc.). Plain HTML sites skip this.
+      - name: Set up Node
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build site files
+        run: |
+          mkdir -p _deploy
+          if [ -f package.json ] && grep -q '"build"' package.json; then
+            npm ci || npm install
+            npm run build
+            # Use whichever output folder the build created
+            for d in dist build out; do
+              if [ -d "$d" ]; then cp -r "$d"/. _deploy/; break; fi
+            done
+          else
+            # Plain HTML: send everything except repo/system files
+            rsync -a --exclude='.git' --exclude='.github' --exclude='_deploy' --exclude='README.md' ./ _deploy/
+          fi
+          echo "Files to upload:" && ls -la _deploy
+
+      - name: Upload to Cloudways
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.CLOUDWAYS_HOST }}
+          username: ${{ secrets.CLOUDWAYS_USER }}
+          password: ${{ secrets.CLOUDWAYS_PASSWORD }}
+          port: 22
+          source: "_deploy/"
+          target: "public_html"
+          strip_components: 1
+          overwrite: true
