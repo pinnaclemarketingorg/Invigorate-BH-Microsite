@@ -135,7 +135,7 @@ SITE_HOST = "help.invigoratebh.com"
 VARIANTS = [
     {
         # Homepage: same page as /lpc/, but indexable and canonical to the root.
-        "id": "home", "slug": "home", "label": "home",
+        "id": "home", "slug": "home", "label": "home", "path": "",
         "phone": "8888912240", "dyn": "none", "noindex": False, "design": "c",
         "canonical": "https://%s/" % SITE_HOST,
         "title": "Invigorate Behavioral Health",
@@ -708,17 +708,18 @@ def main():
         sys.exit("Unresolved image tokens: %s" % ", ".join(sorted(set(leftover))))
     print("images   %6.1f KB raw -> %6.1f KB base64" % (total / 1024, total * 1.34 / 1024))
 
-    # site/ is the Cloudways webroot: site/<slug>/index.html serves /<slug>/
+    # site/ is what gets deployed: site/<path>/index.html serves /<path>/.
+    # path defaults to the slug; the homepage sets it to "" to serve at /.
     site = os.path.join(ROOT, "site")
     prev = os.path.join(ROOT, "preview")
-    for d in [prev] + [os.path.join(site, v["slug"]) for v in VARIANTS]:
+    for d in [prev] + [os.path.join(site, v.get("path", v["slug"])) for v in VARIANTS]:
         if not os.path.isdir(d):
             os.makedirs(d)
 
     for v in VARIANTS:
         # production: standalone document, GTM in <head>, remote LegitScript seal
         prod = standalone(render(base, v, preview=False), v)
-        pp = os.path.join(site, v["slug"], "index.html")
+        pp = os.path.join(site, v.get("path", v["slug"]), "index.html")
         open(pp, "w", encoding="utf-8").write(prod)
 
         # preview: inlined seal, variant switcher on
@@ -736,7 +737,8 @@ def main():
         if left:
             sys.exit("Unresolved token in %s: %s" % (v["slug"], sorted(set(left))))
         print("  %-9s %s  site/%-19s %6.1f KB" % (
-            v["id"], pretty_phone(v["phone"]), v["slug"] + "/index.html",
+            v["id"], pretty_phone(v["phone"]),
+            os.path.relpath(pp, site).replace(os.sep, "/"),
             os.path.getsize(pp) / 1024))
 
 
