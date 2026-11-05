@@ -1,4 +1,7 @@
 <title>Invigorate Behavioral Health</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&display=swap">
@@ -105,6 +108,12 @@ em{font-style:italic;font-weight:400}
 /* ===== Hero ============================================================== */
 .hero{position:relative;background:var(--teal-deep);color:#fff;isolation:isolate;overflow:hidden}
 .hero__bg{position:absolute;inset:0;z-index:-2;background-image:url("__IMG_hero__");background-size:cover;background-position:64% 46%}
+/* Homepage only. Sits over the still image, which stays as the fallback and
+   as the mobile background; JS only attaches the source on wider screens. */
+.hero__video{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .8s ease}
+.hero__video.is-playing{opacity:1}
+@media(max-width:760px){.hero__video{display:none}}
 .hero__scrim{position:absolute;inset:0;z-index:-1;
   background:linear-gradient(97deg,rgba(4,42,47,.96) 0%,rgba(5,49,54,.92) 34%,rgba(6,55,61,.66) 62%,rgba(6,55,61,.26) 100%)}
 .hero__in{padding:clamp(58px,7vw,100px) 0 clamp(56px,6vw,84px);max-width:700px;display:flex;flex-direction:column;gap:26px}
@@ -361,6 +370,46 @@ em{font-style:italic;font-weight:400}
 .ftr__legal{font-size:.78rem;line-height:1.65;color:rgba(255,255,255,.45);max-width:72ch}
 @media(max-width:700px){.ftr__bottom{flex-direction:column;gap:22px}}
 
+/* Homepage + legal pages: the full site footer (landing pages keep the short one) */
+.ftr--full{padding-top:64px}
+.ftr--full a{border-bottom:0;padding-bottom:0}
+.ftr--full a:hover{color:var(--leaf)}
+.fh__grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.25fr;gap:36px 40px}
+.fh__brand img{height:60px}
+.fh__call{display:block;margin-top:22px;font-size:1.02rem;font-weight:700;color:#fff !important}
+.fh__hours{margin-top:4px;color:rgba(255,255,255,.6)}
+.fh__social{display:flex;gap:10px;margin-top:20px}
+.fh__social a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);transition:background-color .2s,color .2s}
+.fh__social a:hover{background:var(--leaf);color:#13260a}
+.fh__h{font:800 .7rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--leaf);margin:6px 0 18px}
+.fh__list{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.fh__list a{color:rgba(255,255,255,.82)}
+.fh__addr{font-style:normal;line-height:1.6}
+.fh__addr + .fh__addr{margin-top:12px}
+.fh__trust{display:flex;flex-wrap:wrap;align-items:center;gap:24px 40px;margin-top:44px;padding-top:30px;border-top:1px solid rgba(255,255,255,.12)}
+.fh__lic{font-size:.84rem;line-height:1.7;color:rgba(255,255,255,.62)}
+.fh__lic a{color:rgba(255,255,255,.9);text-decoration:underline;text-underline-offset:3px}
+.fh__legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 28px;margin-top:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);
+  font:700 .7rem/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.fh__legal a{color:rgba(255,255,255,.75)}
+.fh__copy{margin-top:22px;font-size:.78rem;color:rgba(255,255,255,.42);text-align:center}
+@media(max-width:900px){.fh__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.fh__grid{grid-template-columns:1fr}.fh__legal{justify-content:flex-start;flex-direction:column}}
+
+/* ===== Legal pages ======================================================= */
+.legal{padding:clamp(48px,6vw,88px) 0 clamp(64px,8vw,110px)}
+.legal__in{max-width:780px}
+.legal__back{display:inline-block;margin-bottom:22px;font:700 .72rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--teal);text-decoration:none}
+.legal h1{font-size:clamp(2.2rem,4.4vw,3.3rem);margin-bottom:28px}
+.legal h2{font-size:clamp(1.4rem,2.4vw,1.75rem);font-weight:400;margin:2.1em 0 .6em}
+.legal h3{margin:1.6em 0 .5em}
+.legal p,.legal ul,.legal ol,.legal blockquote{margin:0 0 1em}
+.legal ul,.legal ol{padding-left:1.3em}
+.legal li{margin:.3em 0}
+.legal blockquote{padding-left:18px;border-left:3px solid var(--line);color:var(--muted)}
+.legal a{color:var(--teal);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+
 /* ===== Sticky mobile call bar ============================================ */
 .callbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
   padding:11px 14px calc(11px + env(safe-area-inset-bottom,0px));
@@ -510,6 +559,10 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="hero" data-dark="1">
   <div class="hero__bg" aria-hidden="true"></div>
+<!--HOME:start-->
+  <video class="hero__video" id="heroVideo" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"
+         data-src="/media/hero.mp4"></video>
+<!--HOME:end-->
   <div class="hero__scrim" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero__in">
@@ -980,7 +1033,82 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
 </section>
 </main>
 
-<!-- ===================== FOOTER ===================== -->
+<!-- ===================== FOOTER =====================
+     HOME fence: full site footer (homepage and legal pages).
+     LP fence: the short footer the landing pages keep. -->
+<!--HOME:start-->
+<footer class="ftr ftr--full" data-dark="1">
+  <div class="wrap">
+    <div class="fh__grid">
+      <div class="fh__brand">
+        <img src="__IMG_logoW__" alt="Invigorate Behavioral Health" width="257" height="106">
+        <a class="fh__call" href="tel:+1__PHONE_RAW__">Call Now __PHONE_DISPLAY__</a>
+        <p class="fh__hours">24 hours a day, 7 days a week</p>
+        <div class="fh__social">
+          <a href="https://www.facebook.com/people/Invigorate-Behavioral-Health/61556661569546/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.4V10H7v4h2.5v7h4v-7h3l.5-4h-3.5V8.7c0-.4.3-.7.5-.7z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/invigorate_bh/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/invigorate-behavioral-health" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.5 9h3.8v12H3.5zM5.4 3a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4zM9.6 9h3.6v1.7c.5-1 1.8-2 3.8-2 4 0 4.6 2.6 4.6 6V21h-3.8v-5.6c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3V21H9.6z"/></svg>
+          </a>
+          <a href="mailto:info@invigoratebh.com" aria-label="Email info@invigoratebh.com">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav aria-labelledby="fh-quick">
+        <h2 class="fh__h" id="fh-quick">Quick Links</h2>
+        <ul class="fh__list">
+          <li><a href="https://invigoratebh.com/best-inpatient-rehab/">Inpatient Rehab</a></li>
+          <li><a href="https://invigoratebh.com/medical-detox/">Medical Detox</a></li>
+          <li><a href="https://invigoratebh.com/addiction-therapy/">Therapy &amp; Counseling</a></li>
+          <li><a href="https://invigoratebh.com/admissions/">Admissions</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="fh-network">
+        <h2 class="fh__h" id="fh-network">Our Network</h2>
+        <ul class="fh__list">
+          <li><a href="https://pinnaclehealthgroup.org/" target="_blank" rel="noopener">Pinnacle Health Group</a></li>
+          <li><a href="https://invigoratemh.com/" target="_blank" rel="noopener">Invigorate Counseling Center (Melrose)</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2 class="fh__h">Contact</h2>
+        <ul class="fh__list">
+          <li><a href="mailto:info@invigoratebh.com">info@invigoratebh.com</a></li>
+          <li><a href="tel:+1__PHONE_RAW__">__PHONE_DISPLAY__</a></li>
+          <li>
+            <a href="https://maps.app.goo.gl/MephkTnj8mqV7zSq8" target="_blank" rel="noopener">
+              <address class="fh__addr">553 &amp; 553.5 N Mariposa Ave.<br>Los Angeles, CA 90004</address>
+              <address class="fh__addr">555 &amp; 555.5 N Mariposa Ave.<br>Los Angeles, CA 90004</address>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="fh__trust">
+      <div class="ftr__seals">
+        <img src="__IMG_jcaho__" alt="Accredited by The Joint Commission &mdash; National Quality Approval" width="150" height="150">
+        <a href="https://www.legitscript.com/websites/?checker_keywords=invigoratebh.com" target="_blank" rel="noopener" title="Verify LegitScript Approval for invigoratebh.com">
+          <img src="__IMG_legitscript__" alt="Verify Approval for invigoratebh.com" width="73" height="79">
+        </a>
+      </div>
+      <p class="fh__lic">Licensed by the <a href="https://www.dhcs.ca.gov/" target="_blank" rel="noopener">State Department of Health Care Services</a><br>
+        License #191329AP &middot; Expiration Date: 10/31/2026</p>
+    </div>
+    <nav class="fh__legal" aria-label="Legal">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-use/">Terms of Use</a>
+      <a href="/notice-of-privacy-practices/">Notice of Privacy Practices</a>
+      <a href="/consumer-health-data-privacy-policy/">Consumer Health Data Privacy Policy</a>
+    </nav>
+    <p class="fh__copy">&copy; 2026 Invigorate Behavioral Health. All Rights Reserved.</p>
+  </div>
+</footer>
+<!--HOME:end--><!--LP:start-->
 <footer class="ftr" data-dark="1">
   <div class="wrap">
     <div class="ftr__in">
@@ -1003,6 +1131,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     </div>
   </div>
 </footer>
+<!--LP:end-->
 
 <!-- ===================== VARIANT SWITCHER (preview only) ===================== -->
 <nav class="vswitch" id="vswitch" hidden aria-label="Landing page variants">
@@ -1020,6 +1149,25 @@ __CARE_MODALS__
   <a class="btn btn--primary btn--sm" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
 </div>
 
+<!--HOME:start-->
+<script>
+/* Hero video (~6 MB): only attached on wider screens, and never for visitors
+   who ask for reduced motion or reduced data. Fades in once frames arrive;
+   until then, or if it fails, the still hero image shows. */
+(function () {
+  var v = document.getElementById('heroVideo');
+  if (!v || !window.matchMedia) return;
+  var conn = navigator.connection || {};
+  if (window.matchMedia('(max-width: 760px)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      conn.saveData) return;
+  v.addEventListener('playing', function () { v.classList.add('is-playing'); }, { once: true });
+  v.src = v.getAttribute('data-src');
+  var p = v.play();
+  if (p && p.catch) p.catch(function () {});
+})();
+</script>
+<!--HOME:end-->
 <script>
 (function () {
   'use strict';

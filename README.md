@@ -221,3 +221,17 @@ and this README are not served.
 2. `python src/build.py`
 3. Commit **including `site/`** — Cloudways has no build step
 4. Push, then **Deployment via Git → Pull** in Cloudways
+
+## Homepage, legal pages, static files
+
+- `<!--HOME:start-->…<!--HOME:end-->` blocks in the template render only on the
+  homepage (hero video, full site footer); `<!--LP:start-->…<!--LP:end-->` only
+  on the landing pages (short footer).
+- `src/legal/<slug>.html` holds the article body of each legal page, copied from
+  invigoratebh.com. The build wraps them in the homepage's header and full
+  footer at `site/<slug>/`, canonical to the invigoratebh.com original. When
+  the main site's policies change, update these files.
+- `src/static/` is copied into `site/` as-is: favicons (from go.invigoratebh.com)
+  and `media/hero.mp4`, the main site's hero video re-encoded to H.264 (the
+  original is HEVC, which most Chrome/Firefox installs cannot play) with the
+  logo intro trimmed. Desktop only; mobile keeps the still image.

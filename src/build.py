@@ -9,6 +9,7 @@ import io
 import math
 import os
 import re
+import shutil
 import sys
 
 from PIL import Image
@@ -650,16 +651,22 @@ def strip_designs(html, design):
     <!--C:start--> / <!--C:end--> and <!--D:start--> / <!--D:end-->;
     the matching fences are unwrapped and the others deleted outright."""
     for tag in ("C", "D"):
-        if tag == design.upper():
-            html = html.replace("<!--%s:start-->" % tag, "").replace("<!--%s:end-->" % tag, "")
-        else:
-            html = re.sub(r"<!--%s:start-->.*?<!--%s:end-->" % (tag, tag), "",
-                          html, flags=re.S)
+        html = fence(html, tag, tag == design.upper())
     return html
+
+
+def fence(html, tag, keep):
+    """Unwrap <!--TAG:start-->...<!--TAG:end--> when keep, else delete it."""
+    if keep:
+        return html.replace("<!--%s:start-->" % tag, "").replace("<!--%s:end-->" % tag, "")
+    return re.sub(r"<!--%s:start-->.*?<!--%s:end-->" % (tag, tag), "", html, flags=re.S)
 
 
 def render(base, v, preview):
     html = strip_designs(base, v.get("design", "c"))
+    # HOME: homepage-only blocks (hero video, full footer). LP: landing pages only.
+    html = fence(html, "HOME", v["id"] == "home")
+    html = fence(html, "LP", v["id"] != "home")
     html = html.replace("__CARE_MODALS__", care_modals())
     html = html.replace("__VARIANT_ID__", v["id"])
     html = html.replace("__DYN_MODE__", v["dyn"])
@@ -682,6 +689,43 @@ def render(base, v, preview):
         html = re.sub(r'src="data:image/webp;base64,[^"]+"(\s+alt="Verify Approval)',
                       'src="%s"\\1' % LEGITSCRIPT_URL, html)
     return html
+
+
+# Legal pages, copied from invigoratebh.com into src/legal/<slug>.html (article
+# body only). Built into the homepage's chrome: header, full footer, no
+# landing-page scripts. Canonical points at the invigoratebh.com original.
+LEGAL = [
+    ("privacy-policy", "Privacy Policy",
+     "How Invigorate Behavioral Health collects, uses and protects information on this website."),
+    ("terms-of-use", "Terms of Use",
+     "The terms that govern use of the Invigorate Behavioral Health website."),
+    ("notice-of-privacy-practices", "Notice of Privacy Practices",
+     "How medical information about you may be used and disclosed, and how you can get access to it."),
+    ("consumer-health-data-privacy-policy", "Consumer Health Data Privacy Policy",
+     "Consumer health data privacy policy for Washington and Nevada residents."),
+]
+
+
+def legal_page(home_fragment, slug, title, desc):
+    article = open(os.path.join(SRC, "legal", slug + ".html"), encoding="utf-8").read()
+    article = re.sub(r"^<!--.*?-->\s*", "", article, flags=re.S)
+    head, _, body = home_fragment.partition("<!--/HEAD-->")
+    head = head.replace("<title>Invigorate Behavioral Health</title>",
+                        "<title>%s | Invigorate Behavioral Health</title>" % title)
+    body = re.sub(r"<main>.*?</main>",
+                  '<main class="legal"><div class="wrap legal__in">'
+                  '<a class="legal__back" href="/">&larr; Back to home</a>\n'
+                  "<article>\n%s</article></div></main>" % article.replace("\\", "\\\\"),
+                  body, count=1, flags=re.S)
+    # landing-page furniture that means nothing here
+    body = re.sub(r'<nav class="spine".*?</nav>\s*', "", body, flags=re.S)
+    body = re.sub(r'<div class="callbar".*?</div>\s*', "", body, flags=re.S)
+    body = re.sub(r"<dialog.*?</dialog>\s*", "", body, flags=re.S)
+    body = re.sub(r"<script>.*?</script>\s*", "", body, flags=re.S)
+    body = body.replace('class="hdr__logo" href="#top"', 'class="hdr__logo" href="/"')
+    return standalone(head + "<!--/HEAD-->" + body, {
+        "slug": slug, "desc": desc, "noindex": False,
+        "canonical": "https://invigoratebh.com/%s/" % slug})
 
 
 def main():
@@ -740,6 +784,19 @@ def main():
             v["id"], pretty_phone(v["phone"]),
             os.path.relpath(pp, site).replace(os.sep, "/"),
             os.path.getsize(pp) / 1024))
+
+    home = next(v for v in VARIANTS if v["id"] == "home")
+    home_fragment = render(base, home, preview=False)
+    for slug, title, desc in LEGAL:
+        d = os.path.join(site, slug)
+        if not os.path.isdir(d):
+            os.makedirs(d)
+        open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(
+            legal_page(home_fragment, slug, title, desc))
+        print("  legal     %s" % slug)
+
+    # favicons and the hero video, served from the site root as-is
+    shutil.copytree(os.path.join(SRC, "static"), site, dirs_exist_ok=True)
 
 
 if __name__ == "__main__":
