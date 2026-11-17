@@ -289,7 +289,7 @@ em{font-style:italic;font-weight:400}
 /* Carrier grid: logos sit directly on the section, no plate. Each logo
    carries its own --h from the build so the stacked marks and the wide
    wordmarks land at matching optical weight. */
-.carriers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center;
+.carriers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:center;
   width:100%;--logo-scale:1}
 .carrier{display:grid;place-items:center;height:62px;padding:0 10px}
 .carrier img{height:calc(var(--h,30px) * var(--logo-scale));width:auto;max-width:100%;object-fit:contain}
@@ -299,15 +299,15 @@ em{font-style:italic;font-weight:400}
   width:max-content;justify-self:center;align-self:center;
   transition:border-color .2s,color .2s,background-color .2s}
 .carrier--more:hover{border-color:var(--teal);background:rgba(13,92,99,.06)}
-@media(max-width:900px){.carriers{grid-template-columns:repeat(3,1fr);--logo-scale:.9}.carrier{height:54px}}
-@media(max-width:520px){.carriers{grid-template-columns:repeat(2,1fr);--logo-scale:.78}.carrier{height:48px}}
+@media(max-width:900px){.carriers{grid-template-columns:repeat(3,minmax(0,1fr));--logo-scale:.9}.carrier{height:54px}}
+@media(max-width:520px){.carriers{grid-template-columns:repeat(2,minmax(0,1fr));--logo-scale:.78}.carrier{height:48px}}
 
 /* Admissions form, centred under the carrier grid */
-.admit{display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(30px,4.5vw,60px);align-items:center}
+.admit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:clamp(30px,4.5vw,60px);align-items:center}
 .admit__plans{display:flex;flex-direction:column;gap:18px}
 .admit__form{display:flex;flex-direction:column;gap:16px}
 .admit__alt{text-align:center}
-@media(max-width:900px){.admit{grid-template-columns:1fr;gap:32px;align-items:stretch}}
+@media(max-width:900px){.admit{grid-template-columns:minmax(0,1fr);gap:32px;align-items:stretch}}
 .admit__alt a{font-weight:700;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(13,92,99,.35)}
 .admit__alt a:hover{border-color:var(--teal)}
 
@@ -544,7 +544,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
   </symbol>
   <symbol id="stars5" viewBox="0 0 116 20"><path transform="translate(0,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(24,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(48,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(72,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(96,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/></symbol>
   <symbol id="verified" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M12 1l2.39 2.09 3.16-.4 1.1 2.98 2.94 1.4-1.01 3.06 1.01 3.06-2.94 1.4-1.1 2.98-3.16-.4L12 23l-2.39-2.09-3.16.4-1.1-2.98-2.94-1.4 1.01-3.06L2.41 7.07l2.94-1.4 1.1-2.98 3.16.4z"/>
+    <path fill="currentColor" d="M12 1L14.33 3.31L17.5 2.47L18.36 5.64L21.53 6.5L20.69 9.67L23 12L20.69 14.33L21.53 17.5L18.36 18.36L17.5 21.53L14.33 20.69L12 23L9.67 20.69L6.5 21.53L5.64 18.36L2.47 17.5L3.31 14.33L1 12L3.31 9.67L2.47 6.5L5.64 5.64L6.5 2.47L9.67 3.31Z"/>
     <path fill="#fff" d="M10.65 15.64l-3.01-3.01 1.32-1.32 1.69 1.69 4.24-4.24 1.32 1.33z"/>
   </symbol>
 </defs></svg>
