@@ -153,11 +153,24 @@ __ctm.form.track('app.calltrackingmetrics.com', FRT, '8888912240', {
 ```
 
 This is preferred because it ties the lead to the visitor's CTM session, so the
-tracking number, referrer and keyword data stitch together on CTM's side.
-**It needs the standard CTM embed script on the page** — add it through GTM,
-since the container is already there. Until then the form falls back to a direct
-REST post to the FormReactor endpoint, which records the lead but carries only
-the attribution passed explicitly. Both paths are wired and tested.
+tracking number, referrer and keyword data stitch together on CTM's side. It
+needs CTM's tracking script, which the build now puts in `<head>` on every
+`site/` page:
+
+```html
+<script async src="//374183.tctm.co/t.js" referrerpolicy="no-referrer-when-downgrade"></script>
+```
+
+It is emitted by `CTM_TAG` in `src/build.py` and **only in `site/` builds** —
+`preview/` must not swap numbers or open CTM sessions. If the script fails to
+load, the form falls back to a direct REST post to the FormReactor endpoint,
+which records the lead but carries only the attribution passed explicitly. Both
+paths are wired and tested.
+
+Because the script swaps the displayed number for one from the tracking pool,
+the form reads the number the page is actually showing (`ctmNumber()`, first
+`tel:` link) rather than the number the build baked in — otherwise the lead
+would attach to the wrong tracking number.
 
 Field mapping (identical on both paths):
 
@@ -188,8 +201,9 @@ design review from firing real leads into CTM. `site/` builds have the switcher 
 
 ## Before going live
 
-- [ ] **Add the CTM embed script via GTM** so `__ctm.form.track` is used instead
-      of the REST fallback.
+- [ ] **Add a Bing UET tag** before running the `bing-lpc` / `bing-lpd` pages.
+      GTM carries GA4, Google Ads and Clarity; nothing on the page reports
+      conversions to Microsoft Ads.
 - [ ] **Confirm the REST fallback's CORS** with one real post from
       `help.invigoratebh.com`, in case the embed script is not present. On failure
       the form shows an error pointing at the phone number — it never reports a

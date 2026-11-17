@@ -61,6 +61,11 @@ em{font-style:italic;font-weight:400}
 .sec--mist{background:var(--mist)}
 .sec--dark{background:var(--teal-deep);color:#fff}
 .sec--tight{padding:clamp(46px,4.6vw,64px) 0}
+/* Phones get less section padding than the clamp floor: at 390px a 74px
+   band top and bottom pushes the next section a long way down a screen
+   that is already scrolling. Every section moves together, so the page
+   keeps one rhythm. */
+@media(max-width:700px){.sec{padding:58px 0}.sec--tight{padding:40px 0}}
 .stack{display:flex;flex-direction:column}
 .g8{gap:8px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}.g28{gap:28px}.g36{gap:36px}.g48{gap:48px}
 .center{text-align:center;align-items:center}
@@ -148,6 +153,16 @@ em{font-style:italic;font-weight:400}
 .pullquote{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(1.4rem,2.5vw,1.95rem);
   line-height:1.34;color:var(--teal-deep);max-width:26ch;margin-inline:auto;padding-top:26px;position:relative}
 .pullquote::before{content:"";position:absolute;top:0;left:50%;translate:-50% 0;width:38px;height:2px;background:var(--leaf)}
+/* The kicker belongs to the headline, so those two sit as one block. The
+   pull-quote and the CTA each take a little more air than the body copy, so
+   the section reads as four beats instead of five evenly spaced ones. */
+.why .pullquote{margin-top:8px}
+.why>.btn{margin-top:6px}
+@media(max-width:700px){
+  .why{gap:22px}
+  .why .pullquote{padding-top:22px;margin-top:0}
+  .why>.btn{margin-top:2px}
+}
 
 /* ===== Continuum of care ================================================= */
 .care{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
@@ -506,6 +521,13 @@ var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+
 j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-PHZHNGJ6');
 </script>
+
+<!-- ===================== CALLTRACKINGMETRICS =====================
+     Account 374183. Swaps the displayed number for one from the tracking
+     pool and provides __ctm.form.track, which ties a form lead to the
+     visitor's CTM session. Production only: the preview builds must not
+     swap numbers or open CTM sessions. -->
+<script async src="//374183.tctm.co/t.js" referrerpolicy="no-referrer-when-downgrade"></script>
 </head>
 <body style="margin:0;background:#fbfcfb;color:#0f2429;font:400 14px/1.65 system-ui,sans-serif">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PHZHNGJ6"
@@ -1390,11 +1412,21 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
               typeof window.__ctm.form.track === 'function');
   }
 
+  /* With the embed present CTM swaps the displayed number for one from the
+     pool, so read what the page is showing rather than the number the build
+     baked in — otherwise the lead attaches to the wrong tracking number. */
+  function ctmNumber() {
+    var a = document.querySelector('a[href^="tel:"]');
+    var n = a ? a.getAttribute('href').replace(/\D/g, '') : '';
+    if (n.length === 11 && n.charAt(0) === '1') n = n.slice(1);
+    return n.length === 10 ? n : PHONE_CTM;
+  }
+
   function sendLead() {
     var f = leadFields();
 
     if (hasCtmEmbed()) {
-      window.__ctm.form.track(CTM_HOST, CTM_FRT, PHONE_CTM, {
+      window.__ctm.form.track(CTM_HOST, CTM_FRT, ctmNumber(), {
         country_code: '1',
         name: f.name,
         phone: f.phone,

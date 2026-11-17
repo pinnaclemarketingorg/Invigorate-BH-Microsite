@@ -130,6 +130,10 @@ def encode(filename, width, quality):
 CTM_FRT = "FRT472ABB2C5B9B141AA1D47C9406B9291393156F273CE48E0DCD60EFC245C42561"
 CTM_KEY = "ZGqlN1PcmOHHscx_x5U8kGU8ZJmZfN5str-gtzy1VcqnE0O6"
 GTM_ID = "GTM-PHZHNGJ6"
+# CallTrackingMetrics tracking script (account 374183). Production only —
+# preview builds must not swap numbers or open CTM sessions.
+CTM_TAG = ('<script async src="//374183.tctm.co/t.js" '
+           'referrerpolicy="no-referrer-when-downgrade"></script>')
 LEGITSCRIPT_URL = "https://static.legitscript.com/seals/25550278.png"
 SITE_HOST = "help.invigoratebh.com"
 
@@ -674,6 +678,7 @@ def render(base, v, preview):
     html = html.replace("__PHONE_DISPLAY__", pretty_phone(v["phone"]))
     html = html.replace("__CTM_FRT__", CTM_FRT)
     html = html.replace("__CTM_KEY__", CTM_KEY)
+    html = html.replace("__CTM_TAG__", "" if preview else CTM_TAG)
     if preview:
         html = html.replace("__VARIANT_LINKS__", variant_links(v["id"]))
     else:
