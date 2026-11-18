@@ -443,11 +443,87 @@ em{font-style:italic;font-weight:400}
 @media(max-width:860px){.callbar{display:flex}.ftr{padding-bottom:104px}}
 
 /* ===== Design D ========================================================== */
-/* Hero rating: the Google badge replaces the plain reassurance line */
-.herorate{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
-.herorate .grate{padding:10px 16px;gap:12px}
-.herorate .grate__n{font-size:1.15rem}
-.herorate__t{font-size:.85rem;color:rgba(255,255,255,.66)}
+/* Header: two-line reassurance and an insurance button beside the call */
+.hdr__note--d{display:flex;flex-direction:column;align-items:flex-end;gap:3px;font-size:.76rem;line-height:1.2;letter-spacing:.01em}
+.hdr__note--d b{font-size:.84rem;font-weight:700;color:var(--ink)}
+.hdr__right .hdr__ins{padding-inline:18px}
+@media(max-width:940px){.hdr__note--d{display:none}}
+@media(max-width:600px){.hdr__right .hdr__ins{display:none}}
+
+/* Hero: copy left, the accreditation card right. The card takes over the
+   Google badge and the reassurance line, so the copy column ends on the CTAs. */
+.herogrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,372px);gap:clamp(32px,5vw,76px);align-items:center;
+  padding:clamp(56px,6.4vw,92px) 0 clamp(56px,6vw,84px)}
+.hero--d .hero__in{padding:0;max-width:none;gap:24px}
+.hpoints{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 28px;max-width:640px}
+.hpoints li{display:flex;align-items:center;gap:12px;font-size:.97rem;font-weight:600;line-height:1.3}
+.hpoints__ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.26);background:rgba(255,255,255,.06);color:var(--leaf)}
+.hcard{display:flex;flex-direction:column;gap:20px;padding:26px 26px 24px;border-radius:22px;
+  background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.18);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 30px 60px -36px rgba(0,0,0,.55)}
+.hcard__t{font:700 .7rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.hcard__row{display:flex;align-items:center;gap:16px}
+.hcard__seal{flex:none;width:62px;height:62px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}
+.hcard__g{flex:none;width:62px;height:62px;border-radius:50%;background:#fff;display:grid;place-items:center;
+  box-shadow:0 8px 18px -10px rgba(0,0,0,.6)}
+.hcard__tx{display:flex;flex-direction:column;gap:5px;min-width:0}
+.hcard__tx b{font:700 1.08rem/1.2 var(--sans);color:#fff}
+.hcard__tx>span{font-size:.86rem;line-height:1.3;color:rgba(255,255,255,.72)}
+.hcard__rate{display:flex;align-items:center;gap:10px}
+.hcard__rate b{font-size:1.32rem;font-variant-numeric:tabular-nums}
+.hcard__badges{display:flex;flex-wrap:wrap;gap:8px;padding-top:2px}
+.hbadge{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:999px;white-space:nowrap;
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);font:600 .8rem/1 var(--sans)}
+.hbadge svg{flex:none;color:var(--leaf)}
+@media(max-width:960px){.herogrid{grid-template-columns:minmax(0,1fr)}.hcard{max-width:440px}}
+@media(max-width:760px){
+  .herogrid{padding:34px 0 44px;gap:30px}
+  .hero--d .hero__in{gap:20px}
+  .hpoints{grid-template-columns:minmax(0,1fr);gap:10px}
+  .hpoints li{font-size:.93rem}
+  .hpoints__ic{width:30px;height:30px}
+  .hcard{padding:22px 20px 20px;gap:17px}
+  .hcard__seal,.hcard__g{width:54px;height:54px}
+}
+@media(max-width:560px){.hero--d .cta-row .btn{flex:1 1 100%}}
+@media(max-width:420px){.hbadge{padding:8px 11px;gap:6px;font-size:.76rem}}
+
+/* Trust bar under the hero */
+.tbar{background:var(--mist);border-bottom:1px solid var(--line)}
+.tbar__in{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 30px;padding:26px 0}
+.tbar__i{display:flex;align-items:center;gap:14px;min-width:0}
+.tbar__ic{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--teal-soft);color:var(--teal)}
+.tbar__ic--g{background:#fff;box-shadow:0 0 0 1px var(--line),0 6px 14px -8px rgba(6,55,61,.4)}
+.tbar__tx{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tbar__tx b{font-size:.95rem;font-weight:700;line-height:1.25;color:var(--ink)}
+.tbar__tx>span{font-size:.82rem;line-height:1.35;color:var(--muted)}
+.tbar__rate{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.tbar__rate .stars{max-width:100%;height:auto}
+@media(max-width:1100px){.tbar__in{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){
+  .tbar__in{gap:18px 14px;padding:22px 0}
+  .tbar__i{align-items:flex-start;gap:10px}
+  .tbar__ic{width:36px;height:36px}
+  .tbar__ic svg{width:17px;height:17px}
+  .tbar__tx b{font-size:.86rem}
+  .tbar__tx>span{font-size:.76rem}
+}
+
+/* Amenities, closing the approach section. The bullet is the logo figure. */
+.amen{padding-top:clamp(4px,1.5vw,16px)}
+.amen__t{font:700 .76rem/1 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+.amen__list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:820px}
+.amen__list li{display:inline-flex;align-items:center;gap:10px;padding:11px 20px 11px 14px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;font-size:.95rem;font-weight:500;line-height:1.25;color:var(--ink)}
+.amen__list svg{flex:none;width:22px;height:22px}
+.amen__cta{justify-content:center;padding-top:6px}
+@media(max-width:560px){
+  .amen__list{gap:8px}
+  .amen__list li{font-size:.86rem;padding:9px 14px 9px 10px;gap:8px}
+  .amen__list svg{width:19px;height:19px}
+  .amen__cta .btn{flex:1 1 100%}
+}
 
 /* "You are not the first": photograph carrying a pulled review line */
 .whysplit{display:grid;grid-template-columns:.86fr 1.14fr;gap:clamp(30px,5vw,68px);align-items:center}
@@ -474,8 +550,32 @@ em{font-style:italic;font-weight:400}
 /* Reviews header: one compact row instead of a tall two-column block */
 .revhd{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
 .revfoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:22px}
-.revs--static{margin-bottom:0}
-.revs--static .revs__rail{cursor:grab}
+.revs--static{margin-bottom:0;container-type:inline-size}
+/* Cards snap to the page's left text edge, so the first card lines up with
+   the heading above it; --pad is that edge measured from the screen side. */
+.revs--static .revs__rail{--pad:calc((100cqw - min(1140px, 100cqw - 44px)) / 2);
+  position:relative;cursor:grab;scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);overscroll-behavior-x:contain}
+.revs--static .revs__rail.is-drag{scroll-snap-type:none;user-select:none;-webkit-user-select:none}
+.revs--static .revs__track{padding:4px var(--pad) 10px}
+.revs--static .rev{scroll-snap-align:start}
+/* Edge fades only where there is more to scroll to */
+.revs--static::before,.revs--static::after{width:44px;transition:opacity .25s}
+.revs--static.at-start::before,.revs--static.at-end::after{opacity:0}
+
+/* Prev / next, with a thin bar showing where you are in the row */
+.revnav{display:flex;align-items:center;gap:10px;flex:1 1 auto;min-width:0;max-width:440px}
+.revnav__b{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;cursor:pointer;padding:0;
+  background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);
+  transition:background-color .2s,color .2s,border-color .2s,opacity .2s}
+@media(hover:hover){.revnav__b:hover:not(:disabled){background:#fff;color:var(--teal-deep);border-color:#fff}}
+.revnav__b:disabled{opacity:.3;cursor:default}
+.revnav__bar{position:relative;flex:1;height:2px;margin-left:10px;border-radius:2px;background:rgba(255,255,255,.18);overflow:hidden}
+.revnav__bar i{position:absolute;top:0;bottom:0;left:0;width:20%;border-radius:2px;background:var(--leaf)}
+@media(max-width:560px){
+  .revnav{max-width:none;flex-basis:100%}
+  .revs--static::before,.revs--static::after{width:18px}
+  .revfoot .btn{flex:1 1 100%}
+}
 
 /* The AI summary sits in the rail as a card, on brand colour so it never
    reads as somebody's testimonial */
@@ -486,16 +586,19 @@ em{font-style:italic;font-weight:400}
 .rev--ai .rev__body{color:rgba(255,255,255,.88)}
 .rev--ai .rev__more{color:var(--leaf)}
 .rev--ai__av{background:rgba(138,195,2,.18);color:var(--leaf)}
-/* The summary card is wider and never clamped — it reads in full at rest.
-   Below the two-column breakpoint it scrolls inside itself rather than
-   stretching every other card in the row. */
+/* The summary card is wider and never clamped or boxed — it reads in full at
+   rest at every width. On narrower screens it is the tallest card, so the
+   other reviews get a longer clamp to fill the same height. */
 .rev--ai{flex:0 0 520px}
 .rev--ai .rev__body{display:block;-webkit-line-clamp:unset;overflow:visible}
 @media(max-width:860px){
-  .rev--ai{flex-basis:330px}
-  .rev--ai .rev__body{max-height:300px;overflow-y:auto;scrollbar-width:thin;padding-right:4px}
+  .rev--ai{flex-basis:400px}
+  .revs--static .rev__body{-webkit-line-clamp:12}
 }
-@media(max-width:560px){.rev--ai{flex-basis:270px}}
+@media(max-width:560px){
+  .revs--static .rev,.revs--static .rev--ai{flex-basis:min(330px, calc(100cqw - 84px))}
+  .revs--static .rev__body{-webkit-line-clamp:15}
+}
 
 /* FAQ: prompt column left, answers right */
 .faqsplit{display:grid;grid-template-columns:35fr 65fr;gap:clamp(28px,4.5vw,62px);align-items:start}
@@ -544,6 +647,12 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     <path fill="currentColor" d="M12 1L14.33 3.31L17.5 2.47L18.36 5.64L21.53 6.5L20.69 9.67L23 12L20.69 14.33L21.53 17.5L18.36 18.36L17.5 21.53L14.33 20.69L12 23L9.67 20.69L6.5 21.53L5.64 18.36L2.47 17.5L3.31 14.33L1 12L3.31 9.67L2.47 6.5L5.64 5.64L6.5 2.47L9.67 3.31Z"/>
     <path fill="#fff" d="M10.65 15.64l-3.01-3.01 1.32-1.32 1.69 1.69 4.24-4.24 1.32 1.33z"/>
   </symbol>
+  <!-- The Invigorate figure, traced from the logo, used as a list bullet -->
+  <symbol id="inv-mark" viewBox="0 0 32 32">
+    <path fill="#7cc242" d="M14.6 15.4Q10.99 7.25 2.2 5.8Q5.81 13.95 14.6 15.4ZM17.4 15.4Q26.19 13.95 29.8 5.8Q21.01 7.25 17.4 15.4ZM14.2 19.2Q7.95 15.07 0.9 17.6Q7.15 21.72 14.2 19.2ZM17.8 19.2Q24.85 21.72 31.1 17.6Q24.05 15.07 17.8 19.2ZM14.8 22.6Q8.66 23.1 5.2 28.2Q11.34 27.7 14.8 22.6ZM17.2 22.6Q20.66 27.7 26.8 28.2Q23.34 23.1 17.2 22.6Z"/>
+    <path fill="none" stroke="#0e7c86" stroke-width="2" stroke-linecap="round" d="M9.2 4.4C11.8 9.6 19.4 13.2 19.4 20C19.4 24.6 17.4 27.6 16 30.2M22.8 4.4C20.2 9.6 12.6 13.2 12.6 20C12.6 24.6 14.6 27.6 16 30.2"/>
+    <circle fill="#0e7c86" cx="16" cy="4.2" r="2.7"/>
+  </symbol>
 </defs></svg>
 
 <!-- ===================== SPINE ===================== -->
@@ -565,7 +674,9 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
       <img src="data:image/webp;base64,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" alt="Invigorate Behavioral Health" width="411" height="161">
     </a>
     <div class="hdr__right">
+
       <span class="hdr__note">Confidential &middot; Answered 24/7</span>
+
       <a class="btn btn--primary btn--sm" href="tel:+18888912240">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (888) 891-2240
@@ -588,6 +699,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
       <span class="pill fade-up d1"><span class="pdot" aria-hidden="true"></span><span data-dyn>Admissions Available Today</span></span>
       <h1 class="fade-up d2">Treatment That<br><em>Meets You Where You Are</em></h1>
       <p class="hero__lede fade-up d3"><span data-dyn-pre></span>Real recovery starts with one call.<span data-dyn-post></span></p>
+
       <div class="chips fade-up d4">
         <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5z"/><path d="M3 12.5 12 17l9-4.5"/><path d="M3 17.5 12 22l9-4.5"/></svg>All Levels of Care</span>
         <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>Dual-Diagnosis Treatment</span>
@@ -595,6 +707,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
         <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18h18"/><path d="M7 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/><path d="M12 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/></svg>Luxury Accommodations</span>
         <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 19h20"/><path d="M2.5 16.5 8 8l3.5 5.2L14 9.5l6 7"/><path d="M17 6.5c0 1.4-1.1 2.5-2.5 2.5"/></svg>Adventure &amp; Holistic Therapies</span>
       </div>
+
       <div class="cta-row fade-up d5">
         <a class="btn btn--light btn--lg" href="tel:+18888912240">Call (888) 891-2240</a>
         <a class="btn btn--ghost btn--lg" href="#admissions">Verify Insurance</a>
@@ -603,8 +716,11 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
       <p class="fine fade-up d5">Confidential &middot; No commitment required</p>
 
     </div>
+
   </div>
 </section>
+
+
 
 
 <!-- ===================== EMPATHY ===================== -->
@@ -723,10 +839,13 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
         <span class="feat__tx"><b>FMLA &amp; Medical Leave Guidance</b><p>Navigate work and leave documentation stress-free.</p></span>
       </div>
       <div class="feat">
+
         <span class="feat__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18h18"/><path d="M7 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/><path d="M12 10V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/></svg></span>
         <span class="feat__tx"><b>Luxury Accommodations</b><p>Private rooms, designed for focus and comfort.</p></span>
+
       </div>
     </div>
+
   </div>
 </section>
 
@@ -738,7 +857,7 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
       <div class="stack g20">
         <span class="eyebrow">In their words</span>
         <h2>Lives Changed.<br><em>Every Day.</em></h2>
-        <div class="grate"><svg viewBox="0 0 48 48" width="31" height="31" aria-hidden="true"><use href="#g-logo"/></svg><div class="grate__body"><div class="grate__row"><span class="grate__n">4.8</span><svg class="stars" viewBox="0 0 116 20" width="110" height="19" role="img" aria-label="4.8 out of 5 stars"><defs><linearGradient id="st-hero" x1="0" x2="1" y1="0" y2="0"><stop offset="80%" stop-color="#FBBC04"/><stop offset="80%" stop-color="#bdc1c6"/></linearGradient></defs><path transform="translate(0,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(24,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(48,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(72,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(96,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="url(#st-hero)"/></svg></div><div class="grate__sub"><b>Google Reviews</b><span class="vchk" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><use href="#verified"/></svg></span>Verified</div></div></div>
+        <div class="grate"><svg viewBox="0 0 48 48" width="31" height="31" aria-hidden="true"><use href="#g-logo"/></svg><div class="grate__body"><div class="grate__row"><span class="grate__n">4.9</span><svg class="stars" viewBox="0 0 116 20" width="110" height="19" role="img" aria-label="4.9 out of 5 stars"><defs><linearGradient id="st-hero" x1="0" x2="1" y1="0" y2="0"><stop offset="90%" stop-color="#FBBC04"/><stop offset="90%" stop-color="#bdc1c6"/></linearGradient></defs><path transform="translate(0,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(24,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(48,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(72,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(96,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="url(#st-hero)"/></svg></div><div class="grate__sub"><b>Google Reviews</b><span class="vchk" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><use href="#verified"/></svg></span>Verified</div></div></div>
       </div>
 
       <div class="aisum">
@@ -784,8 +903,8 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     <div class="trust">
       <div class="trust__i">
         <svg class="trust__glogo" viewBox="0 0 48 48" width="30" height="30" aria-hidden="true"><use href="#g-logo"/></svg>
-        <span class="trust__n">4.8 / 5</span>
-        <svg class="stars" viewBox="0 0 116 20" width="116" height="20" role="img" aria-label="4.8 out of 5 stars"><defs><linearGradient id="st-trust" x1="0" x2="1" y1="0" y2="0"><stop offset="80%" stop-color="#FBBC04"/><stop offset="80%" stop-color="#bdc1c6"/></linearGradient></defs><path transform="translate(0,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(24,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(48,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(72,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(96,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="url(#st-trust)"/></svg>
+        <span class="trust__n">4.9 / 5</span>
+        <svg class="stars" viewBox="0 0 116 20" width="116" height="20" role="img" aria-label="4.9 out of 5 stars"><defs><linearGradient id="st-trust" x1="0" x2="1" y1="0" y2="0"><stop offset="90%" stop-color="#FBBC04"/><stop offset="90%" stop-color="#bdc1c6"/></linearGradient></defs><path transform="translate(0,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(24,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(48,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(72,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="#FBBC04"/><path transform="translate(96,0)" d="M10 1.7l2.47 5.01 5.53.8-4 3.9.94 5.51L10 14.33 5.06 16.92l.94-5.51-4-3.9 5.53-.8z" fill="url(#st-trust)"/></svg>
         <span class="trust__l">Google Reviews</span>
       </div>
       <div class="trust__i">
@@ -1159,14 +1278,44 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
   }
 
   /* ------------------------------------------------------------------
-     Review rail: drifts on its own, but it is a real scroll container —
-     wheel, drag, touch and keyboard all work. Auto-scroll yields the
-     moment someone touches it and picks back up once they stop. The cards
-     are rendered twice, so wrapping at the halfway mark is seamless.
+     Review cards: reviews run from a couple of lines to a couple of
+     paragraphs. Cards clamp so the row keeps one height; anything actually
+     cut off gets a Read more, so no review is permanently hidden. Opening
+     one tells the rail, which holds still while it is being read.
      ------------------------------------------------------------------ */
   (function () {
     var rail = document.getElementById('revRail');
     if (!rail) return;
+    Array.prototype.forEach.call(rail.querySelectorAll('.rev'), function (card) {
+      var body = card.querySelector('.rev__body');
+      if (!body || card.classList.contains('rev--ai')) return;
+      if (body.scrollHeight <= body.clientHeight + 4) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rev__more';
+      btn.textContent = 'Read full review';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.addEventListener('click', function () {
+        var open = card.classList.toggle('is-open');
+        btn.textContent = open ? 'Show less' : 'Read full review';
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (!open) body.scrollTop = 0;
+        rail.dispatchEvent(new CustomEvent('rev:toggle', { detail: open }));
+      });
+      card.appendChild(btn);
+    });
+  })();
+
+  /* ------------------------------------------------------------------
+     Design C review rail: drifts on its own, but it is a real scroll
+     container — wheel, drag, touch and keyboard all work. Auto-scroll
+     yields the moment someone touches it and picks back up once they stop.
+     The cards are rendered twice, so wrapping at the halfway mark is
+     seamless.
+     ------------------------------------------------------------------ */
+  (function () {
+    var rail = document.getElementById('revRail');
+    if (!rail || rail.closest('.revs--static')) return;
     var reduce = window.matchMedia &&
                  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1214,6 +1363,11 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     rail.addEventListener('scroll', function () {
       if (paused || dragging) { wrap(); }
     }, { passive: true });
+    rail.addEventListener('rev:toggle', function (ev) {
+      openCount += ev.detail ? 1 : -1;
+      pos = rail.scrollLeft;
+      hold();
+    });
 
     rail.addEventListener('pointerdown', function (ev) {
       if (ev.pointerType === 'mouse' && ev.button !== 0) return;
@@ -1246,37 +1400,150 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     rail.addEventListener('pointerup', endDrag);
     rail.addEventListener('pointercancel', endDrag);
 
-    /* Reviews run from a couple of lines to a couple of paragraphs. Cards clamp
-       to 9 lines so the row keeps one height; anything actually cut off gets a
-       Read more, so no review is permanently hidden. */
-    Array.prototype.forEach.call(rail.querySelectorAll('.rev'), function (card) {
-      var body = card.querySelector('.rev__body');
-      if (!body || card.classList.contains('rev--ai')) return;
-      if (body.scrollHeight <= body.clientHeight + 4) return;
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'rev__more';
-      btn.textContent = 'Read full review';
-      btn.setAttribute('aria-expanded', 'false');
-      btn.addEventListener('click', function () {
-        var open = card.classList.toggle('is-open');
-        openCount += open ? 1 : -1;
-        btn.textContent = open ? 'Show less' : 'Read full review';
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if (!open) body.scrollTop = 0;
-        pos = rail.scrollLeft;
-        hold();
-      });
-      card.appendChild(btn);
-    });
-
-    /* Design D leaves the rail still until the visitor interacts with it;
-       design C drifts on its own. Both stay fully scrollable either way. */
-    var autoScroll = !rail.closest('.revs--static');
     window.requestAnimationFrame(function () {
       pos = rail.scrollLeft = 0;
-      if (autoScroll && !reduce) window.requestAnimationFrame(tick);
+      if (!reduce) window.requestAnimationFrame(tick);
     });
+  })();
+
+  /* ------------------------------------------------------------------
+     Design D review slider: one pass of cards with real ends, so nothing
+     wraps or jumps. Touch and trackpads scroll natively and snap card to
+     card; a mouse can grab and fling it; the arrow buttons page through.
+     ------------------------------------------------------------------ */
+  (function () {
+    var rail = document.getElementById('revRail');
+    if (!rail || !rail.closest('.revs--static')) return;
+    var box = rail.parentNode;
+    var track = rail.querySelector('.revs__track');
+    var cards = Array.prototype.slice.call(rail.querySelectorAll('.rev'));
+    var prev = document.getElementById('revPrev');
+    var next = document.getElementById('revNext');
+    var bar = document.getElementById('revBar');
+    var reduce = window.matchMedia &&
+                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function maxScroll() { return rail.scrollWidth - rail.clientWidth; }
+    function pad() { return parseFloat(getComputedStyle(track).paddingLeft) || 0; }
+    /* Scroll position that puts card i at the snap edge */
+    function stop(i) { return Math.min(Math.max(cards[i].offsetLeft - pad(), 0), maxScroll()); }
+    function nearest(x) {
+      var best = 0, d = Infinity;
+      cards.forEach(function (c, i) {
+        var dd = Math.abs(stop(i) - x);
+        if (dd < d) { d = dd; best = i; }
+      });
+      return best;
+    }
+
+    var raf = 0;
+    function paint() {
+      raf = 0;
+      var x = rail.scrollLeft, max = maxScroll();
+      var atStart = x <= 2, atEnd = x >= max - 2;
+      box.classList.toggle('at-start', atStart);
+      box.classList.toggle('at-end', atEnd);
+      if (prev) prev.disabled = atStart;
+      if (next) next.disabled = atEnd;
+      if (bar) {
+        var f = Math.min(rail.clientWidth / rail.scrollWidth, 1);
+        var p = max > 0 ? x / max : 0;
+        bar.style.width = (f * 100) + '%';
+        bar.style.transform = 'translateX(' + (p * (1 - f) / f * 100) + '%)';
+      }
+    }
+    function schedule() { if (!raf) raf = window.requestAnimationFrame(paint); }
+    rail.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      rail.scrollTo({ left: stop(i), behavior: reduce ? 'auto' : 'smooth' });
+    }
+    /* Page by as many whole cards as are on screen. A regular card is the
+       unit; the summary card is wider, so it is not used for measuring. */
+    function perPage() {
+      var unit = cards[cards.length - 1].offsetWidth + 16;
+      return Math.max(1, Math.floor((rail.clientWidth - 2 * pad() + 16) / unit));
+    }
+    function page(dir) {
+      if (dir > 0 && rail.scrollLeft >= maxScroll() - 2) return;
+      goTo(nearest(rail.scrollLeft) + dir * perPage());
+    }
+    if (prev) prev.addEventListener('click', function () { page(-1); });
+    if (next) next.addEventListener('click', function () { page(1); });
+
+    /* Mouse drag. Touch and pen are left to native scrolling, which already
+       has momentum and snapping. Snapping is switched off while dragging so
+       the row follows the pointer, then the release flings it to a card. */
+    var down = false, captured = false, startX = 0, startScroll = 0;
+    var lastX = 0, lastT = 0, vel = 0, suppressClick = false, settleTimer = null;
+
+    function settle() {
+      window.clearTimeout(settleTimer);
+      var done = function () {
+        rail.removeEventListener('scrollend', done);
+        window.clearTimeout(settleTimer);
+        rail.classList.remove('is-drag');
+      };
+      rail.addEventListener('scrollend', done);
+      settleTimer = window.setTimeout(done, 700);
+    }
+
+    var CONTROLS = 'button, a, input, select, textarea, [role="button"]';
+    /* Stop a grab from starting a text selection */
+    rail.addEventListener('mousedown', function (ev) {
+      if (ev.button === 0 && !ev.target.closest(CONTROLS)) ev.preventDefault();
+    });
+    rail.addEventListener('pointerdown', function (ev) {
+      if (ev.pointerType !== 'mouse' || ev.button !== 0) return;
+      if (ev.target.closest(CONTROLS)) return;
+      down = true; captured = false;
+      startX = lastX = ev.clientX; startScroll = rail.scrollLeft;
+      lastT = ev.timeStamp; vel = 0;
+    });
+    rail.addEventListener('pointermove', function (ev) {
+      if (!down) return;
+      var dx = ev.clientX - startX;
+      if (!captured) {
+        if (Math.abs(dx) < 5) return;
+        captured = true;
+        window.clearTimeout(settleTimer);
+        rail.classList.add('is-drag');
+        rail.setPointerCapture && rail.setPointerCapture(ev.pointerId);
+      }
+      var dt = ev.timeStamp - lastT;
+      if (dt > 0) vel = 0.8 * ((ev.clientX - lastX) / dt) + 0.2 * vel;
+      lastX = ev.clientX; lastT = ev.timeStamp;
+      rail.scrollLeft = startScroll - dx;
+    });
+    function release(ev) {
+      if (!down) return;
+      down = false;
+      if (!captured) return;
+      suppressClick = true;
+      window.setTimeout(function () { suppressClick = false; }, 0);
+      /* A pause before letting go cancels the fling */
+      if (ev && ev.timeStamp - lastT > 90) vel = 0;
+      var here = nearest(rail.scrollLeft);
+      var i = nearest(rail.scrollLeft - vel * 260);
+      /* Any real flick moves at least one card, even a short one */
+      if (i === here && Math.abs(vel) > 0.25) i = here + (vel < 0 ? 1 : -1);
+      goTo(i);
+      settle();
+    }
+    rail.addEventListener('pointerup', release);
+    rail.addEventListener('pointercancel', release);
+    rail.addEventListener('lostpointercapture', release);
+    rail.addEventListener('click', function (ev) {
+      if (suppressClick) { ev.preventDefault(); ev.stopPropagation(); }
+    }, true);
+
+    /* Opening a long review can change the row's width, so repaint the arrows */
+    rail.addEventListener('rev:toggle', schedule);
+
+    rail.scrollLeft = 0;
+    paint();
   })();
 
   /* --- dialogs: plan list and the levels-of-care detail ---

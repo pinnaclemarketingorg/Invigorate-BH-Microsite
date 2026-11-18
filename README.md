@@ -44,15 +44,23 @@ neither design ships the other's markup.
 
 **D** — `lpd`, `lpd-dli`, `lpd-dki`, `bing-lpd`. Same content, reworked:
 
-- Hero closes on the Google rating badge rather than a plain reassurance line.
+- Hero is two columns: the copy with six selling points, and a card on the
+  right carrying the Joint Commission seal, the Google rating and the
+  Confidential / Answered 24/7 badges. A four-item trust bar sits right under
+  it. The header adds a two-line reassurance and a Verify Insurance button.
 - "You are not the first" is a photograph carrying a pulled review line, headed
   *Recovery isn't just possible. It happens here, every day.* (the pull-quote
   that repeated this further down is gone).
 - Levels of care each open a **What to expect** dialog — four specifics and a
   benefits check. Still three cards.
-- Reviews are static until touched, in a much shorter section: one header row,
-  and the AI summary sits **in** the rail as a card on brand colour so it reads
-  as a summary rather than somebody's testimonial. Single pass, 26 cards.
+- Reviews are a slider with real ends (single pass, 26 cards, no wrapping):
+  native touch/trackpad scrolling with card snapping, mouse drag with fling,
+  and prev/next buttons with a position bar. The AI summary sits **in** the
+  rail as a card on brand colour, and is never clamped or boxed at any width;
+  on phones the other cards clamp longer to match its height.
+- Our approach swaps Luxury Accommodations for Aftercare & Alumni Support and
+  closes on an amenities list, bulleted with the logo figure (`#inv-mark` in
+  the sprite, traced from the logo).
 - FAQ is 35/65, prompts left (sticky) and answers right.
 
 ## Variants
@@ -99,7 +107,8 @@ failure falls back silently:
 ## Reviews
 
 `REVIEWS` in `src/build.py` holds the Google reviews as `(name, stars, text)`,
-a curated selection from a profile averaging 4.8. The build renders the list
+a curated selection from a profile averaging 4.9 (`RATING` in `build.py`
+drives every star row and badge). The build renders the list
 twice into a single horizontal rail so it can wrap seamlessly mid-scroll, which
 is why the page contains twice as many cards as reviews.
 

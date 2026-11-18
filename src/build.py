@@ -457,6 +457,9 @@ def _rank(reviews):
 
 REVIEWS = _rank(REVIEWS)
 
+# Google rating shown in the hero card, trust bar, trust strip and badges.
+RATING = 4.9
+
 AVATARS = ["#1a73e8", "#188038", "#c5221f", "#e37400", "#7b1fa2",
            "#00796b", "#ad1457", "#0b8043", "#4285f4"]
 
@@ -568,13 +571,13 @@ def ai_summary_card():
         '<path d="M18.5 14l.85 2.55L21.9 17.4l-2.55.85L18.5 20.8l-.85-2.55L15.1 17.4l2.55-.85z"/>'
         "</svg></span>"
         '<span class="rev__who"><b>AI summary</b>'
-        '<span class="rev__meta">From 26 Google reviews</span></span>'
+        '<span class="rev__meta">From our Google reviews</span></span>'
         "</header>"
         '<p class="rev__body">%s</p></article>' % body
     )
 
 
-def rating_badge(uid, rating=4.8):
+def rating_badge(uid, rating=RATING):
     return (
         '<div class="grate">'
         '<svg viewBox="0 0 48 48" width="31" height="31" aria-hidden="true"><use href="#g-logo"/></svg>'
@@ -737,10 +740,11 @@ def main():
     base = open(os.path.join(SRC, "template.html"), encoding="utf-8").read()
     base = base.replace("__CARRIER_STRIP__", carrier_strip())
     base = base.replace("__RATING_BADGE_DARK__", rating_badge("st-hero"))
-    base = base.replace("__STARS_LIGHT__", stars_svg(4.8, "#bdc1c6", "st-trust", 20))
+    base = base.replace("__STARS_LIGHT__", stars_svg(RATING, "#bdc1c6", "st-trust", 20))
+    base = base.replace("__STARS_HERO__", stars_svg(RATING, "rgba(255,255,255,.28)", "st-hcard", 18))
+    base = base.replace("__STARS_TBAR__", stars_svg(RATING, "#c9d3d1", "st-tbar", 15))
     base = base.replace("__REVIEW_CARDS__", review_cards())
     base = base.replace("__REVIEW_CARDS_ONE__", ai_summary_card() + review_cards(single=True))
-    base = base.replace("__RATING_BADGE_HERO__", rating_badge("st-hero2"))
     print("reviews  %d cards x2 passes" % len(REVIEWS))
 
     total = 0
