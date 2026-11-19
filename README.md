@@ -76,8 +76,11 @@ Both modes write with `textContent` and only ever **replace** copy that is
 already in the HTML, so the page is complete before any of this runs and stays
 complete if it fails. Fallback is always `Admissions Available Today`.
 
-Both render into the hero pill as `{Place} Admissions Available Today`, and
-fall back to plain `Admissions Available Today` when nothing resolves.
+On design C both render into the hero pill as `{Place} Admissions Available
+Today`, and fall back to plain `Admissions Available Today` when nothing
+resolves. On design D (`lpd-dki`, `lpd-dli`) the pill stays static and the
+place replaces "Google review" on Donna's byline in the Why section
+(`Donna · {Place}`); unresolved, it keeps reading `Donna · Google review`.
 
 **`lpc-dki`** reads `?area=`. Values are stripped to letters, spaces, hyphens
 and apostrophes, limited to 2–38 characters and 5 words, then title-cased:

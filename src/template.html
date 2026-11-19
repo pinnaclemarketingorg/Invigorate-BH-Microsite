@@ -702,7 +702,7 @@ __CTM_TAG__
   <div class="hero__scrim" aria-hidden="true"></div>
   <div class="wrap<!--D:start--> herogrid<!--D:end-->">
     <div class="hero__in">
-      <span class="pill fade-up d1"><span class="pdot" aria-hidden="true"></span><span data-dyn>Admissions Available Today</span></span>
+      <span class="pill fade-up d1"><span class="pdot" aria-hidden="true"></span><span<!--C:start--> data-dyn<!--C:end-->>Admissions Available Today</span></span>
       <h1 class="fade-up d2">Treatment That<br><em>Meets You Where You Are</em></h1>
       <p class="hero__lede fade-up d3"><span data-dyn-pre></span>Real recovery starts with one call.<span data-dyn-post></span></p>
 <!--D:start-->
@@ -800,7 +800,7 @@ __CTM_TAG__
       <img src="__IMG_g1__" alt="A bright open living room with light oak furniture and mustard armchairs" loading="lazy" width="642" height="596">
       <figcaption class="whyquote">
         <p>&hellip;didn&rsquo;t just SAVE my life, they helped me to build a life worth living!</p>
-        <cite>Donna &middot; Google review</cite>
+        <cite>Donna &middot; <span data-dyn-cite>Google review</span></cite>
       </figcaption>
     </figure>
     <div class="stack g28">
@@ -1813,12 +1813,15 @@ __CARE_MODALS__
     return hit || '';
   }
 
-  /* "{Place} Admissions Available Today", or the plain line if nothing
-     resolves. Written with textContent, never markup. */
+  /* Design C: "{Place} Admissions Available Today" on the hero pill.
+     Design D keeps the pill static and puts the place on the review
+     byline instead ("Donna · {Place}"). Unresolved, both keep their
+     fallback copy. Written with textContent, never markup. */
   function paintDynamic(place) {
-    var el = document.querySelector('[data-dyn]');
-    if (!el) return;
-    el.textContent = place ? place + ' ' + DYN_FALLBACK : DYN_FALLBACK;
+    var pill = document.querySelector('[data-dyn]');
+    if (pill) pill.textContent = place ? place + ' ' + DYN_FALLBACK : DYN_FALLBACK;
+    var cite = document.querySelector('[data-dyn-cite]');
+    if (cite && place) cite.textContent = place;
     document.documentElement.setAttribute('data-dyn-state', place ? 'resolved' : 'fallback');
   }
 

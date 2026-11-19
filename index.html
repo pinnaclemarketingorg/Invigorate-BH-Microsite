@@ -1672,12 +1672,15 @@ j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNo
     return hit || '';
   }
 
-  /* "{Place} Admissions Available Today", or the plain line if nothing
-     resolves. Written with textContent, never markup. */
+  /* Design C: "{Place} Admissions Available Today" on the hero pill.
+     Design D keeps the pill static and puts the place on the review
+     byline instead ("Donna · {Place}"). Unresolved, both keep their
+     fallback copy. Written with textContent, never markup. */
   function paintDynamic(place) {
-    var el = document.querySelector('[data-dyn]');
-    if (!el) return;
-    el.textContent = place ? place + ' ' + DYN_FALLBACK : DYN_FALLBACK;
+    var pill = document.querySelector('[data-dyn]');
+    if (pill) pill.textContent = place ? place + ' ' + DYN_FALLBACK : DYN_FALLBACK;
+    var cite = document.querySelector('[data-dyn-cite]');
+    if (cite && place) cite.textContent = place;
     document.documentElement.setAttribute('data-dyn-state', place ? 'resolved' : 'fallback');
   }
 
