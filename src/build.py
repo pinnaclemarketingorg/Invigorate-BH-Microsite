@@ -402,6 +402,33 @@ REVIEWS = [
      "recommend Invigorate enough—it’s truly a place of transformation and hope. Thank "
      "you to everyone at Invigorate for giving me a second chance at life. You’ve made "
      "an impact I’ll never forget!"),
+    ("Brianna", 5, "Best place I’ve been to! The staff is super nice and super on it a "
+     "really are here for us. shout out to Isaiah, Shawn, &amp; Sara !! You guys are "
+     "amazing and have made my experience here super comfortable!"),
+    ("Gregory", 5, "IBH is truly a wonderful place with a welcoming environment and a "
+     "staff that genuinely cares about the people they serve. From the moment you walk "
+     "through the doors, you feel comfortable, supported, and treated with kindness and "
+     "respect. They are passionate about mental health and making a positive difference "
+     "in people’s lives."),
+    ("Mitchell", 5, "Invigorate Behavioral Health truly helped save my life. The staff "
+     "and people there treated me with compassion, respect, and genuine care. I’m "
+     "incredibly grateful for everything they did for me and for helping me find my way "
+     "back to myself. If you’re looking for treatment, look no further. Do it. Change "
+     "your life. You won’t regret it."),
+    ("Izaiah", 5, "I can’t express enough, how deeply grateful I am to the staff and "
+     "the entire team at Invigorate. This place truly saved my life when I walked "
+     "through their doors. I was struggling not only with alcohol but also my mental "
+     "health… I was lost, overwhelmed and unsure if there was any hope left for me, "
+     "but from the very first day, I felt a sense of care and support that had never "
+     "experienced before. The staff here are not just professionals; they are genuinely "
+     "compassionate people who take the time to understand and listen to you. The "
+     "therapy programs, the group sessions, and the personalized treatment plan gave me "
+     "the tools I needed to take back my life. The facility is beautiful and provided a "
+     "safe nurturing environment where I could face my past and learn how to cope with "
+     "future challenges. Today I am at a place of strength and clarity that I did not "
+     "know was possible. If you’re struggling and looking for real, lasting change, I "
+     "highly recommend Invigorate. They not only helped me get clean, they helped me "
+     "heal in every way that matters. Thank you Invigorate for giving me my life back."),
 ]
 
 
@@ -413,27 +440,31 @@ REVIEWS = [
 REVIEW_ORDER = [
     "Marilyn",      # staff in recovery, nicotine policy, outings; "most of them anyway"
     "Bryan",        # two months, still sober today, refers people
-    "Chuck",        # names twelve staff; specific and emotional
     "Patrick",      # flew in two hours after calling; field trips; 30 days
+    "Izaiah",       # alcohol and mental health; lost, then "strength and clarity"
     "Donna",        # five months; "sounding like a dang paid advertisement"
-    "Jimmy Mack",   # grief work, classes, friendships that outlasted treatment
+    "Erika",        # "like winning the lottery"; Rosie the housekeeper, Geronimo the chef
     "amirreza",     # one week, medication taper, reporting back a year later
-    "Kailey",       # names Shane; "saving my life"
-    "Anthony Ball", # names Gabe and Teresa
-    "Erika",        # Rosie the housekeeper, Geronimo the chef
-    "Jacob",        # speaks directly to the reader's fear of going
+    "Chuck",        # names twelve staff; specific and emotional
+    "Jimmy Mack",   # grief work, classes, friendships that outlasted treatment
     "Carl",         # concrete stakes: child and work
-    "robin",        # explains the behavioural work in her own voice
-    "Dylon",        # "down to literally nothing"; seen by a doctor immediately
-    "Lisa",         # "not one moment that I felt like I didn't matter"
+    "Mitchell",     # speaks straight to the reader: "Do it. Change your life."
     "Jeff",         # booked 30 days, stayed 35
-    "Taylor",       # concrete amenities
+    "Jacob",        # speaks directly to the reader's fear of going
+    "Kailey",       # names Shane; "saving my life"
+    "Dylon",        # "down to literally nothing"; seen by a doctor immediately
+    "robin",        # explains the behavioural work in her own voice
+    "Lisa",         # "not one moment that I felt like I didn't matter"
+    "Brianna",      # written mid-stay; names Isaiah, Shawn and Sara
+    "Anthony Ball", # names Gabe and Teresa
     "Dan",          # first Dan entry
-    "Danielle",
+    "Taylor",       # concrete amenities
     "Dan",          # second Dan entry
+    "Danielle",
     "Koltun",
     "Katie",
     "Chris",
+    "Gregory",      # warm but general
     "Rich",
     "Joey",
     "Antonio",
@@ -462,6 +493,26 @@ RATING = 4.9
 
 AVATARS = ["#1a73e8", "#188038", "#c5221f", "#e37400", "#7b1fa2",
            "#00796b", "#ad1457", "#0b8043", "#4285f4"]
+
+# Reviewers' Google profile photos, saved from their public reviews into
+# src/assets/avatars/. Anyone not listed gets the coloured initial.
+AVATAR_PHOTOS = {
+    "Marilyn": "marilyn.jpg", "Patrick": "patrick.jpg", "Donna": "donna.jpg",
+    "Jimmy Mack": "jimmy-mack.jpg", "Anthony Ball": "anthony-ball.jpg",
+    "Danielle": "danielle.jpg", "Katie": "katie.jpg", "Chris": "chris.jpg",
+    "Mitchell": "mitchell.jpg", "Izaiah": "izaiah.jpg",
+}
+_avatar_uris = {}
+
+
+def avatar_photo(name):
+    """Data URI for a reviewer's photo at 2x the 38px circle, or None."""
+    filename = AVATAR_PHOTOS.get(name)
+    if not filename:
+        return None
+    if name not in _avatar_uris:
+        _avatar_uris[name] = encode(os.path.join("avatars", filename), 76, 80)[0]
+    return _avatar_uris[name]
 
 
 def stars_svg(rating, empty, uid=None, height=16):
@@ -552,15 +603,14 @@ def ai_summary_card():
     """The AI summary, sized and shaped like a review card so it sits in the
     rail, but on brand colour so it never reads as somebody's testimonial."""
     body = (
-        "Those who have gone through Invigorate’s programs consistently describe a "
-        "turning point — a place where they finally felt seen, safe, and supported "
-        "enough to do the real work of recovery. Clients speak of staff who showed up "
-        "for them as individuals, not just patients: case managers who advocated "
-        "fiercely on their behalf, technicians who felt like family, and therapists "
-        "who helped them unpack trauma with compassion and skill. Many note that they "
-        "arrived broken and afraid — and left with a sense of community, purpose, and "
-        "a foundation they describe as life-saving. The recurring theme is the same: "
-        "Invigorate didn’t just help them get sober — it helped them want to live again."
+        "Reviewers describe arriving at their lowest point: overwhelmed, scared, some "
+        "down to nothing. What they remember is the people. Staff come up by name again "
+        "and again (Shane, Gabe, Teresa, Isaiah, Sara, Jennifer), and one notes that many "
+        "of the techs have been in recovery themselves. The therapy reached past the "
+        "drinking or using to the grief, the mental health and the patterns underneath. "
+        "People mention the food, the outings and friendships that outlasted treatment. "
+        "Writing back months or a year later, some are still sober or off medication, "
+        "and the line that repeats most is a simple one: this place saved my life."
     )
     return (
         '<article class="rev rev--ai">'
@@ -594,6 +644,9 @@ def rating_badge(uid, rating=RATING):
 def review_cards(single=False):
     """Two identical passes so the rail can wrap seamlessly mid-scroll."""
     def card(i, name, rating, text, clone):
+        photo = avatar_photo(name)
+        face = ('<img src="%s" alt="" width="38" height="38" loading="lazy" decoding="async">'
+                % photo) if photo else name[0].upper()
         return (
             '<article class="rev"%s>'
             '<header class="rev__hd">'
@@ -603,7 +656,7 @@ def review_cards(single=False):
             '<use href="#g-logo"/></svg>'
             '</header>%s<p class="rev__body">%s</p></article>'
             % (' aria-hidden="true"' if clone else "",
-               AVATARS[i % len(AVATARS)], name[0].upper(), name,
+               AVATARS[i % len(AVATARS)], face, name,
                stars_svg(rating, "#dadce0"), text)
         )
 

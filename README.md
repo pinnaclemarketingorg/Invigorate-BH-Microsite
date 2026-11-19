@@ -53,7 +53,7 @@ neither design ships the other's markup.
   that repeated this further down is gone).
 - Levels of care each open a **What to expect** dialog — four specifics and a
   benefits check. Still three cards.
-- Reviews are a slider with real ends (single pass, 26 cards, no wrapping):
+- Reviews are a slider with real ends (single pass, no wrapping):
   native touch/trackpad scrolling with card snapping, mouse drag with fling,
   and prev/next buttons with a position bar. The AI summary sits **in** the
   rail as a card on brand colour, and is never clamped or boxed at any width;
@@ -119,6 +119,10 @@ Running order is set by `REVIEW_ORDER`, strongest first — ranked on concrete
 specifics, a clear before/after, and unusual detail, with generic superlatives
 at the back. A review not named in that list keeps its place at the end and the
 build says so.
+
+Reviewers with a Google profile photo show it in place of the coloured initial:
+the photos live in `src/assets/avatars/`, mapped by name in `AVATAR_PHOTOS`,
+and are inlined as 76px WebP.
 
 Reviews run from two lines to several paragraphs, so cards clamp to 9 lines to
 hold one row height. Anything actually cut off gets a **Read more** that expands
