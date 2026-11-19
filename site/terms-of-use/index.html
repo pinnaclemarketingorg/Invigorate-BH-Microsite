@@ -477,6 +477,23 @@ em{font-style:italic;font-weight:400}
 .hbadge{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:999px;white-space:nowrap;
   border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);font:600 .8rem/1 var(--sans)}
 .hbadge svg{flex:none;color:var(--leaf)}
+/* Insurance pages: the plan's own logo on a white plate tops the card */
+.hins{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:#fff;
+  box-shadow:0 16px 32px -20px rgba(0,0,0,.6)}
+.hins__logo{display:grid;place-items:center;min-height:96px;padding:18px 22px}
+.hins__logo img{height:var(--h);width:auto;max-width:100%;object-fit:contain}
+.hins__ok{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;
+  background:var(--leaf);color:var(--teal-deep);font:700 .88rem/1.2 var(--sans);text-decoration:none}
+.hins__ok svg{flex:none}
+/* Below the two-column hero the card drops under the fold, so a logo chip
+   takes the pill's place to name the plan in the first screen */
+.hinsm{display:none;align-self:flex-start;align-items:center;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;
+  background:#fff;box-shadow:0 12px 26px -16px rgba(0,0,0,.6)}
+.hinsm img{height:calc(var(--h) * .52);width:auto;max-width:150px;object-fit:contain}
+.hinsm b{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;
+  background:var(--leaf);color:var(--teal-deep);font:700 .8rem/1 var(--sans)}
+@media(max-width:960px){.hero--ins .hinsm{display:inline-flex}.hero--ins .pill{display:none}}
+@media(max-width:400px){.hero--ins .cta-row .btn{padding-inline:18px;white-space:normal;text-align:center}}
 @media(max-width:960px){.herogrid{grid-template-columns:minmax(0,1fr)}.hcard{max-width:440px}}
 @media(max-width:760px){
   .herogrid{padding:34px 0 44px;gap:30px}
@@ -486,6 +503,7 @@ em{font-style:italic;font-weight:400}
   .hpoints__ic{width:30px;height:30px}
   .hcard{padding:22px 20px 20px;gap:17px}
   .hcard__seal,.hcard__g{width:54px;height:54px}
+  .hins__logo{min-height:84px;padding:15px 18px}
 }
 @media(max-width:560px){.hero--d .cta-row .btn{flex:1 1 100%}}
 @media(max-width:420px){.hbadge{padding:8px 11px;gap:6px;font-size:.76rem}}

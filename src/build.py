@@ -82,6 +82,28 @@ def encode_logo(filename, display_height, quality=88):
     return "data:image/webp;base64," + base64.b64encode(raw).decode(), len(raw), im.size
 
 
+_ins_logos = {}
+
+
+def ins_logo(filename):
+    """The insurance page's plan logo for the hero card plate: trimmed to its
+    ink, sized for roughly constant optical area like the carrier row, but
+    larger. Returns (data URI, display height)."""
+    if filename not in _ins_logos:
+        im = Image.open(os.path.join(CARRIER_DIR, filename)).convert("RGBA")
+        im = im.crop(im.getbbox())
+        h = int(max(34, min(64, round(95 / math.sqrt(im.width / float(im.height))))))
+        target_h = min(im.height, int(h * 2.6))
+        if target_h < im.height:
+            im = im.resize((max(1, round(im.width * target_h / im.height)), target_h),
+                           Image.LANCZOS)
+        buf = io.BytesIO()
+        im.save(buf, "WEBP", quality=88, method=6)
+        _ins_logos[filename] = ("data:image/webp;base64," +
+                                base64.b64encode(buf.getvalue()).decode(), h)
+    return _ins_logos[filename]
+
+
 def carrier_strip():
     """Render the carrier row: logos where we have them, text chips where we don't."""
     cells, found, total = [], 0, 0
@@ -205,6 +227,27 @@ VARIANTS = [
                 "Detox, residential and outpatient care. Call (888) 277-6026.",
     },
 ]
+
+# --- insurance pages: design D with one plan named throughout --------------
+# Slugs match the old WordPress pages so the running ads keep their URLs.
+# "We accept" only: the facility is out of network, never say in-network.
+INSURANCE_PAGES = [
+    ("anthem-landing-page", "Anthem",   "Anthem.png"),
+    ("cigna-landing-page",  "Cigna",    "cigna.png"),
+    ("geha",                "GEHA",     "geha.png"),
+    ("nyship",              "NYSHIP",   "nyship.png"),
+    ("highmark",            "Highmark", "highmark.png"),
+]
+for _slug, _name, _logo in INSURANCE_PAGES:
+    VARIANTS.append({
+        "id": _slug, "slug": _slug, "label": _name.lower(),
+        "phone": "8888912240", "dyn": "none", "design": "d",
+        "ins": {"name": _name, "logo": _logo},
+        "title": "Rehab That Accepts %s | Invigorate Behavioral Health" % _name,
+        "desc": "Invigorate Behavioral Health accepts %s insurance for detox, "
+                "residential and outpatient addiction treatment. Free, confidential "
+                "benefits check. Call (888) 891-2240." % _name,
+    })
 
 
 def pretty_phone(raw):
@@ -727,6 +770,14 @@ def render(base, v, preview):
     # HOME: homepage-only blocks (hero video, full footer). LP: landing pages only.
     html = fence(html, "HOME", v["id"] == "home")
     html = fence(html, "LP", v["id"] != "home")
+    # INS: insurance pages only, in place of the GEN copy everyone else gets.
+    ins = v.get("ins")
+    html = fence(html, "INS", bool(ins))
+    html = fence(html, "GEN", not ins)
+    if ins:
+        uri, h = ins_logo(ins["logo"])
+        html = html.replace("__INS_LOGO__", uri).replace("__INS_LOGO_H__", str(h))
+        html = html.replace("__INS_NAME__", ins["name"])
     html = html.replace("__CARE_MODALS__", care_modals())
     html = html.replace("__VARIANT_ID__", v["id"])
     html = html.replace("__DYN_MODE__", v["dyn"])

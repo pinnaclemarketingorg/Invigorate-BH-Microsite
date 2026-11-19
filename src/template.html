@@ -470,6 +470,23 @@ em{font-style:italic;font-weight:400}
 .hbadge{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:999px;white-space:nowrap;
   border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);font:600 .8rem/1 var(--sans)}
 .hbadge svg{flex:none;color:var(--leaf)}
+/* Insurance pages: the plan's own logo on a white plate tops the card */
+.hins{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:#fff;
+  box-shadow:0 16px 32px -20px rgba(0,0,0,.6)}
+.hins__logo{display:grid;place-items:center;min-height:96px;padding:18px 22px}
+.hins__logo img{height:var(--h);width:auto;max-width:100%;object-fit:contain}
+.hins__ok{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;
+  background:var(--leaf);color:var(--teal-deep);font:700 .88rem/1.2 var(--sans);text-decoration:none}
+.hins__ok svg{flex:none}
+/* Below the two-column hero the card drops under the fold, so a logo chip
+   takes the pill's place to name the plan in the first screen */
+.hinsm{display:none;align-self:flex-start;align-items:center;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;
+  background:#fff;box-shadow:0 12px 26px -16px rgba(0,0,0,.6)}
+.hinsm img{height:calc(var(--h) * .52);width:auto;max-width:150px;object-fit:contain}
+.hinsm b{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;
+  background:var(--leaf);color:var(--teal-deep);font:700 .8rem/1 var(--sans)}
+@media(max-width:960px){.hero--ins .hinsm{display:inline-flex}.hero--ins .pill{display:none}}
+@media(max-width:400px){.hero--ins .cta-row .btn{padding-inline:18px;white-space:normal;text-align:center}}
 @media(max-width:960px){.herogrid{grid-template-columns:minmax(0,1fr)}.hcard{max-width:440px}}
 @media(max-width:760px){
   .herogrid{padding:34px 0 44px;gap:30px}
@@ -479,6 +496,7 @@ em{font-style:italic;font-weight:400}
   .hpoints__ic{width:30px;height:30px}
   .hcard{padding:22px 20px 20px;gap:17px}
   .hcard__seal,.hcard__g{width:54px;height:54px}
+  .hins__logo{min-height:84px;padding:15px 18px}
 }
 @media(max-width:560px){.hero--d .cta-row .btn{flex:1 1 100%}}
 @media(max-width:420px){.hbadge{padding:8px 11px;gap:6px;font-size:.76rem}}
@@ -694,7 +712,7 @@ __CTM_TAG__
 
 <main>
 <!-- ===================== HERO ===================== -->
-<section class="hero<!--D:start--> hero--d<!--D:end-->" id="hero" data-dark="1">
+<section class="hero<!--D:start--> hero--d<!--D:end--><!--INS:start--> hero--ins<!--INS:end-->" id="hero" data-dark="1">
   <div class="hero__bg" aria-hidden="true"></div>
 <!--HOME:start-->
   <video class="hero__video" id="heroVideo" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"
@@ -703,9 +721,17 @@ __CTM_TAG__
   <div class="hero__scrim" aria-hidden="true"></div>
   <div class="wrap<!--D:start--> herogrid<!--D:end-->">
     <div class="hero__in">
+<!--INS:start-->
+      <span class="hinsm fade-up d1"><img src="__INS_LOGO__" alt="__INS_NAME__" style="--h:__INS_LOGO_H__px"><b><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Accepted</b></span>
+<!--INS:end-->
       <span class="pill fade-up d1"><span class="pdot" aria-hidden="true"></span><span<!--C:start--> data-dyn<!--C:end-->>Admissions Available Today</span></span>
+<!--GEN:start-->
       <h1 class="fade-up d2">Treatment That<br><em>Meets You Where You Are</em></h1>
       <p class="hero__lede fade-up d3"><span data-dyn-pre></span>Real recovery starts with one call.<span data-dyn-post></span></p>
+<!--GEN:end--><!--INS:start-->
+      <h1 class="fade-up d2">Addiction Treatment<br><em>That Accepts __INS_NAME__</em></h1>
+      <p class="hero__lede fade-up d3">Real recovery starts with one call. We&rsquo;ll check your __INS_NAME__ benefits for free, before you commit to anything.</p>
+<!--INS:end-->
 <!--D:start-->
       <ul class="hpoints fade-up d4">
         <li><span class="hpoints__ic" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 7.5l9 4.5 9-4.5z"/><path d="M3 12.5 12 17l9-4.5"/><path d="M3 17.5 12 22l9-4.5"/></svg></span>All levels of care</li>
@@ -726,7 +752,7 @@ __CTM_TAG__
 <!--C:end-->
       <div class="cta-row fade-up d5">
         <a class="btn btn--light btn--lg" href="tel:+1__PHONE_RAW__">Call __PHONE_DISPLAY__</a>
-        <a class="btn btn--ghost btn--lg" href="#admissions">Verify Insurance</a>
+        <a class="btn btn--ghost btn--lg" href="#admissions"><!--GEN:start-->Verify Insurance<!--GEN:end--><!--INS:start-->Check My __INS_NAME__ Benefits<!--INS:end--></a>
       </div>
 <!--C:start-->
       <p class="fine fade-up d5">Confidential &middot; No commitment required</p>
@@ -734,6 +760,12 @@ __CTM_TAG__
     </div>
 <!--D:start-->
     <aside class="hcard fade-up d5" aria-label="Accreditation and reviews">
+<!--INS:start-->
+      <div class="hins">
+        <span class="hins__logo"><img src="__INS_LOGO__" alt="__INS_NAME__" style="--h:__INS_LOGO_H__px"></span>
+        <a class="hins__ok" href="#admissions"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>__INS_NAME__ insurance accepted</a>
+      </div>
+<!--INS:end-->
       <span class="hcard__t">Accredited &amp; trusted</span>
       <div class="hcard__row">
         <img class="hcard__seal" src="__IMG_jcaho__" alt="" width="150" height="150">
@@ -770,7 +802,7 @@ __CTM_TAG__
     </div>
     <div class="tbar__i">
       <span class="tbar__ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
-      <span class="tbar__tx"><b>Works with your insurance</b><span>Aetna, Anthem, Cigna and more</span></span>
+      <span class="tbar__tx"><!--GEN:start--><b>Works with your insurance</b><span>Aetna, Anthem, Cigna and more</span><!--GEN:end--><!--INS:start--><b>__INS_NAME__ accepted</b><span>Free, confidential benefits check</span><!--INS:end--></span>
     </div>
   </div>
 </section>
@@ -1054,8 +1086,13 @@ __CTM_TAG__
   <div class="wrap stack g36">
     <div class="narrow stack g16 center">
       <span class="eyebrow">Admissions</span>
+<!--GEN:start-->
       <h2>We Make Treatment Accessible.</h2>
       <p class="lede">Working directly with insurance to maximize benefits and minimize out-of-pocket costs.</p>
+<!--GEN:end--><!--INS:start-->
+      <h2>We Accept __INS_NAME__.</h2>
+      <p class="lede">Send a few details and our admissions team will check your __INS_NAME__ benefits and walk you through what your plan covers, before you decide anything.</p>
+<!--INS:end-->
     </div>
 
     <div class="admit">
@@ -1091,7 +1128,7 @@ __CTM_TAG__
           </div>
           <div class="field">
             <label for="ins">Insurance provider <span class="rq" aria-hidden="true">*</span></label>
-            <input id="ins" name="insurance" type="text" list="carrierList" placeholder="Anthem, Aetna, Cigna&hellip;" required>
+            <input id="ins" name="insurance" type="text" list="carrierList" placeholder="Anthem, Aetna, Cigna&hellip;"<!--INS:start--> value="__INS_NAME__"<!--INS:end--> required>
             <datalist id="carrierList">
               <option value="Anthem"></option><option value="Aetna"></option><option value="BCBS"></option>
               <option value="Carelon"></option><option value="Cigna"></option><option value="Magellan"></option>
@@ -1177,8 +1214,8 @@ __CTM_TAG__
         <div class="q__panel" id="a4"><div><p>Yes &mdash; this is one of our core specializations. Many people struggling with addiction also live with depression, anxiety, PTSD, trauma, or other mental health conditions. We treat both simultaneously, because addressing only one rarely leads to lasting recovery.</p></div></div>
       </div>
       <div class="q">
-        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a5">What insurance do you accept? What does treatment cost?<span class="q__ic" aria-hidden="true"></span></button>
-        <div class="q__panel" id="a5"><div><p>We are an out-of-network provider and work with most major commercial insurance plans, including Anthem, Aetna, BCBS, Carelon, Cigna, Magellan, Surest, UHC, UMR, and more. At this time, we do not accept Medicaid or Medi-Cal. Insurance verification is free and confidential &mdash; contact us and we&rsquo;ll walk you through your benefits before you make any decisions.</p></div></div>
+        <button class="q__btn" type="button" aria-expanded="false" aria-controls="a5"><!--GEN:start-->What insurance do you accept? What does treatment cost?<!--GEN:end--><!--INS:start-->Do you accept __INS_NAME__? What does treatment cost?<!--INS:end--><span class="q__ic" aria-hidden="true"></span></button>
+        <div class="q__panel" id="a5"><div><p><!--INS:start-->Yes, we accept __INS_NAME__ insurance. What your plan covers depends on its out-of-network benefits, which we check for you at no cost. <!--INS:end-->We are an out-of-network provider and work with most major commercial insurance plans, including Anthem, Aetna, BCBS, Carelon, Cigna, Magellan, Surest, UHC, UMR, and more. At this time, we do not accept Medicaid or Medi-Cal. Insurance verification is free and confidential &mdash; contact us and we&rsquo;ll walk you through your benefits before you make any decisions.</p></div></div>
       </div>
       <div class="q">
         <button class="q__btn" type="button" aria-expanded="false" aria-controls="a6">How long is treatment? Can I customize my stay?<span class="q__ic" aria-hidden="true"></span></button>

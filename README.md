@@ -63,6 +63,17 @@ neither design ships the other's markup.
   the sprite, traced from the logo).
 - FAQ is 35/65, prompts left (sticky) and answers right.
 
+**Insurance pages** — `anthem-landing-page`, `cigna-landing-page`, `geha`,
+`nyship`, `highmark`. Design D with one plan named throughout, on the same
+slugs as the old WordPress pages so the running ads keep their URLs. Listed in
+`INSURANCE_PAGES` in `build.py` (slug, plan name, logo in `src/assets/carriers/`).
+Copy that differs is fenced `<!--INS:start-->` (these pages) and
+`<!--GEN:start-->` (everyone else): the headline, the plan's logo plate atop the
+hero card (a logo chip in place of the pill below 960px), the benefits button,
+the trust bar's insurance item, the admissions heading, the FAQ answer and a
+pre-filled insurance field. The copy says the plan is *accepted*, never
+in-network — the facility is out of network.
+
 ## Variants
 
 `VARIANTS` in `src/build.py` drives everything. Each entry sets the tracking
