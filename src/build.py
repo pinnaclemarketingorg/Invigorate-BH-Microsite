@@ -229,7 +229,8 @@ VARIANTS = [
 ]
 
 # --- insurance pages: design D with one plan named throughout --------------
-# Slugs match the old WordPress pages so the running ads keep their URLs.
+# Slugs match the old WordPress pages so the running ads keep their URLs
+# (Aetna had none; it follows the same -landing-page pattern).
 # "We accept" only: the facility is out of network, never say in-network.
 INSURANCE_PAGES = [
     ("anthem-landing-page", "Anthem",   "Anthem.png"),
@@ -238,6 +239,7 @@ INSURANCE_PAGES = [
     ("nyship",              "NYSHIP",   "nyship.png"),
     ("highmark",            "Highmark", "highmark.png"),
     ("kaiser-landing-page", "Kaiser",   "kaiser.png"),
+    ("aetna-landing-page",  "Aetna",    "Aetna.png"),   # new, no old page
 ]
 for _slug, _name, _logo in INSURANCE_PAGES:
     VARIANTS.append({

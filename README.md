@@ -64,7 +64,7 @@ neither design ships the other's markup.
 - FAQ is 35/65, prompts left (sticky) and answers right.
 
 **Insurance pages** — `anthem-landing-page`, `cigna-landing-page`, `geha`,
-`nyship`, `highmark`, `kaiser-landing-page`. Design D with one plan named throughout, on the same
+`nyship`, `highmark`, `kaiser-landing-page`, `aetna-landing-page`. Design D with one plan named throughout, on the same
 slugs as the old WordPress pages so the running ads keep their URLs. Listed in
 `INSURANCE_PAGES` in `build.py` (slug, plan name, logo in `src/assets/carriers/`).
 Copy that differs is fenced `<!--INS:start-->` (these pages) and
