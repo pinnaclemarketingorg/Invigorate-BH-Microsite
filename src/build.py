@@ -237,6 +237,7 @@ INSURANCE_PAGES = [
     ("geha",                "GEHA",     "geha.png"),
     ("nyship",              "NYSHIP",   "nyship.png"),
     ("highmark",            "Highmark", "highmark.png"),
+    ("kaiser-landing-page", "Kaiser",   "kaiser.png"),
 ]
 for _slug, _name, _logo in INSURANCE_PAGES:
     VARIANTS.append({
